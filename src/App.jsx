@@ -7,8 +7,10 @@ import IkeaNavLinks from './components/Menu';
 function App() {
   return (
     <ConfigProvider>
-        <IkeaHeader/>
-        <IkeaNavLinks/>
+        <div className="w-full">
+        <IkeaHeader />
+        <IkeaNavLinks />
+      </div>
     </ConfigProvider>
   );
 }

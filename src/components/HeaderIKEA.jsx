@@ -3,7 +3,6 @@ import {
   Input, 
   Button, 
   Dropdown, 
-  Menu, 
   Badge 
 } from 'antd';
 import { 
@@ -19,14 +18,13 @@ import {
 const IkeaHeader = () => {
   const [searchValue, setSearchValue] = useState('');
 
-  const languageMenu = (
-    <Menu>
-      <Menu.Item key="1">English</Menu.Item>
-      <Menu.Item key="2">Svenska</Menu.Item>
-      <Menu.Item key="3">Deutsch</Menu.Item>
-      <Menu.Item key="4">Français</Menu.Item>
-    </Menu>
-  );
+  // Fixed: using items array instead of Menu component
+  const languageItems = [
+    { key: '1', label: 'English' },
+    { key: '2', label: 'Svenska' },
+    { key: '3', label: 'Deutsch' },
+    { key: '4', label: 'Français' }
+  ];
 
   return (
     <div className="font-sans">
@@ -35,12 +33,13 @@ const IkeaHeader = () => {
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           {/* Left side - Language selector */}
           <div className="flex items-center">
-            <Dropdown overlay={languageMenu} placement="bottomLeft">
-              <Button type="text" className="text-white flex items-center" icon={<GlobalOutlined />}>
-                <span className="ml-2 mr-1">US</span>
+            {/* Fixed: using menu prop instead of overlay */}
+            <Dropdown menu={{ items: languageItems }} placement="bottomLeft">
+                <Button type="text" className="text-white flex items-center" icon={<GlobalOutlined style={{ color: 'white' }}/>}>
+                <span className="ml-2 mr-1 text-white flex items-center">US</span>
                 <span className="mx-1 text-gray-400">|</span>
-                <span>English</span>
-              </Button>
+                <span className="text-white flex items-center">English</span>
+                </Button>
             </Dropdown>
           </div>
 

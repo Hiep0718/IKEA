@@ -1,24 +1,33 @@
 import React from 'react';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown } from 'antd';
 import { MenuOutlined, DownOutlined } from '@ant-design/icons';
 
 const IkeaNavigation = () => {
-  const categoryMenu = (
-    <Menu className="w-64">
-      <Menu.ItemGroup title="Products">
-        <Menu.Item key="furniture">Furniture</Menu.Item>
-        <Menu.Item key="kitchen">Kitchen & Appliances</Menu.Item>
-        <Menu.Item key="beds">Beds & Mattresses</Menu.Item>
-        <Menu.Item key="storage">Storage & Organization</Menu.Item>
-      </Menu.ItemGroup>
-      <Menu.ItemGroup title="Rooms">
-        <Menu.Item key="living">Living Room</Menu.Item>
-        <Menu.Item key="bedroom">Bedroom</Menu.Item>
-        <Menu.Item key="kitchen-room">Kitchen</Menu.Item>
-        <Menu.Item key="bathroom">Bathroom</Menu.Item>
-      </Menu.ItemGroup>
-    </Menu>
-  );
+  // Fixed: Using items array for dropdown menu
+  const categoryItems = [
+    {
+      key: 'products',
+      type: 'group',
+      label: 'Products',
+      children: [
+        { key: 'furniture', label: 'Furniture' },
+        { key: 'kitchen', label: 'Kitchen & Appliances' },
+        { key: 'beds', label: 'Beds & Mattresses' },
+        { key: 'storage', label: 'Storage & Organization' }
+      ]
+    },
+    {
+      key: 'rooms',
+      type: 'group',
+      label: 'Rooms',
+      children: [
+        { key: 'living', label: 'Living Room' },
+        { key: 'bedroom', label: 'Bedroom' },
+        { key: 'kitchen-room', label: 'Kitchen' },
+        { key: 'bathroom', label: 'Bathroom' }
+      ]
+    }
+  ];
 
   return (
     <nav className="bg-white border-b border-gray-200">
@@ -49,7 +58,8 @@ const IkeaNavigation = () => {
           </div>
           
           <div className="lg:hidden flex items-center">
-            <Dropdown overlay={categoryMenu} placement="bottomLeft" trigger={['click']}>
+            {/* Fixed: Changed overlay to menu */}
+            <Dropdown menu={{ items: categoryItems }} placement="bottomLeft" trigger={['click']}>
               <Button type="text" className="flex items-center" icon={<MenuOutlined />}>
                 <span className="ml-2">Categories</span>
                 <DownOutlined className="ml-1" />
@@ -59,12 +69,14 @@ const IkeaNavigation = () => {
         </div>
       </div>
 
-      {/* Hide scrollbar style */}
-      <style jsx>{`
-        ::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      {/* Apply scrollbar hiding using inline styles instead of JSX style */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          nav div::-webkit-scrollbar {
+            display: none;
+          }
+        `
+      }} />
     </nav>
   );
 };
