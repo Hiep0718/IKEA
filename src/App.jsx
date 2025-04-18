@@ -1,8 +1,8 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
 import IkeaHeader from './components/HeaderIKEA';
-import IkeaNavLinks from './components/Menu';
 import IkeaFooter from './components/IkeaFooter';
+import IkeaNavigation from './components/IkeaNavigation';
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <ConfigProvider>
         <div className="w-screen">
         <IkeaHeader />
-        <IkeaNavLinks />
+        <IkeaNavigation/>
         <IkeaFooter/>
       </div>
     </ConfigProvider>
