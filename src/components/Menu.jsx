@@ -54,7 +54,7 @@ const IkeaNavigation = () => {
             <a href="#" className="px-4 py-3 hover:border-b-2 hover:border-black">Ideas & inspiration</a>
             <a href="#" className="px-4 py-3 hover:border-b-2 hover:border-black">Design & planning</a>
             <a href="#" className="px-4 py-3 hover:border-b-2 hover:border-black">IKEA for Business</a>
-            <a href="#" className="px-4 py-3 border-b-2 border-blue-600 text-blue-600">Services & support</a>
+            <a href="#" className="px-4 py-3 hover:border-b-2 hover:border-black">Services & support</a>
           </div>
           
           <div className="lg:hidden flex items-center">
