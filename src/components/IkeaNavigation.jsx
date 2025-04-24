@@ -1,273 +1,390 @@
-import React, { useState } from 'react';
-import { Button, Dropdown } from 'antd';
-import { MenuOutlined, DownOutlined } from '@ant-design/icons';
+"use client"
+
+import { useState, useRef } from "react"
+import { Button, Dropdown } from "antd"
+import { MenuOutlined, DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons"
 
 const IkeaNavigation = () => {
-  const [activeSection, setActiveSection] = useState('products');
-  
-  // Navigation items
-  const navItems = [
-    { key: 'products', label: 'Products', icon: 'package' },
-    { key: 'rooms', label: 'Rooms', icon: 'home' },
-    { key: 'deals', label: 'Deals', icon: null },
-    { key: 'spring-home-ideas', label: 'Spring home ideas', icon: null },
-    { key: 'home-accessories', label: 'Home accessories', icon: null },
-    { key: 'ideas-inspiration', label: 'Ideas & inspiration', icon: null },
-    { key: 'design-planning', label: 'Design & planning', icon: null },
-    { key: 'ikea-business', label: 'IKEA for Business', icon: null },
-    { key: 'services-support', label: 'Services & support', icon: null }
-  ];
+  const [activeSection, setActiveSection] = useState("products")
+  const productScrollRef = useRef(null)
+  const roomScrollRef = useRef(null)
 
-  // Dropdown menu items for mobile view
-  const categoryItems = [
+  // Main navigation items
+  const navItems = [
+    { key: "products", label: "Products" },
+    { key: "rooms", label: "Rooms" },
+    { key: "deals", label: "Deals" },
+    { key: "spring-home-ideas", label: "Spring home ideas" },
+    { key: "home-accessories", label: "Home accessories" },
+    { key: "ideas-inspiration", label: "Ideas & inspiration" },
+    { key: "design-planning", label: "Design & planning" },
+    { key: "ikea-business", label: "IKEA for Business" },
+    { key: "services-support", label: "Services & support" },
+  ]
+
+  // Extended product categories for the scrollable section
+  const productCategories = [
     {
-      key: 'products',
-      type: 'group',
-      label: 'Products',
-      children: [
-        { key: 'furniture', label: 'Furniture' },
-        { key: 'kitchen', label: 'Kitchen & Appliances' },
-        { key: 'beds', label: 'Beds & Mattresses' },
-        { key: 'storage', label: 'Storage & Organization' }
-      ]
+      key: "new-trending",
+      label: "New & trending",
+      icon: null,
+      color: "bg-orange-600",
+      textColor: "text-white",
+      text: "New",
     },
     {
-      key: 'rooms',
-      type: 'group',
-      label: 'Rooms',
-      children: [
-        { key: 'living', label: 'Living Room' },
-        { key: 'bedroom', label: 'Bedroom' },
-        { key: 'kitchen-room', label: 'Kitchen' },
-        { key: 'bathroom', label: 'Bathroom' }
-      ]
+      key: "offers",
+      label: "Offers",
+      icon: null,
+      color: "bg-yellow-400",
+      textColor: "text-black",
+      text: "DEALS",
+    },
+    {
+      key: "storage",
+      label: "Storage & organization",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "sofas",
+      label: "Sofas & armchairs",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "outdoor",
+      label: "Outdoor",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "beds",
+      label: "Beds & mattresses",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "lighting",
+      label: "Lighting",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "textiles",
+      label: "Home textiles",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "kitchen",
+      label: "Kitchen, appliances & supplies",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "desk",
+      label: "Desk & desk chairs",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "tables",
+      label: "Tables & chairs",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "decor",
+      label: "Home decor & accessories",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "kitchenware",
+      label: "Kitchenware & tableware",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    // Additional product categories
+    {
+      key: "bathroom",
+      label: "Bathroom products",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "children",
+      label: "Children's IKEA",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "plants",
+      label: "Plants & plant pots",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "mirrors",
+      label: "Mirrors & frames",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "rugs",
+      label: "Rugs & mats",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "curtains",
+      label: "Curtains & blinds",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "cookware",
+      label: "Cookware & bakeware",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "smart-home",
+      label: "Smart home products",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "laundry",
+      label: "Laundry & cleaning",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "pet",
+      label: "Pet furniture",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "seasonal",
+      label: "Seasonal decorations",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "office",
+      label: "Office furniture",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      key: "food",
+      label: "Food & beverages",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+  ]
+
+  // Extended room categories
+  const roomCategories = [
+    { key: "bedroom", label: "Bedroom", image: "/placeholder.svg?height=120&width=120" },
+    { key: "outdoor-room", label: "Outdoor", image: "/placeholder.svg?height=120&width=120" },
+    { key: "living-room", label: "Living room", image: "/placeholder.svg?height=120&width=120" },
+    { key: "kitchen-room", label: "Kitchen & appliances", image: "/placeholder.svg?height=120&width=120" },
+    { key: "home-office", label: "Home office", image: "/placeholder.svg?height=120&width=120" },
+    { key: "dining", label: "Dining", image: "/placeholder.svg?height=120&width=120" },
+    { key: "bathroom", label: "Bathroom", image: "/placeholder.svg?height=120&width=120" },
+    { key: "kids-room", label: "Kids room", image: "/placeholder.svg?height=120&width=120" },
+    { key: "garage", label: "Garage", image: "/placeholder.svg?height=120&width=120" },
+    { key: "gaming-room", label: "Gaming room", image: "/placeholder.svg?height=120&width=120" },
+    { key: "laundry", label: "Laundry", image: "/placeholder.svg?height=120&width=120" },
+    // Additional room categories
+    { key: "hallway", label: "Hallway", image: "/placeholder.svg?height=120&width=120" },
+    { key: "guest-room", label: "Guest room", image: "/placeholder.svg?height=120&width=120" },
+    { key: "nursery", label: "Nursery", image: "/placeholder.svg?height=120&width=120" },
+    { key: "teen-room", label: "Teen room", image: "/placeholder.svg?height=120&width=120" },
+    { key: "craft-room", label: "Craft room", image: "/placeholder.svg?height=120&width=120" },
+    { key: "library", label: "Home library", image: "/placeholder.svg?height=120&width=120" },
+    { key: "gym", label: "Home gym", image: "/placeholder.svg?height=120&width=120" },
+    { key: "entertainment", label: "Entertainment area", image: "/placeholder.svg?height=120&width=120" },
+    { key: "balcony", label: "Balcony", image: "/placeholder.svg?height=120&width=120" },
+    { key: "basement", label: "Basement", image: "/placeholder.svg?height=120&width=120" },
+    { key: "attic", label: "Attic", image: "/placeholder.svg?height=120&width=120" },
+    { key: "studio", label: "Studio apartment", image: "/placeholder.svg?height=120&width=120" },
+    { key: "small-space", label: "Small spaces", image: "/placeholder.svg?height=120&width=120" },
+  ]
+
+  // Dropdown menu items for mobile view
+  const mobileMenuItems = [
+    {
+      key: "products",
+      type: "group",
+      label: "Products",
+      children: productCategories.map((cat) => ({ key: cat.key, label: cat.label })),
+    },
+    {
+      key: "rooms",
+      type: "group",
+      label: "Rooms",
+      children: roomCategories.map((room) => ({ key: room.key, label: room.label })),
+    },
+    ...navItems.slice(2).map((item) => ({
+      key: item.key,
+      label: item.label,
+    })),
+  ]
+
+  // Handle click on navigation item
+  const handleNavClick = (key) => {
+    setActiveSection(key)
+  }
+
+  // Scroll the category container left
+  const scrollLeft = () => {
+    const currentRef = activeSection === "products" ? productScrollRef : roomScrollRef
+    if (currentRef.current) {
+      currentRef.current.scrollBy({ left: -300, behavior: "smooth" })
     }
-  ];
+  }
 
-  // Content for Products section
-  const ProductsContent = () => (
-    <div className="py-8">
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <div className="flex flex-col items-center">
-          <div className="bg-orange-500 p-4 rounded-md mb-2">
-            <span className="text-white font-bold">New</span>
+  // Scroll the category container right
+  const scrollRight = () => {
+    const currentRef = activeSection === "products" ? productScrollRef : roomScrollRef
+    if (currentRef.current) {
+      currentRef.current.scrollBy({ left: 300, behavior: "smooth" })
+    }
+  }
+
+  // Render product categories content
+  const renderProductCategories = () => (
+    <div className="relative py-6">
+      <button
+        onClick={scrollLeft}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100"
+        aria-label="Scroll left"
+      >
+        <LeftOutlined />
+      </button>
+
+      <div
+        ref={productScrollRef}
+        className="flex overflow-x-auto gap-4 px-8 scrollbar-hide"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {productCategories.map((category) => (
+          <div key={category.key} className="flex flex-col items-center flex-shrink-0 cursor-pointer">
+            {category.color ? (
+              <div
+                className={`${category.color} ${category.textColor} w-16 h-16 flex items-center justify-center rounded-md mb-2 font-bold`}
+              >
+                {category.text}
+              </div>
+            ) : (
+              <img
+                src={category.image || "/placeholder.svg"}
+                alt={category.label}
+                className="w-16 h-16 object-cover rounded-md mb-2"
+              />
+            )}
+            <span className="text-xs text-center max-w-[80px]">{category.label}</span>
           </div>
-          <span className="text-sm">New & trending</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-yellow-400 p-4 rounded-md mb-2">
-            <span className="font-bold">DEALS</span>
-          </div>
-          <span className="text-sm">Offers</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2">
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <line x1="3" y1="9" x2="21" y2="9" />
-              <line x1="9" y1="21" x2="9" y2="9" />
-            </svg>
-          </div>
-          <span className="text-sm">Storage & organization</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2">
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="2" y="8" width="20" height="12" rx="2" />
-              <path d="M6 8V6a2 2 0 012-2h8a2 2 0 012 2v2" />
-            </svg>
-          </div>
-          <span className="text-sm">Sofas & armchairs</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2">
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-          </div>
-          <span className="text-sm">Outdoor</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2">
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="2" y="6" width="20" height="12" rx="2" />
-            </svg>
-          </div>
-          <span className="text-sm">Beds & mattresses</span>
-        </div>
+        ))}
       </div>
-    </div>
-  );
 
-  // Content for Rooms section
-  const RoomsContent = () => (
-    <div className="py-8">
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2 w-16 h-16">
-            <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M3 10h18" />
-              <path d="M10 3v18" />
-            </svg>
+      <button
+        onClick={scrollRight}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100"
+        aria-label="Scroll right"
+      >
+        <RightOutlined />
+      </button>
+    </div>
+  )
+
+  // Render room categories content
+  const renderRoomCategories = () => (
+    <div className="relative py-6">
+      <button
+        onClick={scrollLeft}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100"
+        aria-label="Scroll left"
+      >
+        <LeftOutlined />
+      </button>
+
+      <div
+        ref={roomScrollRef}
+        className="flex overflow-x-auto gap-4 px-8 scrollbar-hide"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {roomCategories.map((room) => (
+          <div key={room.key} className="flex flex-col items-center flex-shrink-0 cursor-pointer">
+            <img
+              src={room.image || "/placeholder.svg"}
+              alt={room.label}
+              className="w-24 h-24 object-cover rounded-md mb-2"
+            />
+            <span className="text-xs text-center">{room.label}</span>
           </div>
-          <span className="text-sm">Bedroom</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2 w-16 h-16">
-            <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-          </div>
-          <span className="text-sm">Outdoor</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2 w-16 h-16">
-            <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M9 3v18" />
-              <path d="M3 9h6" />
-              <path d="M3 15h6" />
-            </svg>
-          </div>
-          <span className="text-sm">Living room</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2 w-16 h-16">
-            <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M4 4h16v16H4z" />
-              <path d="M4 12h16" />
-              <path d="M12 4v16" />
-            </svg>
-          </div>
-          <span className="text-sm">Kitchen & appliances</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2 w-16 h-16">
-            <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <line x1="3" y1="9" x2="21" y2="9" />
-              <line x1="9" y1="21" x2="9" y2="9" />
-            </svg>
-          </div>
-          <span className="text-sm">Home office</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-200 p-4 rounded-md mb-2 w-16 h-16">
-            <svg className="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="16" />
-              <line x1="8" y1="12" x2="16" y2="12" />
-            </svg>
-          </div>
-          <span className="text-sm">Dining</span>
-        </div>
+        ))}
       </div>
-    </div>
-  );
 
-  // Content for Spring home ideas section
-  const SpringIdeasContent = () => (
-    <div className="py-8">
-      <h2 className="text-xl font-medium mb-6">Spring home ideas</h2>
-      <div className="space-y-4">
-        <a href="#" className="block hover:underline">See all in Spring home ideas</a>
-        <a href="#" className="block hover:underline">Enjoy the sun in new outdoor furniture</a>
-        <a href="#" className="block hover:underline">Celebrate mom with Mother's Day gifts she'll love</a>
-      </div>
+      <button
+        onClick={scrollRight}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100"
+        aria-label="Scroll right"
+      >
+        <RightOutlined />
+      </button>
     </div>
-  );
-
-  // Content for other sections - simplified for now
-  const GenericContent = () => (
-    <div className="py-8">
-      <h2 className="text-xl font-medium mb-6">{navItems.find(item => item.key === activeSection)?.label}</h2>
-      <p>Content for {navItems.find(item => item.key === activeSection)?.label} would go here.</p>
-    </div>
-  );
+  )
 
   // Render the appropriate content based on active section
   const renderContent = () => {
     switch (activeSection) {
-      case 'products':
-        return <ProductsContent />;
-      case 'rooms':
-        return <RoomsContent />;
-      case 'spring-home-ideas':
-        return <SpringIdeasContent />;
+      case "products":
+        return renderProductCategories()
+      case "rooms":
+        return renderRoomCategories()
       default:
-        return <GenericContent />;
+        return (
+          <div className="py-6">
+            <h2 className="text-xl font-medium mb-4">{navItems.find((item) => item.key === activeSection)?.label}</h2>
+            <p>Content for {navItems.find((item) => item.key === activeSection)?.label} would go here.</p>
+          </div>
+        )
     }
-  };
-
-  // Handle click on navigation item
-  const handleNavClick = (key) => {
-    setActiveSection(key);
-  };
+  }
 
   return (
-    <div className="bg-white">
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="hidden lg:flex space-x-1">
-              {navItems.map((item) => (
-                <a 
-                  key={item.key}
-                  href="#" 
-                  className={`px-4 py-3 hover:border-b-2 hover:border-black flex items-center ${
-                    activeSection === item.key ? 'border-b-2 border-black' : ''
-                  }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.key);
-                  }}
-                >
-                  {item.icon === 'package' && (
-                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M20 8H4V18H20V8Z" />
-                      <path d="M2 5H22" />
-                    </svg>
-                  )}
-                  {item.icon === 'home' && (
-                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M3 20H21V8L12 3L3 8V20Z" />
-                      <path d="M9 20V12H15V20" />
-                    </svg>
-                  )}
-                  {item.label}
-                </a>
-              ))}
-            </div>
-            
-            <div className="lg:hidden flex items-center">
-              <Dropdown menu={{ items: categoryItems, onClick: ({key}) => handleNavClick(key) }} placement="bottomLeft" trigger={['click']}>
-                <Button type="text" className="flex items-center" icon={<MenuOutlined />}>
-                  <span className="ml-2">Categories</span>
-                  <DownOutlined className="ml-1" />
-                </Button>
-              </Dropdown>
-            </div>
-          </div>
+    <div className="bg-white border-b border-gray-200">
+      {/* Main navigation */}
+      <div className="max-w-7xl mx-auto">
+        <div className="hidden lg:flex border-b">
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              className={`px-4 py-3 text-sm hover:underline ${
+                activeSection === item.key ? "border-b-2 border-black -mb-[2px]" : ""
+              }`}
+              onClick={() => handleNavClick(item.key)}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            nav div::-webkit-scrollbar {
-              display: none;
-            }
-          `
-        }} />
-      </nav>
-
-      {/* Dynamic content section based on active menu item */}
-      <div className="max-w-7xl mx-auto px-4">
-        {renderContent()}
+        {/* Mobile navigation */}
+        <div className="lg:hidden flex py-3 px-4">
+          <Dropdown
+            menu={{
+              items: mobileMenuItems,
+              onClick: ({ key }) => handleNavClick(key),
+            }}
+            placement="bottomLeft"
+            trigger={["click"]}
+          >
+            <Button type="text" className="flex items-center" icon={<MenuOutlined />}>
+              <span className="ml-2">Categories</span>
+              <DownOutlined className="ml-1" />
+            </Button>
+          </Dropdown>
+        </div>
       </div>
-    </div>
-  );
-};
 
-export default IkeaNavigation;
+      {/* Content section based on active menu item */}
+      <div className="max-w-7xl mx-auto">{renderContent()}</div>
+
+      {/* Hide scrollbar */}
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+    </div>
+  )
+}
+
+export default IkeaNavigation
