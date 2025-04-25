@@ -73,9 +73,9 @@
       "kallax": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC4TAjh6ZOD9Am5v1Eexq5UNvqZGL0hEunw&s"
     },
     "inspiration": {
-      "smallSpace": "/images/inspiration/small-space.jpg",
-      "bedroom": "/images/inspiration/bedroom.jpg",
-      "kitchen": "/images/inspiration/kitchen.jpg"
+      "smallSpace": "https://cdn.apartmenttherapy.info/image/upload/v1603129306/at/IKEA%20Catalog%202021/PH169886.jpg",
+      "bedroom": "https://www.ikea.com/ext/ingkadam/m/b188de628d74f5b/original/PH199271.jpg?f=s",
+      "kitchen": "https://www.ikea.com/ext/ingkadam/m/3915edf2b352cb8e/original/PH201870.jpg?f=s"
     },
     "banners": {
       "welcome": "https://www.executivegrapevine.com/uploads/articles/story-ikea-celebrates-veteran-employees.jpg",
