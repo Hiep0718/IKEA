@@ -1,0 +1,104 @@
+{
+    "logo": {
+      "ikea": "/images/logo/ikea-logo.svg"
+    },
+    "placeholders": {
+      "product": "/placeholder.svg?height=200&width=200",
+      "productLarge": "/placeholder.svg?height=600&width=600",
+      "productThumbnail": "/placeholder.svg?height=150&width=150",
+      "banner": "/placeholder.svg?height=500&width=1200",
+      "category": "/placeholder.svg?height=80&width=80",
+      "room": "/placeholder.svg?height=120&width=120",
+      "inspiration": "/placeholder.svg?height=300&width=500",
+      "sustainability": "/placeholder.svg?height=300&width=500"
+    },
+    "categories": {
+      "newTrending": "/images/categories/new-trending.jpg",
+      "offers": "/images/categories/offers.jpg",
+      "storage": "/images/categories/storage.jpg",
+      "sofas": "/images/categories/sofas.jpg",
+      "outdoor": "/images/categories/outdoor.jpg",
+      "beds": "/images/categories/beds.jpg",
+      "lighting": "/images/categories/lighting.jpg",
+      "textiles": "/images/categories/textiles.jpg",
+      "kitchen": "/images/categories/kitchen.jpg",
+      "desk": "/images/categories/desk.jpg",
+      "tables": "/images/categories/tables.jpg",
+      "decor": "/images/categories/decor.jpg",
+      "kitchenware": "/images/categories/kitchenware.jpg",
+      "bathroom": "/images/categories/bathroom.jpg",
+      "children": "/images/categories/children.jpg",
+      "plants": "/images/categories/plants.jpg",
+      "mirrors": "/images/categories/mirrors.jpg",
+      "rugs": "/images/categories/rugs.jpg",
+      "curtains": "/images/categories/curtains.jpg",
+      "cookware": "/images/categories/cookware.jpg",
+      "smartHome": "/images/categories/smart-home.jpg",
+      "laundry": "/images/categories/laundry.jpg",
+      "pet": "/images/categories/pet.jpg",
+      "seasonal": "/images/categories/seasonal.jpg",
+      "office": "/images/categories/office.jpg",
+      "food": "/images/categories/food.jpg"
+    },
+    "rooms": {
+      "bedroom": "/images/rooms/bedroom.jpg",
+      "outdoor": "/images/rooms/outdoor.jpg",
+      "livingRoom": "/images/rooms/living-room.jpg",
+      "kitchen": "/images/rooms/kitchen.jpg",
+      "homeOffice": "/images/rooms/home-office.jpg",
+      "dining": "/images/rooms/dining.jpg",
+      "bathroom": "/images/rooms/bathroom.jpg",
+      "kidsRoom": "/images/rooms/kids-room.jpg",
+      "garage": "/images/rooms/garage.jpg",
+      "gamingRoom": "/images/rooms/gaming-room.jpg",
+      "laundry": "/images/rooms/laundry.jpg",
+      "hallway": "/images/rooms/hallway.jpg",
+      "guestRoom": "/images/rooms/guest-room.jpg",
+      "nursery": "/images/rooms/nursery.jpg",
+      "teenRoom": "/images/rooms/teen-room.jpg",
+      "craftRoom": "/images/rooms/craft-room.jpg",
+      "library": "/images/rooms/library.jpg",
+      "gym": "/images/rooms/gym.jpg",
+      "entertainment": "/images/rooms/entertainment.jpg",
+      "balcony": "/images/rooms/balcony.jpg",
+      "basement": "/images/rooms/basement.jpg",
+      "attic": "/images/rooms/attic.jpg",
+      "studio": "/images/rooms/studio.jpg",
+      "smallSpace": "/images/rooms/small-space.jpg"
+    },
+    "products": {
+      "billy": "/images/products/billy-bookcase.jpg",
+      "malm": "/images/products/malm-bed.jpg",
+      "poang": "/images/products/poang-chair.jpg",
+      "kallax": "/images/products/kallax-shelf.jpg"
+    },
+    "inspiration": {
+      "smallSpace": "/images/inspiration/small-space.jpg",
+      "bedroom": "/images/inspiration/bedroom.jpg",
+      "kitchen": "/images/inspiration/kitchen.jpg"
+    },
+    "banners": {
+      "welcome": "/images/banners/welcome.jpg",
+      "spring": "/images/banners/spring-collection.jpg",
+      "sustainability": "/images/banners/sustainability.jpg"
+    },
+    "icons": {
+      "payment": {
+        "visa": "/images/payment-icons/visa.png",
+        "mastercard": "/images/payment-icons/mastercard.png",
+        "discover": "/images/payment-icons/discover.png",
+        "amex": "/images/payment-icons/amex.png",
+        "ikeaCard": "/images/payment-icons/ikea-card.png",
+        "paypal": "/images/payment-icons/paypal.png",
+        "applePay": "/images/payment-icons/apple-pay.png",
+        "googlePay": "/images/payment-icons/google-pay.png",
+        "klarna": "/images/payment-icons/klarna.png",
+        "unionpay": "/images/payment-icons/unionpay.png",
+        "jcb": "/images/payment-icons/jcb.png",
+        "diners": "/images/payment-icons/diners.png",
+        "giftCard": "/images/payment-icons/gift-card.png",
+        "affirm": "/images/payment-icons/affirm.png"
+      }
+    }
+  }
+  

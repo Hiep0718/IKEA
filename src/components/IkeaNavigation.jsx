@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { Button, Dropdown } from "antd"
 import { MenuOutlined, DownOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons"
+import { getImage, getCategoryImage, getRoomImage } from "../utils/imageUtils"
 
 const IkeaNavigation = () => {
   const [activeSection, setActiveSection] = useState("products")
@@ -22,10 +23,10 @@ const IkeaNavigation = () => {
     { key: "services-support", label: "Services & support" },
   ]
 
-  // Extended product categories for the scrollable section
+  // Product categories for the scrollable section
   const productCategories = [
     {
-      key: "new-trending",
+      key: "newTrending",
       label: "New & trending",
       icon: null,
       color: "bg-orange-600",
@@ -43,153 +44,153 @@ const IkeaNavigation = () => {
     {
       key: "storage",
       label: "Storage & organization",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("storage"),
     },
     {
       key: "sofas",
       label: "Sofas & armchairs",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("sofas"),
     },
     {
       key: "outdoor",
       label: "Outdoor",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("outdoor"),
     },
     {
       key: "beds",
       label: "Beds & mattresses",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("beds"),
     },
     {
       key: "lighting",
       label: "Lighting",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("lighting"),
     },
     {
       key: "textiles",
       label: "Home textiles",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("textiles"),
     },
     {
       key: "kitchen",
       label: "Kitchen, appliances & supplies",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("kitchen"),
     },
     {
       key: "desk",
       label: "Desk & desk chairs",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("desk"),
     },
     {
       key: "tables",
       label: "Tables & chairs",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("tables"),
     },
     {
       key: "decor",
       label: "Home decor & accessories",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("decor"),
     },
     {
       key: "kitchenware",
       label: "Kitchenware & tableware",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("kitchenware"),
     },
     // Additional product categories
     {
       key: "bathroom",
       label: "Bathroom products",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("bathroom"),
     },
     {
       key: "children",
       label: "Children's IKEA",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("children"),
     },
     {
       key: "plants",
       label: "Plants & plant pots",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("plants"),
     },
     {
       key: "mirrors",
       label: "Mirrors & frames",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("mirrors"),
     },
     {
       key: "rugs",
       label: "Rugs & mats",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("rugs"),
     },
     {
       key: "curtains",
       label: "Curtains & blinds",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("curtains"),
     },
     {
       key: "cookware",
       label: "Cookware & bakeware",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("cookware"),
     },
     {
-      key: "smart-home",
+      key: "smartHome",
       label: "Smart home products",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("smartHome"),
     },
     {
       key: "laundry",
       label: "Laundry & cleaning",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("laundry"),
     },
     {
       key: "pet",
       label: "Pet furniture",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("pet"),
     },
     {
       key: "seasonal",
       label: "Seasonal decorations",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("seasonal"),
     },
     {
       key: "office",
       label: "Office furniture",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("office"),
     },
     {
       key: "food",
       label: "Food & beverages",
-      image: "/placeholder.svg?height=80&width=80",
+      image: getCategoryImage("food"),
     },
   ]
 
-  // Extended room categories
+  // Room categories
   const roomCategories = [
-    { key: "bedroom", label: "Bedroom", image: "/placeholder.svg?height=120&width=120" },
-    { key: "outdoor-room", label: "Outdoor", image: "/placeholder.svg?height=120&width=120" },
-    { key: "living-room", label: "Living room", image: "/placeholder.svg?height=120&width=120" },
-    { key: "kitchen-room", label: "Kitchen & appliances", image: "/placeholder.svg?height=120&width=120" },
-    { key: "home-office", label: "Home office", image: "/placeholder.svg?height=120&width=120" },
-    { key: "dining", label: "Dining", image: "/placeholder.svg?height=120&width=120" },
-    { key: "bathroom", label: "Bathroom", image: "/placeholder.svg?height=120&width=120" },
-    { key: "kids-room", label: "Kids room", image: "/placeholder.svg?height=120&width=120" },
-    { key: "garage", label: "Garage", image: "/placeholder.svg?height=120&width=120" },
-    { key: "gaming-room", label: "Gaming room", image: "/placeholder.svg?height=120&width=120" },
-    { key: "laundry", label: "Laundry", image: "/placeholder.svg?height=120&width=120" },
+    { key: "bedroom", label: "Bedroom", image: getRoomImage("bedroom") },
+    { key: "outdoor", label: "Outdoor", image: getRoomImage("outdoor") },
+    { key: "livingRoom", label: "Living room", image: getRoomImage("livingRoom") },
+    { key: "kitchen", label: "Kitchen & appliances", image: getRoomImage("kitchen") },
+    { key: "homeOffice", label: "Home office", image: getRoomImage("homeOffice") },
+    { key: "dining", label: "Dining", image: getRoomImage("dining") },
+    { key: "bathroom", label: "Bathroom", image: getRoomImage("bathroom") },
+    { key: "kidsRoom", label: "Kids room", image: getRoomImage("kidsRoom") },
+    { key: "garage", label: "Garage", image: getRoomImage("garage") },
+    { key: "gamingRoom", label: "Gaming room", image: getRoomImage("gamingRoom") },
+    { key: "laundry", label: "Laundry", image: getRoomImage("laundry") },
     // Additional room categories
-    { key: "hallway", label: "Hallway", image: "/placeholder.svg?height=120&width=120" },
-    { key: "guest-room", label: "Guest room", image: "/placeholder.svg?height=120&width=120" },
-    { key: "nursery", label: "Nursery", image: "/placeholder.svg?height=120&width=120" },
-    { key: "teen-room", label: "Teen room", image: "/placeholder.svg?height=120&width=120" },
-    { key: "craft-room", label: "Craft room", image: "/placeholder.svg?height=120&width=120" },
-    { key: "library", label: "Home library", image: "/placeholder.svg?height=120&width=120" },
-    { key: "gym", label: "Home gym", image: "/placeholder.svg?height=120&width=120" },
-    { key: "entertainment", label: "Entertainment area", image: "/placeholder.svg?height=120&width=120" },
-    { key: "balcony", label: "Balcony", image: "/placeholder.svg?height=120&width=120" },
-    { key: "basement", label: "Basement", image: "/placeholder.svg?height=120&width=120" },
-    { key: "attic", label: "Attic", image: "/placeholder.svg?height=120&width=120" },
-    { key: "studio", label: "Studio apartment", image: "/placeholder.svg?height=120&width=120" },
-    { key: "small-space", label: "Small spaces", image: "/placeholder.svg?height=120&width=120" },
+    { key: "hallway", label: "Hallway", image: getRoomImage("hallway") },
+    { key: "guestRoom", label: "Guest room", image: getRoomImage("guestRoom") },
+    { key: "nursery", label: "Nursery", image: getRoomImage("nursery") },
+    { key: "teenRoom", label: "Teen room", image: getRoomImage("teenRoom") },
+    { key: "craftRoom", label: "Craft room", image: getRoomImage("craftRoom") },
+    { key: "library", label: "Home library", image: getRoomImage("library") },
+    { key: "gym", label: "Home gym", image: getRoomImage("gym") },
+    { key: "entertainment", label: "Entertainment area", image: getRoomImage("entertainment") },
+    { key: "balcony", label: "Balcony", image: getRoomImage("balcony") },
+    { key: "basement", label: "Basement", image: getRoomImage("basement") },
+    { key: "attic", label: "Attic", image: getRoomImage("attic") },
+    { key: "studio", label: "Studio apartment", image: getRoomImage("studio") },
+    { key: "smallSpace", label: "Small spaces", image: getRoomImage("smallSpace") },
   ]
 
   // Dropdown menu items for mobile view
@@ -259,7 +260,7 @@ const IkeaNavigation = () => {
               </div>
             ) : (
               <img
-                src={category.image || "/placeholder.svg"}
+                src={category.image || getImage("placeholders.category")}
                 alt={category.label}
                 className="w-16 h-16 object-cover rounded-md mb-2"
               />
@@ -298,7 +299,7 @@ const IkeaNavigation = () => {
         {roomCategories.map((room) => (
           <div key={room.key} className="flex flex-col items-center flex-shrink-0 cursor-pointer">
             <img
-              src={room.image || "/placeholder.svg"}
+              src={room.image || getImage("placeholders.room")}
               alt={room.label}
               className="w-24 h-24 object-cover rounded-md mb-2"
             />
@@ -374,7 +375,7 @@ const IkeaNavigation = () => {
       <div className="max-w-7xl mx-auto">{renderContent()}</div>
 
       {/* Hide scrollbar */}
-      <style jsx>{`
+      <style jsx="true">{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }

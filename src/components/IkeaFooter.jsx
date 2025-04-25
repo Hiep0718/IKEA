@@ -81,6 +81,24 @@ const IkeaFooter = () => {
     { text: "California Notice at Collection", url: "#" },
   ]
 
+  // Payment methods
+  const paymentMethods = [
+    { key: "visa", alt: "Visa" },
+    { key: "mastercard", alt: "Mastercard" },
+    { key: "discover", alt: "Discover" },
+    { key: "amex", alt: "American Express" },
+    { key: "ikeaCard", alt: "IKEA Card" },
+    { key: "paypal", alt: "PayPal" },
+    { key: "applePay", alt: "Apple Pay" },
+    { key: "googlePay", alt: "Google Pay" },
+    { key: "klarna", alt: "Klarna" },
+    { key: "unionpay", alt: "UnionPay" },
+    { key: "jcb", alt: "JCB" },
+    { key: "diners", alt: "Diners Club" },
+    { key: "giftCard", alt: "Gift Card" },
+    { key: "affirm", alt: "Affirm" },
+  ]
+
   return (
     <footer className="bg-gray-100 py-10 px-4 lg:px-12">
       {/* Main footer content */}
@@ -140,12 +158,17 @@ const IkeaFooter = () => {
 
             {/* Payment methods */}
             <div className="flex flex-wrap gap-2 ml-auto">
-              {Array.from({ length: 14 }).map((_, index) => (
+              {paymentMethods.map((method) => (
                 <div
-                  key={index}
-                  className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center"
+                  key={method.key}
+                  className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center overflow-hidden"
                 >
-                  <div className="w-6 h-4 bg-gray-200 rounded"></div>
+                  <img
+                    // Update the path to directly reference the files in your project structure
+                    src={`/src/images/payment-icons/${method.key}.png`}
+                    alt={method.alt}
+                    className="max-w-full max-h-full object-contain"
+                  />
                 </div>
               ))}
             </div>

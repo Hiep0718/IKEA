@@ -4,9 +4,11 @@ import { useState } from "react"
 import { Button, Tabs, Rate, InputNumber } from "antd"
 import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
+import { getImage, getProductImage } from "../utils/imageUtils"
 
 const ProductPage = ({ navigateTo }) => {
   const [quantity, setQuantity] = useState(1)
+  const [mainImage, setMainImage] = useState("kallax")
 
   // Breadcrumb items for a specific product page
   const breadcrumbItems = [
@@ -14,6 +16,14 @@ const ProductPage = ({ navigateTo }) => {
     { label: "Furniture", path: "#" },
     { label: "Storage & organization", path: "#" },
     { label: "KALLAX Shelf unit", path: "#" },
+  ]
+
+  // Product images
+  const productImages = [
+    { id: 1, key: "kallax", alt: "KALLAX Shelf unit main view" },
+    { id: 2, key: "kallax", alt: "KALLAX Shelf unit side view" },
+    { id: 3, key: "kallax", alt: "KALLAX Shelf unit with items" },
+    { id: 4, key: "kallax", alt: "KALLAX Shelf unit in room setting" },
   ]
 
   return (
@@ -34,17 +44,18 @@ const ProductPage = ({ navigateTo }) => {
           {/* Product Images */}
           <div>
             <img
-              src="/placeholder.svg?height=600&width=600"
+              src={getProductImage(mainImage) || "/placeholder.svg"}
               alt="KALLAX Shelf unit"
               className="w-full h-auto rounded-md"
             />
             <div className="grid grid-cols-4 gap-2 mt-4">
-              {[1, 2, 3, 4].map((i) => (
+              {productImages.map((img) => (
                 <img
-                  key={i}
-                  src={`/placeholder.svg?height=150&width=150&text=Image ${i}`}
-                  alt={`Product view ${i}`}
+                  key={img.id}
+                  src={getImage(`placeholders.productThumbnail`) || "/placeholder.svg"}
+                  alt={img.alt}
                   className="w-full h-auto rounded-md cursor-pointer border hover:border-blue-500"
+                  onClick={() => setMainImage(img.key)}
                 />
               ))}
             </div>

@@ -3,6 +3,7 @@
 import { Button, Carousel } from "antd"
 import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
+import { getImage, getProductImage, getBannerImage } from "../utils/imageUtils"
 
 const HomePage = ({ navigateTo }) => {
   // Breadcrumb items for the home page
@@ -15,27 +16,27 @@ const HomePage = ({ navigateTo }) => {
   const featuredProducts = [
     {
       id: 1,
+      key: "billy",
       name: "BILLY Bookcase",
       price: "$49.99",
-      image: "/placeholder.svg?height=200&width=200",
     },
     {
       id: 2,
+      key: "malm",
       name: "MALM Bed frame",
       price: "$179.00",
-      image: "/placeholder.svg?height=200&width=200",
     },
     {
       id: 3,
+      key: "poang",
       name: "POÄNG Armchair",
       price: "$99.00",
-      image: "/placeholder.svg?height=200&width=200",
     },
     {
       id: 4,
+      key: "kallax",
       name: "KALLAX Shelf unit",
       price: "$79.99",
-      image: "/placeholder.svg?height=200&width=200",
     },
   ]
 
@@ -43,27 +44,27 @@ const HomePage = ({ navigateTo }) => {
   const ideasInspiration = [
     {
       id: 1,
+      key: "smallSpace",
       title: "Small space living ideas",
       description: "Make the most of your compact home with these clever solutions",
-      image: "/placeholder.svg?height=300&width=500",
     },
     {
       id: 2,
+      key: "bedroom",
       title: "Bedroom inspiration",
       description: "Create a relaxing retreat with our bedroom design ideas",
-      image: "/placeholder.svg?height=300&width=500",
     },
     {
       id: 3,
+      key: "kitchen",
       title: "Kitchen organization tips",
       description: "Smart storage solutions for a clutter-free kitchen",
-      image: "/placeholder.svg?height=300&width=500",
     },
   ]
 
   // Handle product click
   const handleProductClick = () => {
-    navigateTo("product")
+    navigateTo && navigateTo("product")
   }
 
   return (
@@ -80,7 +81,7 @@ const HomePage = ({ navigateTo }) => {
           <div>
             <div className="relative h-[400px] md:h-[500px]">
               <img
-                src="/placeholder.svg?height=500&width=1200"
+                src={getBannerImage("welcome") || "/placeholder.svg"}
                 alt="IKEA Hero Banner"
                 className="w-full h-full object-cover"
               />
@@ -100,7 +101,7 @@ const HomePage = ({ navigateTo }) => {
           <div>
             <div className="relative h-[400px] md:h-[500px]">
               <img
-                src="/placeholder.svg?height=500&width=1200"
+                src={getBannerImage("spring") || "/placeholder.svg"}
                 alt="IKEA Spring Collection"
                 className="w-full h-full object-cover"
               />
@@ -129,7 +130,7 @@ const HomePage = ({ navigateTo }) => {
               <div key={product.id} className="group cursor-pointer" onClick={handleProductClick}>
                 <div className="mb-3 overflow-hidden">
                   <img
-                    src={product.image || "/placeholder.svg"}
+                    src={getProductImage(product.key) || "/placeholder.svg"}
                     alt={product.name}
                     className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -157,7 +158,11 @@ const HomePage = ({ navigateTo }) => {
                 key={idea.id}
                 className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <img src={idea.image || "/placeholder.svg"} alt={idea.title} className="w-full h-48 object-cover" />
+                <img
+                  src={getImage(`inspiration.${idea.key || "/placeholder.svg"}`)}
+                  alt={idea.title}
+                  className="w-full h-48 object-cover"
+                />
                 <div className="p-4">
                   <h3 className="text-xl font-medium mb-2">{idea.title}</h3>
                   <p className="text-gray-600 mb-4">{idea.description}</p>
@@ -186,7 +191,7 @@ const HomePage = ({ navigateTo }) => {
               </div>
               <div className="md:w-1/2">
                 <img
-                  src="/placeholder.svg?height=300&width=500"
+                  src={getBannerImage("sustainability") || "/placeholder.svg"}
                   alt="Sustainability at IKEA"
                   className="w-full h-auto rounded-lg"
                 />
