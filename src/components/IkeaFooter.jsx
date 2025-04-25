@@ -111,7 +111,7 @@ const IkeaFooter = () => {
                 {section.items.map((item, itemIndex) => (
                   <li key={itemIndex}>
                     {item.buttonText ? (
-                      <button className="bg-black text-white rounded-full px-6 py-2 text-sm hover:bg-gray-800">
+                      <button className="bg-gray-500 rounded-full px-6 py-2 text-sm hover:bg-gray-800">
                         {item.buttonText}
                       </button>
                     ) : item.isLink ? (

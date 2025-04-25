@@ -95,14 +95,15 @@ const HomePage = ({ navigateTo }) => {
                 alt="IKEA Hero Banner"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-16">
-                <h1 className="text-white text-3xl md:text-5xl font-bold mb-4">Welcome to IKEA</h1>
+              <div className="absolute inset-0 flex flex-col justify-center px-8 md:px-16"
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}>
+                <h1 className="text-white text-4xl md:text-6xl font-bold mb-3">Welcome to IKEA</h1>
                 <p className="text-white text-lg md:text-xl mb-6 max-w-md">
-                  Affordable home furnishing solutions for everyone
+                Affordable home furnishing solutions for everyone
                 </p>
                 <div>
-                  <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700">
-                    Shop now
+                  <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 rounded-none px-6">
+                  Shop now
                   </Button>
                 </div>
               </div>
@@ -115,13 +116,16 @@ const HomePage = ({ navigateTo }) => {
                 alt="IKEA Spring Collection"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-16">
-                <h1 className="text-white text-3xl md:text-5xl font-bold mb-4">Spring Collection 2025</h1>
+              <div
+                className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 pb-16"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+              >
+                <h1 className="text-white text-4xl md:text-6xl font-bold mb-3">Spring Collection 2025</h1>
                 <p className="text-white text-lg md:text-xl mb-6 max-w-md">
                   Refresh your home with our new spring arrivals
                 </p>
                 <div>
-                  <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700">
+                  <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 rounded-none px-6">
                     Explore collection
                   </Button>
                 </div>
