@@ -5,10 +5,37 @@ import { Button, Tabs, Rate, InputNumber } from "antd"
 import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
 import { getImage, getProductImage } from "../utils/imageUtils"
+import { useCart } from "../context/CartContext"
 
 const ProductPage = ({ navigateTo }) => {
   const [quantity, setQuantity] = useState(1)
   const [mainImage, setMainImage] = useState("kallax")
+  const { addToCart } = useCart()
+
+  // Product data
+  const product = {
+    id: "kallax-shelf",
+    key: "kallax",
+    name: "KALLAX Shelf unit",
+    price: 79.99,
+    description:
+      "A simple, stylish storage solution that fits everywhere. Use it as a room divider, bookshelf or TV bench. KALLAX shelf unit can be placed on the floor or mounted on the wall.",
+    dimensions: "77×39×77 cm",
+    material: "Particleboard, Fiberboard, Plastic edging, Plastic edging",
+    maxLoad: "13 kg per shelf",
+    rating: 4.5,
+    reviewCount: 127,
+    colors: [
+      { name: "White", value: "white" },
+      { name: "Black-brown", value: "black" },
+      { name: "Blue", value: "blue-600" },
+    ],
+    sizes: [
+      { name: "77x77 cm", value: "small" },
+      { name: "77x147 cm", value: "medium" },
+      { name: "147x147 cm", value: "large" },
+    ],
+  }
 
   // Breadcrumb items for a specific product page
   const breadcrumbItems = [
@@ -25,6 +52,11 @@ const ProductPage = ({ navigateTo }) => {
     { id: 3, key: "kallax", alt: "KALLAX Shelf unit with items" },
     { id: 4, key: "kallax", alt: "KALLAX Shelf unit in room setting" },
   ]
+
+  // Handle add to cart
+  const handleAddToCart = () => {
+    addToCart(product, quantity)
+  }
 
   return (
     <div className="bg-white">
@@ -63,24 +95,25 @@ const ProductPage = ({ navigateTo }) => {
 
           {/* Product Details */}
           <div>
-            <h1 className="text-3xl font-bold mb-2">KALLAX Shelf unit</h1>
-            <p className="text-xl text-gray-700 mb-4">$79.99</p>
+            <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
+            <p className="text-xl text-gray-700 mb-4">${product.price}</p>
             <div className="flex items-center mb-4">
-              <Rate allowHalf defaultValue={4.5} disabled />
-              <span className="ml-2 text-gray-500">(127 reviews)</span>
+              <Rate allowHalf defaultValue={product.rating} disabled />
+              <span className="ml-2 text-gray-500">({product.reviewCount} reviews)</span>
             </div>
-            <p className="text-gray-600 mb-6">
-              A simple, stylish storage solution that fits everywhere. Use it as a room divider, bookshelf or TV bench.
-              KALLAX shelf unit can be placed on the floor or mounted on the wall.
-            </p>
+            <p className="text-gray-600 mb-6">{product.description}</p>
 
             {/* Color Options */}
             <div className="mb-6">
               <h3 className="font-medium mb-2">Color</h3>
               <div className="flex space-x-3">
-                <button className="w-10 h-10 bg-white border border-gray-300 rounded-full"></button>
-                <button className="w-10 h-10 bg-gray-800 border border-gray-300 rounded-full"></button>
-                <button className="w-10 h-10 bg-blue-600 border border-gray-300 rounded-full"></button>
+                {product.colors.map((color) => (
+                  <button
+                    key={color.value}
+                    className={`w-10 h-10 bg-${color.value} border border-gray-300 rounded-full`}
+                    title={color.name}
+                  ></button>
+                ))}
               </div>
             </div>
 
@@ -88,11 +121,14 @@ const ProductPage = ({ navigateTo }) => {
             <div className="mb-6">
               <h3 className="font-medium mb-2">Size</h3>
               <div className="flex space-x-3">
-                <button className="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500">77x77 cm</button>
-                <button className="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500">77x147 cm</button>
-                <button className="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500">
-                  147x147 cm
-                </button>
+                {product.sizes.map((size) => (
+                  <button
+                    key={size.value}
+                    className="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500"
+                  >
+                    {size.name}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -103,7 +139,12 @@ const ProductPage = ({ navigateTo }) => {
             </div>
 
             {/* Add to Cart Button */}
-            <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 w-full mb-4">
+            <Button
+              type="primary"
+              size="large"
+              className="bg-blue-600 hover:bg-blue-700 w-full mb-4"
+              onClick={handleAddToCart}
+            >
               Add to cart
             </Button>
 
@@ -126,9 +167,9 @@ const ProductPage = ({ navigateTo }) => {
                   label: "Product details",
                   children: (
                     <div>
-                      <p>Dimensions: 77×39×77 cm</p>
-                      <p>Material: Particleboard, Fiberboard, Plastic edging, Plastic edging</p>
-                      <p>Max load per shelf: 13 kg</p>
+                      <p>Dimensions: {product.dimensions}</p>
+                      <p>Material: {product.material}</p>
+                      <p>Max load per shelf: {product.maxLoad}</p>
                     </div>
                   ),
                 },
@@ -148,7 +189,9 @@ const ProductPage = ({ navigateTo }) => {
                   label: "Reviews",
                   children: (
                     <div>
-                      <p>Average rating: 4.5/5 from 127 reviews</p>
+                      <p>
+                        Average rating: {product.rating}/5 from {product.reviewCount} reviews
+                      </p>
                       <p>95% of customers would recommend this product</p>
                     </div>
                   ),

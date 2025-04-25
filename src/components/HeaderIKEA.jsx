@@ -12,9 +12,13 @@ import {
   CameraOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons"
+import { useCart } from "../context/CartContext"
+import CartDropdown from "./CartDropdown"
 
 const HeaderIKEA = () => {
   const [searchValue, setSearchValue] = useState("")
+  const { getCartCount, toggleCart } = useCart()
+  const cartCount = getCartCount()
 
   // Language dropdown items
   const languageItems = [
@@ -103,12 +107,20 @@ const HeaderIKEA = () => {
               <span>Hej! Log in or sign up</span>
             </a>
             <Button type="text" icon={<HeartOutlined style={{ fontSize: "24px" }} />} />
-            <Badge count={0} showZero={false}>
-              <Button type="text" icon={<ShoppingCartOutlined style={{ fontSize: "24px" }} />} />
+            <Badge count={cartCount} showZero={false}>
+              <Button
+                type="text"
+                icon={<ShoppingCartOutlined style={{ fontSize: "24px" }} />}
+                onClick={toggleCart}
+                aria-label="Shopping cart"
+              />
             </Badge>
           </div>
         </div>
       </header>
+
+      {/* Cart Dropdown */}
+      <CartDropdown />
     </div>
   )
 }

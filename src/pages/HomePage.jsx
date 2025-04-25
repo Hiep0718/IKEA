@@ -1,11 +1,15 @@
 "use client"
 
 import { Button, Carousel } from "antd"
+import { ShoppingCartOutlined } from "@ant-design/icons"
 import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
 import { getImage, getProductImage, getBannerImage } from "../utils/imageUtils"
+import { useCart } from "../context/CartContext"
 
 const HomePage = ({ navigateTo }) => {
+  const { addToCart } = useCart()
+
   // Breadcrumb items for the home page
   const breadcrumbItems = [
     { label: "Products", path: "#products" },
@@ -15,28 +19,28 @@ const HomePage = ({ navigateTo }) => {
   // Featured products data
   const featuredProducts = [
     {
-      id: 1,
+      id: "billy-bookcase",
       key: "billy",
       name: "BILLY Bookcase",
-      price: "$49.99",
+      price: 49.99,
     },
     {
-      id: 2,
+      id: "malm-bed",
       key: "malm",
       name: "MALM Bed frame",
-      price: "$179.00",
+      price: 179.0,
     },
     {
-      id: 3,
+      id: "poang-chair",
       key: "poang",
       name: "POÄNG Armchair",
-      price: "$99.00",
+      price: 99.0,
     },
     {
-      id: 4,
+      id: "kallax-shelf",
       key: "kallax",
       name: "KALLAX Shelf unit",
-      price: "$79.99",
+      price: 79.99,
     },
   ]
 
@@ -65,6 +69,12 @@ const HomePage = ({ navigateTo }) => {
   // Handle product click
   const handleProductClick = () => {
     navigateTo && navigateTo("product")
+  }
+
+  // Handle quick add to cart
+  const handleQuickAddToCart = (e, product) => {
+    e.stopPropagation() // Prevent navigating to product page
+    addToCart(product, 1)
   }
 
   return (
@@ -127,16 +137,24 @@ const HomePage = ({ navigateTo }) => {
           <h2 className="text-2xl md:text-3xl font-bold mb-8">Popular products</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="group cursor-pointer" onClick={handleProductClick}>
+              <div key={product.id} className="group cursor-pointer relative" onClick={handleProductClick}>
                 <div className="mb-3 overflow-hidden">
                   <img
                     src={getProductImage(product.key) || "/placeholder.svg"}
                     alt={product.name}
                     className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  {/* Quick add to cart button */}
+                  <button
+                    className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    onClick={(e) => handleQuickAddToCart(e, product)}
+                    aria-label={`Add ${product.name} to cart`}
+                  >
+                    <ShoppingCartOutlined style={{ fontSize: "18px" }} />
+                  </button>
                 </div>
                 <h3 className="font-medium">{product.name}</h3>
-                <p className="text-gray-700">{product.price}</p>
+                <p className="text-gray-700">${product.price}</p>
               </div>
             ))}
           </div>
