@@ -8,7 +8,7 @@ import IkeaFooter from "./components/IkeaFooter"
 import ProductPage from "./pages/ProductPage"
 import { CartProvider } from "./context/CartContext"
 import { AuthProvider } from "./context/AuthContext"
-import HomePage from "./pages/homePage"
+import HomePage from "./pages/HomePage"
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home")
