@@ -13,11 +13,15 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons"
 import { useCart } from "../context/CartContext"
+import { useAuth } from "../context/AuthContext"
 import CartDropdown from "./CartDropdown"
+import UserMenu from "./UserMenu"
+import LoginModal from "./LoginModal"
 
 const HeaderIKEA = () => {
   const [searchValue, setSearchValue] = useState("")
   const { getCartCount, toggleCart } = useCart()
+  const { user, openLoginModal } = useAuth()
   const cartCount = getCartCount()
 
   // Language dropdown items
@@ -102,10 +106,14 @@ const HeaderIKEA = () => {
 
           {/* User Controls */}
           <div className="flex items-center space-x-6">
-            <a href="#" className="hidden md:flex items-center text-sm">
-              <UserOutlined className="mr-2 text-lg" />
-              <span>Hej! Log in or sign up</span>
-            </a>
+            {user ? (
+              <UserMenu />
+            ) : (
+              <Button type="text" onClick={openLoginModal} className="hidden md:flex items-center text-sm">
+                <UserOutlined className="mr-2 text-lg" />
+                <span>Hej! Đăng nhập hoặc đăng ký</span>
+              </Button>
+            )}
             <Button type="text" icon={<HeartOutlined style={{ fontSize: "24px" }} />} />
             <Badge count={cartCount} showZero={false}>
               <Button
@@ -121,6 +129,9 @@ const HeaderIKEA = () => {
 
       {/* Cart Dropdown */}
       <CartDropdown />
+
+      {/* Login Modal */}
+      <LoginModal />
     </div>
   )
 }

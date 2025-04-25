@@ -7,6 +7,7 @@ import IkeaNavigation from "./components/IkeaNavigation"
 import IkeaFooter from "./components/IkeaFooter"
 import ProductPage from "./pages/ProductPage"
 import { CartProvider } from "./context/CartContext"
+import { AuthProvider } from "./context/AuthContext"
 import HomePage from "./pages/homePage"
 
 function App() {
@@ -19,17 +20,19 @@ function App() {
 
   return (
     <ConfigProvider>
-      <CartProvider>
-        <div className="w-full min-h-screen flex flex-col">
-          <IkeaHeader />
-          <IkeaNavigation />
-          <main className="flex-grow">
-            {currentPage === "home" && <HomePage navigateTo={navigateTo} />}
-            {currentPage === "product" && <ProductPage navigateTo={navigateTo} />}
-          </main>
-          <IkeaFooter />
-        </div>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <div className="w-full min-h-screen flex flex-col">
+            <IkeaHeader />
+            <IkeaNavigation />
+            <main className="flex-grow">
+              {currentPage === "home" && <HomePage navigateTo={navigateTo} />}
+              {currentPage === "product" && <ProductPage navigateTo={navigateTo} />}
+            </main>
+            <IkeaFooter />
+          </div>
+        </CartProvider>
+      </AuthProvider>
     </ConfigProvider>
   )
 }
