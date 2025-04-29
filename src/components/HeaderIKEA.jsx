@@ -1,28 +1,24 @@
-"use client"
-
-import { useState } from "react"
-import { Input, Button, Dropdown, Badge } from "antd"
+"use client";
+import { Button, Dropdown, Badge } from "antd";
 import {
-  SearchOutlined,
   HeartOutlined,
   ShoppingCartOutlined,
   GlobalOutlined,
   CarOutlined,
   UserOutlined,
-  CameraOutlined,
   EnvironmentOutlined,
-} from "@ant-design/icons"
-import { useCart } from "../context/CartContext"
-import { useAuth } from "../context/AuthContext"
-import CartDropdown from "./CartDropdown"
-import UserMenu from "./UserMenu"
-import LoginModal from "./LoginModal"
+} from "@ant-design/icons";
+import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+import SearchBar from "./SearchBar";
+import CartDropdown from "./CartDropdown";
+import UserMenu from "./UserMenu";
+import LoginModal from "./LoginModal";
 
-const HeaderIKEA = () => {
-  const [searchValue, setSearchValue] = useState("")
-  const { getCartCount, toggleCart } = useCart()
-  const { user, openLoginModal } = useAuth()
-  const cartCount = getCartCount()
+const HeaderIKEA = ({ navigateTo }) => {
+  const { getCartCount, toggleCart } = useCart();
+  const { user, openLoginModal } = useAuth();
+  const cartCount = getCartCount();
 
   // Language dropdown items
   const languageItems = [
@@ -30,7 +26,7 @@ const HeaderIKEA = () => {
     { key: "2", label: "Svenska" },
     { key: "3", label: "Deutsch" },
     { key: "4", label: "Français" },
-  ]
+  ];
 
   return (
     <div className="font-sans">
@@ -68,7 +64,10 @@ const HeaderIKEA = () => {
             </div>
             <div className="flex items-center">
               <Button type="text" className="text-white flex items-center p-0">
-                <EnvironmentOutlined className="mr-2" style={{ color: "white" }} />
+                <EnvironmentOutlined
+                  className="mr-2"
+                  style={{ color: "white" }}
+                />
                 <span className="text-white">Select store</span>
               </Button>
             </div>
@@ -80,7 +79,14 @@ const HeaderIKEA = () => {
       <header className="bg-white py-3 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           {/* IKEA Logo */}
-          <a href="/" className="flex-shrink-0">
+          <a
+            href="#"
+            className="flex-shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              navigateTo("home");
+            }}
+          >
             <div className="bg-blue-600 h-10 w-16 rounded flex items-center justify-center">
               <div className="bg-yellow-400 h-6 w-12 rounded flex items-center justify-center border-2 border-blue-600">
                 <span className="text-blue-600 font-bold text-sm">IKEA</span>
@@ -89,19 +95,8 @@ const HeaderIKEA = () => {
           </a>
 
           {/* Search Bar */}
-          <div className="flex-grow max-w-2xl mx-4 relative">
-            <Input
-              placeholder="What are you looking for?"
-              prefix={<SearchOutlined className="text-gray-400" />}
-              suffix={
-                <Button type="text" className="flex items-center p-0">
-                  <CameraOutlined className="text-gray-400" />
-                </Button>
-              }
-              className="rounded-full py-1"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
+          <div className="flex-grow max-w-2xl mx-4">
+            <SearchBar navigateTo={navigateTo} />
           </div>
 
           {/* User Controls */}
@@ -109,12 +104,19 @@ const HeaderIKEA = () => {
             {user ? (
               <UserMenu />
             ) : (
-              <Button type="text" onClick={openLoginModal} className="hidden md:flex items-center text-sm">
+              <Button
+                type="text"
+                onClick={openLoginModal}
+                className="hidden md:flex items-center text-sm"
+              >
                 <UserOutlined className="mr-2 text-lg" />
-                <span>Hej! Đăng nhập hoặc đăng ký</span>
+                <span>Hej! Sign in or register</span>
               </Button>
             )}
-            <Button type="text" icon={<HeartOutlined style={{ fontSize: "24px" }} />} />
+            <Button
+              type="text"
+              icon={<HeartOutlined style={{ fontSize: "24px" }} />}
+            />
             <Badge count={cartCount} showZero={false}>
               <Button
                 type="text"
@@ -133,7 +135,7 @@ const HeaderIKEA = () => {
       {/* Login Modal */}
       <LoginModal />
     </div>
-  )
-}
+  );
+};
 
-export default HeaderIKEA
+export default HeaderIKEA;

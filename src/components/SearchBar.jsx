@@ -7,13 +7,11 @@ import {
   CameraOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({ onSearch, className = "" }) => {
+const SearchBar = ({ navigateTo, className = "" }) => {
   const [searchValue, setSearchValue] = useState("");
   const [recentSearches, setRecentSearches] = useState([]);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
-  const navigate = useNavigate();
   const searchRef = useRef(null);
 
   // Load recent searches from localStorage on component mount
@@ -60,13 +58,8 @@ const SearchBar = ({ onSearch, className = "" }) => {
 
     saveRecentSearch(searchValue);
 
-    // If onSearch prop is provided, use it (for in-page search)
-    if (onSearch) {
-      onSearch(searchValue);
-    } else {
-      // Otherwise navigate to search page
-      navigate(`/search?q=${encodeURIComponent(searchValue)}`);
-    }
+    // Navigate to search page with the query
+    navigateTo("search", { query: searchValue });
 
     setShowRecentSearches(false);
   };
@@ -81,7 +74,9 @@ const SearchBar = ({ onSearch, className = "" }) => {
   // Handle clicking on a recent search
   const handleRecentSearchClick = (query) => {
     setSearchValue(query);
-    setTimeout(() => handleSearch(), 0);
+    setTimeout(() => {
+      navigateTo("search", { query });
+    }, 0);
   };
 
   // Clear all recent searches
