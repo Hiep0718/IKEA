@@ -25,12 +25,22 @@ const SearchFilters = ({ categories, activeFilters, onFilterChange }) => {
     onFilterChange("priceRange", e.target.value);
   };
 
+  const handleColorChange = (e) => {
+    onFilterChange("color", e.target.value);
+  };
+
+  const handleMaterialChange = (e) => {
+    onFilterChange("material", e.target.value);
+  };
+
   const clearAllFilters = () => {
-    // Clear all filters by setting each to null/undefined
+    // Clear all filters by setting each to null
     onFilterChange("categoryId", null);
     onFilterChange("priceRange", null);
     onFilterChange("bestSeller", null);
     onFilterChange("lastChance", null);
+    onFilterChange("color", null);
+    onFilterChange("material", null);
   };
 
   const priceRanges = [
@@ -39,6 +49,24 @@ const SearchFilters = ({ categories, activeFilters, onFilterChange }) => {
     { value: "500-1000", label: "$500 - $1,000" },
     { value: "1000-5000", label: "$1,000 - $5,000" },
     { value: "5000+", label: "Over $5,000" },
+  ];
+
+  const colors = [
+    { value: "white", label: "White" },
+    { value: "black", label: "Black" },
+    { value: "gray", label: "Gray" },
+    { value: "blue", label: "Blue" },
+    { value: "green", label: "Green" },
+    { value: "brown", label: "Brown" },
+    { value: "beige", label: "Beige" },
+  ];
+
+  const materials = [
+    { value: "wood", label: "Wood" },
+    { value: "fabric", label: "Fabric" },
+    { value: "plastic", label: "Plastic" },
+    { value: "metal", label: "Metal" },
+    { value: "rattan", label: "Rattan" },
   ];
 
   return (
@@ -52,7 +80,10 @@ const SearchFilters = ({ categories, activeFilters, onFilterChange }) => {
         </Button>
       </div>
 
-      <Collapse defaultActiveKey={["category", "price", "special"]} ghost>
+      <Collapse
+        defaultActiveKey={["category", "price", "special", "color", "material"]}
+        ghost
+      >
         <Panel header="Categories" key="category">
           <Radio.Group
             value={activeFilters.categoryId}
@@ -77,6 +108,33 @@ const SearchFilters = ({ categories, activeFilters, onFilterChange }) => {
               {priceRanges.map((range) => (
                 <Radio key={range.value} value={range.value}>
                   {range.label}
+                </Radio>
+              ))}
+            </Space>
+          </Radio.Group>
+        </Panel>
+
+        <Panel header="Color" key="color">
+          <Radio.Group value={activeFilters.color} onChange={handleColorChange}>
+            <Space direction="vertical">
+              {colors.map((color) => (
+                <Radio key={color.value} value={color.value}>
+                  {color.label}
+                </Radio>
+              ))}
+            </Space>
+          </Radio.Group>
+        </Panel>
+
+        <Panel header="Material" key="material">
+          <Radio.Group
+            value={activeFilters.material}
+            onChange={handleMaterialChange}
+          >
+            <Space direction="vertical">
+              {materials.map((material) => (
+                <Radio key={material.value} value={material.value}>
+                  {material.label}
                 </Radio>
               ))}
             </Space>

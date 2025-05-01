@@ -14,6 +14,7 @@ import {
 import { HomeOutlined } from "@ant-design/icons";
 import ProductCard from "../components/ProductCard";
 import SearchFilters from "../components/SearchFilters";
+import productsData from "../data/products.json";
 
 const { Title, Text } = Typography;
 
@@ -29,72 +30,89 @@ const SearchPage = ({ navigateTo, searchParams = {} }) => {
   const [activeFilters, setActiveFilters] = useState({});
   const [categories, setCategories] = useState([]);
 
-  // Fetch categories when component mounts
+  // Load categories from JSON data
   useEffect(() => {
-    fetchCategories();
+    setCategories(productsData.categories);
   }, []);
 
-  // Fetch products when search params change
+  // Search and filter products when parameters change
   useEffect(() => {
     if (query) {
-      fetchProducts();
+      searchProducts();
     }
   }, [query, currentPage, pageSize, sortOrder, activeFilters]);
 
-  const fetchCategories = async () => {
-    try {
-      // This would typically be an API call
-      // For demo purposes, we'll use mock data
-      setCategories([
-        { id: 1, name: "Living Room" },
-        { id: 2, name: "Bedroom" },
-        { id: 3, name: "Kitchen" },
-        { id: 4, name: "Bathroom" },
-        { id: 5, name: "Office" },
-        { id: 6, name: "Children" },
-        { id: 7, name: "Outdoor" },
-      ]);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  const fetchProducts = async () => {
+  const searchProducts = async () => {
     setLoading(true);
+
     try {
-      // This would typically be an API call
-      // For demo purposes, we'll simulate a delay and return mock data
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Mock data - in a real app, this would come from your API
-      const mockProducts = Array.from({ length: 24 }, (_, i) => ({
-        id: i + 1,
-        name: `${query.toUpperCase()} Product ${i + 1}`,
-        description: `Description for ${query} item ${i + 1}`,
-        price: ((i + 1) * 19.99).toFixed(2),
-        image: `/images/product-${(i % 8) + 1}.jpg`,
-        rating: 3 + Math.random() * 2,
-        reviews: Math.floor(Math.random() * 1000),
-        bestSeller: i % 7 === 0,
-        lastChance: i % 11 === 0,
-        categoryId: (i % 7) + 1,
-      }));
+      // Filter products based on search query
+      let filteredProducts = productsData.products.filter((product) => {
+        const searchFields = [
+          product.name,
+          product.description,
+          ...(product.tags || []),
+        ].map((field) => field.toLowerCase());
 
-      // Apply filters
-      let filteredProducts = [...mockProducts];
+        const searchTerms = query.toLowerCase().split(" ");
 
+        // Check if any search term is included in any search field
+        return searchTerms.some((term) =>
+          searchFields.some((field) => field.includes(term))
+        );
+      });
+
+      // Apply category filter
       if (activeFilters.categoryId) {
         filteredProducts = filteredProducts.filter(
-          (p) => p.categoryId.toString() === activeFilters.categoryId.toString()
+          (product) =>
+            product.categoryId.toString() ===
+            activeFilters.categoryId.toString()
         );
       }
 
+      // Apply price range filter
+      if (activeFilters.priceRange) {
+        const [min, max] = activeFilters.priceRange
+          .split("-")
+          .map((val) => (val === "+" ? Number.POSITIVE_INFINITY : Number(val)));
+
+        filteredProducts = filteredProducts.filter((product) => {
+          const price = Number.parseFloat(product.price);
+          return (
+            price >= min && (max === Number.POSITIVE_INFINITY || price <= max)
+          );
+        });
+      }
+
+      // Apply special filters
       if (activeFilters.bestSeller) {
-        filteredProducts = filteredProducts.filter((p) => p.bestSeller);
+        filteredProducts = filteredProducts.filter(
+          (product) => product.bestSeller
+        );
       }
 
       if (activeFilters.lastChance) {
-        filteredProducts = filteredProducts.filter((p) => p.lastChance);
+        filteredProducts = filteredProducts.filter(
+          (product) => product.lastChance
+        );
+      }
+
+      // Apply color filter
+      if (activeFilters.color) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.color === activeFilters.color
+        );
+      }
+
+      // Apply material filter
+      if (activeFilters.material) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.material === activeFilters.material
+        );
       }
 
       // Apply sorting
@@ -114,11 +132,10 @@ const SearchPage = ({ navigateTo, searchParams = {} }) => {
         filteredProducts.sort((a, b) => b.rating - a.rating);
       }
 
-      // Calculate pagination
-      const totalCount = filteredProducts.length;
-      setTotalProducts(totalCount);
+      // Store total count for pagination
+      setTotalProducts(filteredProducts.length);
 
-      // Get current page items
+      // Apply pagination
       const startIndex = (currentPage - 1) * pageSize;
       const paginatedProducts = filteredProducts.slice(
         startIndex,
@@ -127,17 +144,28 @@ const SearchPage = ({ navigateTo, searchParams = {} }) => {
 
       setProducts(paginatedProducts);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error searching products:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleFilterChange = (filterType, value) => {
-    setActiveFilters((prev) => ({
-      ...prev,
-      [filterType]: value,
-    }));
+    setActiveFilters((prev) => {
+      // If value is null/undefined, remove the filter
+      if (value === null || value === undefined) {
+        const newFilters = { ...prev };
+        delete newFilters[filterType];
+        return newFilters;
+      }
+
+      // Otherwise, set or update the filter
+      return {
+        ...prev,
+        [filterType]: value,
+      };
+    });
+
     setCurrentPage(1); // Reset to first page when filters change
   };
 
