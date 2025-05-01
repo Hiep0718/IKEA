@@ -1,104 +1,103 @@
 {
-    "logo": {
-      "ikea": "/images/logo/ikea-logo.svg"
-    },
-    "placeholders": {
-      "product": "/placeholder.svg?height=200&width=200",
-      "productLarge": "/placeholder.svg?height=600&width=600",
-      "productThumbnail": "/placeholder.svg?height=150&width=150",
-      "banner": "/placeholder.svg?height=500&width=1200",
-      "category": "/placeholder.svg?height=80&width=80",
-      "room": "/placeholder.svg?height=120&width=120",
-      "inspiration": "/placeholder.svg?height=300&width=500",
-      "sustainability": "/placeholder.svg?height=300&width=500"
-    },
-    "categories": {
-      "newTrending": "/images/categories/new-trending.jpg",
-      "offers": "/images/categories/offers.jpg",
-      "storage": "https://www.ikea.com/nl/en/images/products/storemolla-chest-of-8-drawers-light-grey-beige-stained__1256218_pe924946_s5.jpg?f=s",
-      "sofas": "https://www.ikea.com/images/5d/06/5d06041a3573d4a0a70819c8099a70eb.jpg?f=s",
-      "outdoor": "https://www.ikea.com.tw/dairyfarm/tw/images/134/1213447_PE911141_S3.jpg",
-      "beds": "https://www.ikea.com/us/en/images/products/malm-bed-frame-dark-brown-veneer__1364772_pe956028_s5.jpg?f=u",
-      "lighting": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m0jgc2rpupvz7c",
-      "textiles": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-wDYxB10TmS951kEzUnCfMXaLAqcYekQpbshzjVNrDSs-4K28R7Vdk7fCHzWoSgFdN6Y&usqp=CAU",
-      "kitchen": "https://d2rbyiw1vv51io.cloudfront.net/web/ikea4/images/434/0543490_PE654587_S5.jpg",
-      "desk": "https://down-my.img.susercontent.com/file/83ba8b785a5b156a00c6cfb393870067",
-      "tables": "https://www.ikea.com/nl/en/images/products/danderyd-skogsta-table-and-6-chairs-pine-veneer-black-black__1324468_pe943560_s5.jpg",
-      "decor": "https://www.sheetstreet.com/media/wysiwyg/Plants_1.png",
-      "kitchenware": "https://gw.alicdn.com/imgextra/i1/4231317500/O1CN01mBBgdn25H3Pp2KOv5_!!0-item_pic.jpg_Q75.jpg_.webp",
-      "bathroom": "https://www.ikea.com/us/en/images/products/hemnes-orrsjoen-double-vanity-with-sink-faucet-gray__1072434_pe855171_s5.jpg?f=s",
-      "children": "https://file.app.ikea.cn/cn/en/images/products/dvaerghare-soft-toy-bunny-beige__1388010_pe964452_s4.jpg?x-oss-process=style/small",
-      "plants": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_800,h_1000/https://flowershop.com.vn/wp-content/uploads/2020/09/y-nghia-hoa-thien-dieu-8.jpg",
-      "mirrors": "https://cdn.shopify.com/s/files/1/0090/0461/3747/files/This_season_s_mirror_trends.webp?v=1725566000",
-      "rugs": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9V-KcZGDAcqKyOrQnBXL3t80TvEuHAege9q8DczwbMwQSzz5J",
-      "curtains": "https://thelinenhouse.pk/cdn/shop/products/Curtain_Pom_Pom_large.jpg?v=1729404281",
-      "cookware": "https://cdn.shopify.com/s/files/1/0931/2382/files/1x1_STAHL_03_2022_8090_1.jpg",
-      "smartHome": "https://lumi.vn/wp-content/uploads/2023/06/bo-san-pham-lumi-smarthome.jpg",
-      "laundry": "https://www.marthastewart.com/thmb/LBPZsRNVIonAavLgDvhxGHQ5T7E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ms-laundry-room-103043095-msl0917.jpg-918f103de92a430189587418de9550d6.jpg",
-      "pet": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVL9tfVWVWLX8jiKGmbm4PhI8VGIqpM0GVxQ&s",
-      "seasonal": "https://static01.nyt.com/images/2020/12/13/realestate/08fix01/08fix01-articleLarge-v2.jpg?quality=75&auto=webp&disable=upscale",
-      "office": "https://cdn.prod.website-files.com/61cdc308bda4b01d29c5fc56/63a3bc6a7f64ca3c86e5e5d4_how-to-decorate-your-private-office.jpg",
-      "food": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg"
-    },
-    "rooms": {
-      "bedroom": "/images/rooms/bedroom.jpg",
-      "outdoor": "/images/rooms/outdoor.jpg",
-      "livingRoom": "/images/rooms/living-room.jpg",
-      "kitchen": "/images/rooms/kitchen.jpg",
-      "homeOffice": "/images/rooms/home-office.jpg",
-      "dining": "/images/rooms/dining.jpg",
-      "bathroom": "/images/rooms/bathroom.jpg",
-      "kidsRoom": "/images/rooms/kids-room.jpg",
-      "garage": "/images/rooms/garage.jpg",
-      "gamingRoom": "/images/rooms/gaming-room.jpg",
-      "laundry": "/images/rooms/laundry.jpg",
-      "hallway": "/images/rooms/hallway.jpg",
-      "guestRoom": "/images/rooms/guest-room.jpg",
-      "nursery": "/images/rooms/nursery.jpg",
-      "teenRoom": "/images/rooms/teen-room.jpg",
-      "craftRoom": "/images/rooms/craft-room.jpg",
-      "library": "/images/rooms/library.jpg",
-      "gym": "/images/rooms/gym.jpg",
-      "entertainment": "/images/rooms/entertainment.jpg",
-      "balcony": "/images/rooms/balcony.jpg",
-      "basement": "/images/rooms/basement.jpg",
-      "attic": "/images/rooms/attic.jpg",
-      "studio": "/images/rooms/studio.jpg",
-      "smallSpace": "/images/rooms/small-space.jpg"
-    },
-    "products": {
-      "billy": "https://www.ikea.com/ie/en/images/products/billy-bookcase-white__1051924_pe845813_s5.jpg?f=s",
-      "malm": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRKOkCU4xou-c6-Kt011A_wD5t3PVjX3xteA&s",
-      "poang": "https://images-na.ssl-images-amazon.com/images/I/71yhJz137JS.SS400.jpg",
-      "kallax": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC4TAjh6ZOD9Am5v1Eexq5UNvqZGL0hEunw&s"
-    },
-    "inspiration": {
-      "smallSpace": "https://cdn.apartmenttherapy.info/image/upload/v1603129306/at/IKEA%20Catalog%202021/PH169886.jpg",
-      "bedroom": "https://www.ikea.com/ext/ingkadam/m/b188de628d74f5b/original/PH199271.jpg?f=s",
-      "kitchen": "https://www.ikea.com/ext/ingkadam/m/3915edf2b352cb8e/original/PH201870.jpg?f=s"
-    },
-    "banners": {
-      "welcome": "https://www.executivegrapevine.com/uploads/articles/story-ikea-celebrates-veteran-employees.jpg",
-      "spring": "https://www.ikea.com/ext/ingkadam/m/7b6e7a698e9d0726/original/PH201907_SHI_002.jpg?f=xxxs?imwidth=300",
-      "sustainability": "https://d2rbyiw1vv51io.cloudfront.net/web/ikea4/pageImages/page__en_lt_15423783690.jpeg"
-    },
-    "icons": {
-      "payment": {
-        "visa": "/images/payment-icons/visa.png",
-        "mastercard": "/images/payment-icons/mastercard.png",
-        "discover": "/images/payment-icons/discover.png",
-        "amex": "/images/payment-icons/amex.png",
-        "ikeaCard": "/images/payment-icons/ikeacard.png",
-        "paypal": "/images/payment-icons/paypal.png",
-        "applePay": "/images/payment-icons/applepay.png",
-        "googlePay": "/images/payment-icons/googlepay.png",
-        "klarna": "/images/payment-icons/klarna.png",
-        "unionpay": "/images/payment-icons/unionpay.png",
-        "jcb": "/images/payment-icons/jcb.png",
-        "diners": "/images/payment-icons/diners.png",
-        "giftCard": "/images/payment-icons/giftcard.png",
-        "affirm": "/images/payment-icons/affirm.png"
-      }
+  "logo": {
+    "ikea": "/images/logo/ikea-logo.svg"
+  },
+  "placeholders": {
+    "product": "/placeholder.svg?height=200&width=200",
+    "productLarge": "/placeholder.svg?height=600&width=600",
+    "productThumbnail": "/placeholder.svg?height=150&width=150",
+    "banner": "/placeholder.svg?height=500&width=1200",
+    "category": "/placeholder.svg?height=80&width=80",
+    "room": "/placeholder.svg?height=120&width=120",
+    "inspiration": "/placeholder.svg?height=300&width=500",
+    "sustainability": "/placeholder.svg?height=300&width=500"
+  },
+  "categories": {
+    "newTrending": "/images/categories/new-trending.jpg",
+    "offers": "/images/categories/offers.jpg",
+    "storage": "https://www.ikea.com/nl/en/images/products/storemolla-chest-of-8-drawers-light-grey-beige-stained__1256218_pe924946_s5.jpg?f=s",
+    "sofas": "https://www.ikea.com/images/5d/06/5d06041a3573d4a0a70819c8099a70eb.jpg?f=s",
+    "outdoor": "https://www.ikea.com.tw/dairyfarm/tw/images/134/1213447_PE911141_S3.jpg",
+    "beds": "https://www.ikea.com/us/en/images/products/malm-bed-frame-dark-brown-veneer__1364772_pe956028_s5.jpg?f=u",
+    "lighting": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m0jgc2rpupvz7c",
+    "textiles": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-wDYxB10TmS951kEzUnCfMXaLAqcYekQpbshzjVNrDSs-4K28R7Vdk7fCHzWoSgFdN6Y&usqp=CAU",
+    "kitchen": "https://d2rbyiw1vv51io.cloudfront.net/web/ikea4/images/434/0543490_PE654587_S5.jpg",
+    "desk": "https://down-my.img.susercontent.com/file/83ba8b785a5b156a00c6cfb393870067",
+    "tables": "https://www.ikea.com/nl/en/images/products/danderyd-skogsta-table-and-6-chairs-pine-veneer-black-black__1324468_pe943560_s5.jpg",
+    "decor": "https://www.sheetstreet.com/media/wysiwyg/Plants_1.png",
+    "kitchenware": "https://gw.alicdn.com/imgextra/i1/4231317500/O1CN01mBBgdn25H3Pp2KOv5_!!0-item_pic.jpg_Q75.jpg_.webp",
+    "bathroom": "https://www.ikea.com/us/en/images/products/hemnes-orrsjoen-double-vanity-with-sink-faucet-gray__1072434_pe855171_s5.jpg?f=s",
+    "children": "https://file.app.ikea.cn/cn/en/images/products/dvaerghare-soft-toy-bunny-beige__1388010_pe964452_s4.jpg?x-oss-process=style/small",
+    "plants": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_800,h_1000/https://flowershop.com.vn/wp-content/uploads/2020/09/y-nghia-hoa-thien-dieu-8.jpg",
+    "mirrors": "https://cdn.shopify.com/s/files/1/0090/0461/3747/files/This_season_s_mirror_trends.webp?v=1725566000",
+    "rugs": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9V-KcZGDAcqKyOrQnBXL3t80TvEuHAege9q8DczwbMwQSzz5J",
+    "curtains": "https://thelinenhouse.pk/cdn/shop/products/Curtain_Pom_Pom_large.jpg?v=1729404281",
+    "cookware": "https://cdn.shopify.com/s/files/1/0931/2382/files/1x1_STAHL_03_2022_8090_1.jpg",
+    "smartHome": "https://lumi.vn/wp-content/uploads/2023/06/bo-san-pham-lumi-smarthome.jpg",
+    "laundry": "https://www.marthastewart.com/thmb/LBPZsRNVIonAavLgDvhxGHQ5T7E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ms-laundry-room-103043095-msl0917.jpg-918f103de92a430189587418de9550d6.jpg",
+    "pet": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVL9tfVWVWLX8jiKGmbm4PhI8VGIqpM0GVxQ&s",
+    "seasonal": "https://static01.nyt.com/images/2020/12/13/realestate/08fix01/08fix01-articleLarge-v2.jpg?quality=75&auto=webp&disable=upscale",
+    "office": "https://cdn.prod.website-files.com/61cdc308bda4b01d29c5fc56/63a3bc6a7f64ca3c86e5e5d4_how-to-decorate-your-private-office.jpg",
+    "food": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg"
+  },
+  "rooms": {
+    "bedroom": "https://www.ikea.com/ext/ingkadam/m/2fc8da7544c42f56/original/PH203841.jpg?f=sg",
+    "outdoor": "https://www.ikea.com/ext/ingkadam/m/269a2758305b3dad/original/PH204274.jpg?imwidth=300",
+    "livingRoom": "https://www.ikea.com/ext/ingkadam/m/4ce680043c3bd59c/original/PH202776.jpg?imwidth=300",
+    "kitchen": "https://www.ikea.com/ext/ingkadam/m/26ec93d9bb2482e/original/PH204378.jpg?imwidth=300",
+    "homeOffice": "https://www.ikea.com/ext/ingkadam/m/5ce9afdafefe2588/original/PH204297.jpg?imwidth=300",
+    "dining": "https://www.ikea.com/ext/ingkadam/m/5680be1ef98d1bb4/original/PH202440_SHI_001.jpg?imwidth=300",
+    "bathroom": "https://www.ikea.com/ext/ingkadam/m/63cb3a75875882ec/original/PH196183.JPG?imwidth=300",
+    "kidsRoom": "https://www.ikea.com/ext/ingkadam/m/57a0266fee804bb5/original/PH203920.jpg?imwidth=300",
+    "garage": "https://www.ikea.com/ext/ingkadam/m/76274fc5b5beb2f5/original/PH193584.jpg?imwidth=300",
+    "gamingRoom": "https://www.ikea.com/ext/ingkadam/m/20fe24a365accdd1/original/PH200336.jpg?imwidth=300",
+    "laundry": "https://www.ikea.com/images/a-yellow-tiled-laundry-room-with-a-white-nysjoen-cabinet-a-w-9e95bad7aad891b80136b497ba670a01.jpg?imwidth=300",
+    "hallway": "https://www.ikea.com/ext/ingkadam/m/25aaa9eb30c56857/original/PH203870.jpg?imwidth=300",
+    "guestRoom": "https://up.yimg.com/ib/th?id=OIP.M9fOyQMTVKcVr736VwD_sQHaFW&pid=Api&rs=1&c=1&qlt=95&w=143&h=103",
+    "nursery": "https://tse4.mm.bing.net/th?id=OIP.hcXOot20KS9cGHeUqN2RUAHaE8&pid=Api&P=0&h=220",
+    "teenRoom": "https://tse4.mm.bing.net/th?id=OIP.DFMTaZi3Zvn7MI_gwh_PGwHaE8&pid=Api&P=0&h=220",
+    "craftRoom": "https://tse4.mm.bing.net/th?id=OIP.p8ByfLSi1Fi2MTlZREBukwHaFt&pid=Api&P=0&h=220",
+    "library": "https://tse4.mm.bing.net/th?id=OIP.Jp55m1au86i1SAyOf8YnLgHaEc&pid=Api&P=0&h=220",
+    "gym": "https://tse1.mm.bing.net/th?id=OIP.hETXdJTpf52ObX8iz8kbTAHaE8&pid=Api&P=0&h=220",
+    "entertainment": "https://tse1.mm.bing.net/th?id=OIP.rXQyWC8p8SBr06gjEbOwNwHaE8&pid=Api&P=0&h=220",
+    "balcony": "https://tse1.mm.bing.net/th?id=OIP.1nc46DLdFHhGj57s0psSYwHaHa&pid=Api&P=0&h=220",
+    "basement": "https://tse3.mm.bing.net/th?id=OIP.V1demzq1OlgPa-puZepfxAHaFS&pid=Api&P=0&h=220",
+    "attic": "https://tse4.mm.bing.net/th?id=OIP.0x_PtRHi4FheF6wzMXPw4AHaFE&pid=Api&P=0&h=220",
+    "studio": "https://tse3.mm.bing.net/th?id=OIP.hAgmMl2riF3Zwvaxd42ibAHaEx&pid=Api&P=0&h=220",
+    "smallSpace": "https://tse2.mm.bing.net/th?id=OIP.FgKnhmY3XTBFzYZ96sycOwHaE7&pid=Api&P=0&h=220"
+  },
+  "products": {
+    "billy": "https://www.ikea.com/ie/en/images/products/billy-bookcase-white__1051924_pe845813_s5.jpg?f=s",
+    "malm": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRKOkCU4xou-c6-Kt011A_wD5t3PVjX3xteA&s",
+    "poang": "https://images-na.ssl-images-amazon.com/images/I/71yhJz137JS.SS400.jpg",
+    "kallax": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC4TAjh6ZOD9Am5v1Eexq5UNvqZGL0hEunw&s"
+  },
+  "inspiration": {
+    "smallSpace": "https://cdn.apartmenttherapy.info/image/upload/v1603129306/at/IKEA%20Catalog%202021/PH169886.jpg",
+    "bedroom": "https://www.ikea.com/ext/ingkadam/m/b188de628d74f5b/original/PH199271.jpg?f=s",
+    "kitchen": "https://www.ikea.com/ext/ingkadam/m/3915edf2b352cb8e/original/PH201870.jpg?f=s"
+  },
+  "banners": {
+    "welcome": "https://www.executivegrapevine.com/uploads/articles/story-ikea-celebrates-veteran-employees.jpg",
+    "spring": "https://www.ikea.com/ext/ingkadam/m/7b6e7a698e9d0726/original/PH201907_SHI_002.jpg?f=xxxs?imwidth=300",
+    "sustainability": "https://d2rbyiw1vv51io.cloudfront.net/web/ikea4/pageImages/page__en_lt_15423783690.jpeg"
+  },
+  "icons": {
+    "payment": {
+      "visa": "/images/payment-icons/visa.png",
+      "mastercard": "/images/payment-icons/mastercard.png",
+      "discover": "/images/payment-icons/discover.png",
+      "amex": "/images/payment-icons/amex.png",
+      "ikeaCard": "/images/payment-icons/ikeacard.png",
+      "paypal": "/images/payment-icons/paypal.png",
+      "applePay": "/images/payment-icons/applepay.png",
+      "googlePay": "/images/payment-icons/googlepay.png",
+      "klarna": "/images/payment-icons/klarna.png",
+      "unionpay": "/images/payment-icons/unionpay.png",
+      "jcb": "/images/payment-icons/jcb.png",
+      "diners": "/images/payment-icons/diners.png",
+      "giftCard": "/images/payment-icons/giftcard.png",
+      "affirm": "/images/payment-icons/affirm.png"
     }
   }
-  
+}
