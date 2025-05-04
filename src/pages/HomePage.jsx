@@ -68,7 +68,7 @@ const HomePage = ({ navigateTo }) => {
 
   // Handle product click
   const handleProductClick = () => {
-    navigateTo && navigateTo("product")
+    navigateTo && navigateTo("products")
   }
 
   // Handle quick add to cart

@@ -11,7 +11,8 @@ import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import ProfilePage from "./pages/ProfilePage";
-import CheckoutPage from "./pages/CheckoutPage"
+import CheckoutPage from "./pages/CheckoutPage";
+import ProductsPage from "./pages/ProductsPage";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -43,6 +44,7 @@ function App() {
               )}
               {currentPage === "profile" && <ProfilePage navigateTo={navigateTo} />}
               {currentPage === "checkout" && <CheckoutPage navigateTo={navigateTo} />}
+              {currentPage === "products" && <ProductsPage navigateTo={navigateTo} />}
             </main>
             <IkeaFooter />
           </div>
