@@ -10,6 +10,7 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -39,6 +40,7 @@ function App() {
               {currentPage === "search" && (
                 <SearchPage navigateTo={navigateTo} searchParams={pageParams} />
               )}
+              {currentPage === "profile" && <ProfilePage navigateTo={navigateTo} />}
             </main>
             <IkeaFooter />
           </div>

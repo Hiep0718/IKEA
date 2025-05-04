@@ -1,11 +1,13 @@
 "use client";
-import { Button, Dropdown, Badge } from "antd";
+import {Input, Button, Dropdown, Badge } from "antd";
 import {
+  SearchOutlined,
   HeartOutlined,
   ShoppingCartOutlined,
   GlobalOutlined,
   CarOutlined,
   UserOutlined,
+  CameraOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { useCart } from "../context/CartContext";
@@ -27,6 +29,52 @@ const HeaderIKEA = ({ navigateTo }) => {
     { key: "3", label: "Deutsch" },
     { key: "4", label: "Français" },
   ];
+  // User menu items
+  const userMenuItems = [
+    {
+      key: "profile",
+      label: (
+        <div className="py-2 px-1">
+          <div className="font-medium">{user?.name}</div>
+          <div className="text-sm text-gray-500">{user?.email}</div>
+        </div>
+      ),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "account",
+      label: "Tài khoản của tôi",
+      onClick: () => navigateTo("profile"),
+    },
+    {
+      key: "orders",
+      label: "Đơn hàng của tôi",
+      onClick: () => {
+        navigateTo("profile")
+        // You could add logic to activate the orders tab
+      },
+    },
+    {
+      key: "wishlist",
+      label: "Danh sách yêu thích",
+      onClick: () => {
+        navigateTo("profile")
+        // You could add logic to activate the wishlist tab
+      },
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "logout",
+      label: "Đăng xuất",
+      onClick: () => {
+        // Implement logout logic
+      },
+    },
+  ]
 
   return (
     <div className="font-sans">
@@ -102,21 +150,19 @@ const HeaderIKEA = ({ navigateTo }) => {
           {/* User Controls */}
           <div className="flex items-center space-x-6">
             {user ? (
-              <UserMenu />
+              <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+                <div className="flex items-center cursor-pointer">
+                  <UserOutlined className="mr-2 text-lg" />
+                  <span className="hidden md:inline">Hej, {user.name}</span>
+                </div>
+              </Dropdown>
             ) : (
-              <Button
-                type="text"
-                onClick={openLoginModal}
-                className="hidden md:flex items-center text-sm"
-              >
+              <Button type="text" onClick={openLoginModal} className="hidden md:flex items-center text-sm">
                 <UserOutlined className="mr-2 text-lg" />
-                <span>Hej! Sign in or register</span>
+                <span>Hej! Đăng nhập hoặc đăng ký</span>
               </Button>
             )}
-            <Button
-              type="text"
-              icon={<HeartOutlined style={{ fontSize: "24px" }} />}
-            />
+            <Button type="text" icon={<HeartOutlined style={{ fontSize: "24px" }} />} />
             <Badge count={cartCount} showZero={false}>
               <Button
                 type="text"

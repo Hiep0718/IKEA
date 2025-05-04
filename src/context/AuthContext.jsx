@@ -74,6 +74,19 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  // Update user profile
+  const updateUserProfile = (updatedData) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setUser((prevUser) => ({
+          ...prevUser,
+          ...updatedData,
+        }))
+        resolve({ success: true })
+      }, 500)
+    })
+  }
+
   // Open login modal
   const openLoginModal = () => {
     setIsLoginModalOpen(true)
@@ -90,6 +103,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     register,
+    updateUserProfile,
     openLoginModal,
     closeLoginModal,
   }
