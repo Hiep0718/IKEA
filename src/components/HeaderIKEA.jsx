@@ -176,7 +176,7 @@ const HeaderIKEA = ({ navigateTo }) => {
       </header>
 
       {/* Cart Dropdown */}
-      <CartDropdown />
+      <CartDropdown navigateTo={navigateTo} />
 
       {/* Login Modal */}
       <LoginModal />

@@ -5,8 +5,13 @@ import { Button, InputNumber } from "antd"
 import { CloseOutlined, DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons"
 import { getProductImage } from "../utils/imageUtils"
 
-const CartDropdown = () => {
-  const { cartItems, isCartOpen, getCartTotal, updateQuantity, removeFromCart, closeCart } = useCart()
+const CartDropdown = ({ navigateTo }) => {
+    const { cartItems, isCartOpen, getCartTotal, updateQuantity, removeFromCart, closeCart } = useCart()
+  
+    const handleCheckout = () => {
+      closeCart()
+      navigateTo && navigateTo("checkout")
+    }
 
   if (!isCartOpen) return null
 
@@ -98,7 +103,13 @@ const CartDropdown = () => {
               <span>${getCartTotal()}</span>
             </div>
             <p className="text-xs text-gray-500">Shipping and taxes calculated at checkout</p>
-            <Button type="primary" size="large" block className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              type="primary"
+              size="large"
+              block
+              className="bg-blue-600 hover:bg-blue-700"
+              onClick={handleCheckout}
+            >
               Checkout
             </Button>
             <Button size="large" block onClick={closeCart}>
