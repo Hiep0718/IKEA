@@ -68,8 +68,13 @@ const HomePage = ({ navigateTo }) => {
 
   // Handle product click
   const handleProductClick = () => {
+    navigateTo && navigateTo("product")
+  }
+
+  const handleProductClicks = () => {
     navigateTo && navigateTo("products")
   }
+
 
   // Handle quick add to cart
   const handleQuickAddToCart = (e, product) => {
@@ -163,7 +168,7 @@ const HomePage = ({ navigateTo }) => {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Button size="large" onClick={handleProductClick}>
+            <Button size="large" onClick={handleProductClicks}>
               View all products
             </Button>
           </div>
