@@ -5,10 +5,14 @@ import { ConfigProvider } from "antd"
 import IkeaHeader from "./components/HeaderIKEA"
 import IkeaNavigation from "./components/IkeaNavigation"
 import IkeaFooter from "./components/IkeaFooter"
-import ProductPage from "./pages/ProductPage"
+import ChatWidget from "./components/ChatWidget"
+
 import { CartProvider } from "./context/CartContext"
 import { AuthProvider } from "./context/AuthContext"
+import { ChatProvider } from "./context/ChatContext"
+
 import HomePage from "./pages/HomePage"
+import ProductPage from "./pages/ProductPage"
 import SearchPage from "./pages/SearchPage"
 import ProfilePage from "./pages/ProfilePage"
 import CheckoutPage from "./pages/CheckoutPage"
@@ -21,23 +25,26 @@ function App() {
       <ConfigProvider>
         <AuthProvider>
           <CartProvider>
-            <div className="w-full min-h-screen flex flex-col">
-              <IkeaHeader />
-              <IkeaNavigation />
-              <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/products" element={<ProductsPage />} />
-                  <Route path="/product/:productId" element={<ProductPage />} />
-                  <Route path="/search" element={<SearchPage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/checkout" element={<CheckoutPage />} />
-                  <Route path="/404" element={<NotFoundPage />} />
-                  <Route path="*" element={<Navigate to="/404" replace />} />
-                </Routes>
-              </main>
-              <IkeaFooter />
-            </div>
+            <ChatProvider>
+              <div className="w-full min-h-screen flex flex-col">
+                <IkeaHeader />
+                <IkeaNavigation />
+                <main className="flex-grow">
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/product/:productId" element={<ProductPage />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
+                  </Routes>
+                </main>
+                <IkeaFooter />
+                <ChatWidget />
+              </div>
+            </ChatProvider>
           </CartProvider>
         </AuthProvider>
       </ConfigProvider>
