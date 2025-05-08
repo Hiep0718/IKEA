@@ -88,11 +88,7 @@
       "categoryId": 1,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "storage",
-        "bookcase",
-        "shelving"
-      ]
+      "tags": ["storage", "bookcase", "shelving"]
     },
     {
       "id": 2,
@@ -108,11 +104,7 @@
       "categoryId": 1,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "storage",
-        "shelving",
-        "display"
-      ]
+      "tags": ["storage", "shelving", "display"]
     },
     {
       "id": 3,
@@ -128,11 +120,7 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "bed",
-        "bedroom",
-        "furniture"
-      ]
+      "tags": ["bed", "bedroom", "furniture"]
     },
     {
       "id": 4,
@@ -148,11 +136,7 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "storage",
-        "wardrobe",
-        "clothes"
-      ]
+      "tags": ["storage", "wardrobe", "clothes"]
     },
     {
       "id": 5,
@@ -168,11 +152,7 @@
       "categoryId": 1,
       "color": "black",
       "material": "wood",
-      "tags": [
-        "table",
-        "coffee table",
-        "living room"
-      ]
+      "tags": ["table", "coffee table", "living room"]
     },
     {
       "id": 6,
@@ -188,11 +168,7 @@
       "categoryId": 1,
       "color": "beige",
       "material": "wood",
-      "tags": [
-        "chair",
-        "armchair",
-        "seating"
-      ]
+      "tags": ["chair", "armchair", "seating"]
     },
     {
       "id": 7,
@@ -208,11 +184,7 @@
       "categoryId": 5,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "desk",
-        "table",
-        "office"
-      ]
+      "tags": ["desk", "table", "office"]
     },
     {
       "id": 8,
@@ -228,11 +200,7 @@
       "categoryId": 4,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "bathroom",
-        "storage",
-        "cabinet"
-      ]
+      "tags": ["bathroom", "storage", "cabinet"]
     },
     {
       "id": 9,
@@ -248,11 +216,7 @@
       "categoryId": 6,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "children",
-        "art",
-        "creativity"
-      ]
+      "tags": ["children", "art", "creativity"]
     },
     {
       "id": 10,
@@ -268,11 +232,7 @@
       "categoryId": 6,
       "color": "blue",
       "material": "fabric",
-      "tags": [
-        "children",
-        "play",
-        "activity"
-      ]
+      "tags": ["children", "play", "activity"]
     },
     {
       "id": 11,
@@ -282,17 +242,13 @@
       "currency": "$",
       "rating": 4.8,
       "reviews": 2733,
-      "image": "https://www.ikea.com/us/en/images/products/antilop-high-chair-with-tray-white-silver-color__0727334_pe735616_s5.jpg?f=s",
+      "image": "https://abigfurniture.com/upload/thumb/ghe-ban-an-luxury-cao-cap-nhap-khau-cp105-29_600x600.jpg",
       "bestSeller": false,
       "lastChance": true,
       "categoryId": 6,
       "color": "white",
       "material": "plastic",
-      "tags": [
-        "children",
-        "feeding",
-        "chair"
-      ]
+      "tags": ["children", "feeding", "chair"]
     },
     {
       "id": 12,
@@ -302,17 +258,13 @@
       "currency": "$",
       "rating": 4.9,
       "reviews": 1036,
-      "image": "https://www.ikea.com/us/en/images/products/djungelskog-soft-toy-brown-bear__0710175_pe727396_s5.jpg?f=s",
+      "image": "data:image/jpeg;base64,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",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 6,
       "color": "brown",
       "material": "fabric",
-      "tags": [
-        "children",
-        "toy",
-        "soft toy"
-      ]
+      "tags": ["children", "toy", "soft toy"]
     },
     {
       "id": 13,
@@ -328,11 +280,7 @@
       "categoryId": 6,
       "color": "green",
       "material": "fabric",
-      "tags": [
-        "children",
-        "play",
-        "tent"
-      ]
+      "tags": ["children", "play", "tent"]
     },
     {
       "id": 14,
@@ -348,11 +296,7 @@
       "categoryId": 6,
       "color": "white",
       "material": "plastic",
-      "tags": [
-        "children",
-        "bathroom",
-        "potty"
-      ]
+      "tags": ["children", "bathroom", "potty"]
     },
     {
       "id": 15,
@@ -368,11 +312,7 @@
       "categoryId": 6,
       "color": "white",
       "material": "plastic",
-      "tags": [
-        "children",
-        "baby",
-        "changing"
-      ]
+      "tags": ["children", "baby", "changing"]
     },
     {
       "id": 16,
@@ -382,17 +322,13 @@
       "currency": "$",
       "rating": 4.8,
       "reviews": 876,
-      "image": "https://www.ikea.com/us/en/images/products/jaettelik-soft-toy-dinosaur-stegosaurus__0877171_pe633311_s5.jpg?f=s",
+      "image": "data:image/jpeg;base64,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",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 6,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "children",
-        "toy",
-        "dinosaur"
-      ]
+      "tags": ["children", "toy", "dinosaur"]
     },
     {
       "id": 17,
@@ -402,17 +338,13 @@
       "currency": "$",
       "rating": 4.7,
       "reviews": 1245,
-      "image": "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-with-3-drawers-white-maximera-bodbyn-gray__0467521_pe610654_s5.jpg?f=s",
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQbLNQ73gjoOLkzTR3LnxnKI26Q9xmUKNblxGS15Rq31rwxsleTHIHVUcLn94sncdhJ1uZq1q0IIUedEPyZanBUITJ8aO3rQNbqHxpGnC9_&usqp=CAc",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 3,
       "color": "gray",
       "material": "wood",
-      "tags": [
-        "kitchen",
-        "cabinet",
-        "storage"
-      ]
+      "tags": ["kitchen", "cabinet", "storage"]
     },
     {
       "id": 18,
@@ -428,11 +360,7 @@
       "categoryId": 3,
       "color": "gray",
       "material": "wood",
-      "tags": [
-        "kitchen",
-        "complete",
-        "cabinet"
-      ]
+      "tags": ["kitchen", "complete", "cabinet"]
     },
     {
       "id": 19,
@@ -442,17 +370,13 @@
       "currency": "$",
       "rating": 4.8,
       "reviews": 2134,
-      "image": "https://www.ikea.com/us/en/images/products/bekvaem-step-stool-birch__0713357_pe729369_s5.jpg?f=s",
+      "image": "data:image/jpeg;base64,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",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 3,
       "color": "beige",
       "material": "wood",
-      "tags": [
-        "kitchen",
-        "stool",
-        "step"
-      ]
+      "tags": ["kitchen", "stool", "step"]
     },
     {
       "id": 20,
@@ -462,17 +386,13 @@
       "currency": "$",
       "rating": 4.6,
       "reviews": 1432,
-      "image": "https://www.ikea.com/us/en/images/products/applaro-table-and-4-armchairs-outdoor-brown-stained-froesoen-duvholmen-beige__0735615_pe740138_s5.jpg?f=s",
+      "image": "data:image/webp;base64,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",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 7,
       "color": "brown",
       "material": "wood",
-      "tags": [
-        "outdoor",
-        "furniture",
-        "dining"
-      ]
+      "tags": ["outdoor", "furniture", "dining"]
     },
     {
       "id": 21,
@@ -488,11 +408,7 @@
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "sofa",
-        "sleeper",
-        "sectional"
-      ]
+      "tags": ["sofa", "sleeper", "sectional"]
     },
     {
       "id": 22,
@@ -502,17 +418,13 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 1243,
-      "image": "https://www.ikea.com/us/en/images/products/kivik-sofa-skiftebo-dark-gray__0781796_pe760872_s5.jpg?f=s",
+      "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSLhegPbCQqtxgV7H21Ly2WHOgvYJF5fSIeSNAnJsB6V4kaJezY0Da1lJ1w1qOkfD3nNMw2eoP_Vyx9C9Zq4nLPXU36OfoTt3gaD1RMwIyw&usqp=CAc",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "sofa",
-        "living room",
-        "seating"
-      ]
+      "tags": ["sofa", "living room", "seating"]
     },
     {
       "id": 23,
@@ -528,11 +440,7 @@
       "categoryId": 1,
       "color": "beige",
       "material": "fabric",
-      "tags": [
-        "sofa",
-        "living room",
-        "seating"
-      ]
+      "tags": ["sofa", "living room", "seating"]
     },
     {
       "id": 24,
@@ -542,17 +450,13 @@
       "currency": "$",
       "rating": 4.4,
       "reviews": 876,
-      "image": "https://www.ikea.com/us/en/images/products/soederhamn-sectional-4-seat-with-chaise-finnsta-white__0406301_pe583238_s5.jpg?f=s",
+      "image": "https://7thavenue.co/cdn/shop/products/4-seat-modular-corner-sectional-244139_950x.jpg?v=1738983437",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 1,
       "color": "white",
       "material": "fabric",
-      "tags": [
-        "sofa",
-        "sectional",
-        "living room"
-      ]
+      "tags": ["sofa", "sectional", "living room"]
     },
     {
       "id": 25,
@@ -568,11 +472,7 @@
       "categoryId": 1,
       "color": "black",
       "material": "leather",
-      "tags": [
-        "sofa",
-        "living room",
-        "seating"
-      ]
+      "tags": ["sofa", "living room", "seating"]
     },
     {
       "id": 26,
@@ -582,17 +482,13 @@
       "currency": "$",
       "rating": 4.3,
       "reviews": 987,
-      "image": "https://www.ikea.com/us/en/images/products/klippan-loveseat-vissle-gray__0820948_pe775462_s5.jpg?f=s",
+      "image": "https://ericavietnam.com/wp-content/uploads/2025/03/1-1.png",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "loveseat",
-        "sofa",
-        "living room"
-      ]
+      "tags": ["loveseat", "sofa", "living room"]
     },
     {
       "id": 27,
@@ -608,11 +504,7 @@
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "armchair",
-        "chair",
-        "living room"
-      ]
+      "tags": ["armchair", "chair", "living room"]
     },
     {
       "id": 28,
@@ -622,17 +514,13 @@
       "currency": "$",
       "rating": 4.4,
       "reviews": 1098,
-      "image": "https://www.ikea.com/us/en/images/products/brimnes-bed-frame-with-storage-white-luroey__0861362_pe614968_s5.jpg?f=s",
+      "image": "https://pula.vn/storage/images/2023/09/09/giuong-ngu-boc-nem-vien-vang-phong-cach-bac-au-pula-pb42-1-1694282769.webp",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "bed",
-        "storage",
-        "bedroom"
-      ]
+      "tags": ["bed", "storage", "bedroom"]
     },
     {
       "id": 29,
@@ -648,11 +536,7 @@
       "categoryId": 2,
       "color": "beige",
       "material": "wood",
-      "tags": [
-        "bed",
-        "bedroom",
-        "furniture"
-      ]
+      "tags": ["bed", "bedroom", "furniture"]
     },
     {
       "id": 30,
@@ -668,11 +552,7 @@
       "categoryId": 2,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "bed",
-        "bedroom",
-        "upholstered"
-      ]
+      "tags": ["bed", "bedroom", "upholstered"]
     },
     {
       "id": 31,
@@ -682,17 +562,13 @@
       "currency": "$",
       "rating": 4.6,
       "reviews": 2134,
-      "image": "https://www.ikea.com/us/en/images/products/pax-wardrobe-white-forsand-white__0667805_pe714081_s5.jpg?f=s",
+      "image": "data:image/jpeg;base64,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",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "wardrobe",
-        "storage",
-        "bedroom"
-      ]
+      "tags": ["wardrobe", "storage", "bedroom"]
     },
     {
       "id": 32,
@@ -708,11 +584,7 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "dresser",
-        "storage",
-        "bedroom"
-      ]
+      "tags": ["dresser", "storage", "bedroom"]
     },
     {
       "id": 33,
@@ -728,11 +600,7 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "dresser",
-        "storage",
-        "bedroom"
-      ]
+      "tags": ["dresser", "storage", "bedroom"]
     },
     {
       "id": 34,
@@ -742,17 +610,13 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 876,
-      "image": "https://www.ikea.com/us/en/images/products/nordli-6-drawer-dresser-white__0598600_pe677752_s5.jpg?f=s",
+      "image": "https://bizweb.dktcdn.net/100/429/325/products/o1cn012shzpl1psjdbflbf7-2214670281839-0-cib.jpg?v=1696941369057",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "dresser",
-        "storage",
-        "bedroom"
-      ]
+      "tags": ["dresser", "storage", "bedroom"]
     },
     {
       "id": 35,
@@ -762,17 +626,13 @@
       "currency": "$",
       "rating": 4.2,
       "reviews": 987,
-      "image": "https://www.ikea.com/us/en/images/products/kullen-6-drawer-dresser-black-brown__0651598_pe707047_s5.jpg?f=s",
+      "image": "https://www.storkcraft.com/cdn/shop/files/03686-00B_MAN.jpg?v=1740084508&width=1080",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 2,
       "color": "black",
       "material": "wood",
-      "tags": [
-        "dresser",
-        "storage",
-        "bedroom"
-      ]
+      "tags": ["dresser", "storage", "bedroom"]
     },
     {
       "id": 36,
@@ -788,11 +648,7 @@
       "categoryId": 5,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "desk",
-        "office",
-        "work"
-      ]
+      "tags": ["desk", "office", "work"]
     },
     {
       "id": 37,
@@ -808,11 +664,7 @@
       "categoryId": 5,
       "color": "white",
       "material": "metal",
-      "tags": [
-        "desk",
-        "office",
-        "work"
-      ]
+      "tags": ["desk", "office", "work"]
     },
     {
       "id": 38,
@@ -828,11 +680,7 @@
       "categoryId": 5,
       "color": "gray",
       "material": "fabric",
-      "tags": [
-        "chair",
-        "office",
-        "work"
-      ]
+      "tags": ["chair", "office", "work"]
     },
     {
       "id": 39,
@@ -842,17 +690,13 @@
       "currency": "$",
       "rating": 4.3,
       "reviews": 1543,
-      "image": "https://www.ikea.com/us/en/images/products/flintan-office-chair-vissle-black__0724695_pe734584_s5.jpg?f=s",
+      "image": "data:image/jpeg;base64,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",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 5,
       "color": "black",
       "material": "fabric",
-      "tags": [
-        "chair",
-        "office",
-        "work"
-      ]
+      "tags": ["chair", "office", "work"]
     },
     {
       "id": 40,
@@ -868,11 +712,7 @@
       "categoryId": 5,
       "color": "white",
       "material": "wood",
-      "tags": [
-        "drawer",
-        "storage",
-        "office"
-      ]
+      "tags": ["drawer", "storage", "office"]
     },
     {
       "id": 41,
@@ -882,17 +722,13 @@
       "currency": "$",
       "rating": 4.7,
       "reviews": 987,
-      "image": "https://www.ikea.com/us/en/images/products/hektar-pendant-lamp-dark-gray__0879377_pe714920_s5.jpg?f=s",
+      "image": "https://thelightingvault.co.uk/cdn/shop/files/SmallWarwick.jpg?v=1738071550&width=1080",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 9,
       "color": "gray",
       "material": "metal",
-      "tags": [
-        "lighting",
-        "pendant",
-        "ceiling"
-      ]
+      "tags": ["lighting", "pendant", "ceiling"]
     },
     {
       "id": 42,
@@ -902,17 +738,13 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 1243,
-      "image": "https://www.ikea.com/us/en/images/products/regolit-pendant-lamp-shade-white__0841351_pe600344_s5.jpg?f=s",
+      "image": "https://c1.wallpaperflare.com/preview/196/997/94/pendant-light-pendant-lighting-pado-konsyap.jpg",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 9,
       "color": "white",
       "material": "paper",
-      "tags": [
-        "lighting",
-        "pendant",
-        "shade"
-      ]
+      "tags": ["lighting", "pendant", "shade"]
     },
     {
       "id": 43,
@@ -928,11 +760,7 @@
       "categoryId": 9,
       "color": "gray",
       "material": "metal",
-      "tags": [
-        "lighting",
-        "desk",
-        "work"
-      ]
+      "tags": ["lighting", "desk", "work"]
     },
     {
       "id": 44,
@@ -948,11 +776,7 @@
       "categoryId": 9,
       "color": "silver",
       "material": "metal",
-      "tags": [
-        "lighting",
-        "desk",
-        "work"
-      ]
+      "tags": ["lighting", "desk", "work"]
     },
     {
       "id": 45,
@@ -968,31 +792,23 @@
       "categoryId": 9,
       "color": "white",
       "material": "metal",
-      "tags": [
-        "lighting",
-        "table",
-        "lamp"
-      ]
+      "tags": ["lighting", "table", "lamp"]
     },
     {
       "id": 46,
       "name": "BERGPALM",
-      "description": "Duvet cover and pillowcase(s), pink/stripe, Full/Queen",
+      "description": "",
       "price": "39.99",
       "currency": "$",
       "rating": 4.6,
       "reviews": 432,
-      "image": "https://www.ikea.com/us/en/images/products/bergpalm-duvet-cover-and-pillowcase-s-pink-stripe__0722358_pe733493_s5.jpg?f=s",
+      "image": "https://m.media-amazon.com/images/I/61WWJyaiyLL.jpg",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 10,
       "color": "pink",
       "material": "cotton",
-      "tags": [
-        "bedding",
-        "duvet",
-        "textile"
-      ]
+      "tags": ["bedding", "duvet", "textile"]
     },
     {
       "id": 47,
@@ -1008,11 +824,7 @@
       "categoryId": 10,
       "color": "white",
       "material": "cotton",
-      "tags": [
-        "bedding",
-        "sheet",
-        "textile"
-      ]
+      "tags": ["bedding", "sheet", "textile"]
     },
     {
       "id": 48,
@@ -1028,11 +840,7 @@
       "categoryId": 10,
       "color": "gray",
       "material": "linen",
-      "tags": [
-        "bedding",
-        "duvet",
-        "textile"
-      ]
+      "tags": ["bedding", "duvet", "textile"]
     },
     {
       "id": 49,
@@ -1048,11 +856,7 @@
       "categoryId": 10,
       "color": "pink",
       "material": "acrylic",
-      "tags": [
-        "throw",
-        "blanket",
-        "textile"
-      ]
+      "tags": ["throw", "blanket", "textile"]
     },
     {
       "id": 50,
@@ -1068,11 +872,7 @@
       "categoryId": 10,
       "color": "blue",
       "material": "velvet",
-      "tags": [
-        "curtain",
-        "window",
-        "textile"
-      ]
+      "tags": ["curtain", "window", "textile"]
     },
     {
       "id": 51,
@@ -1088,11 +888,7 @@
       "categoryId": 11,
       "color": "clear",
       "material": "glass",
-      "tags": [
-        "kitchen",
-        "container",
-        "storage"
-      ]
+      "tags": ["kitchen", "container", "storage"]
     },
     {
       "id": 52,
@@ -1108,11 +904,7 @@
       "categoryId": 11,
       "color": "gray",
       "material": "plastic",
-      "tags": [
-        "kitchen",
-        "bottle",
-        "drink"
-      ]
+      "tags": ["kitchen", "bottle", "drink"]
     },
     {
       "id": 53,
@@ -1128,11 +920,7 @@
       "categoryId": 11,
       "color": "black",
       "material": "carbon steel",
-      "tags": [
-        "kitchen",
-        "cookware",
-        "pan"
-      ]
+      "tags": ["kitchen", "cookware", "pan"]
     },
     {
       "id": 54,
@@ -1148,11 +936,7 @@
       "categoryId": 11,
       "color": "silver",
       "material": "stainless steel",
-      "tags": [
-        "kitchen",
-        "cookware",
-        "pot"
-      ]
+      "tags": ["kitchen", "cookware", "pot"]
     },
     {
       "id": 55,
@@ -1168,11 +952,7 @@
       "categoryId": 11,
       "color": "beige",
       "material": "stoneware",
-      "tags": [
-        "kitchen",
-        "tableware",
-        "plate"
-      ]
+      "tags": ["kitchen", "tableware", "plate"]
     },
     {
       "id": 56,
@@ -1188,11 +968,7 @@
       "categoryId": 12,
       "color": "green",
       "material": "plastic",
-      "tags": [
-        "decoration",
-        "plant",
-        "artificial"
-      ]
+      "tags": ["decoration", "plant", "artificial"]
     },
     {
       "id": 57,
@@ -1208,11 +984,7 @@
       "categoryId": 12,
       "color": "black",
       "material": "wood",
-      "tags": [
-        "decoration",
-        "frame",
-        "photo"
-      ]
+      "tags": ["decoration", "frame", "photo"]
     },
     {
       "id": 58,
@@ -1228,11 +1000,7 @@
       "categoryId": 12,
       "color": "beige",
       "material": "wood",
-      "tags": [
-        "decoration",
-        "frame",
-        "photo"
-      ]
+      "tags": ["decoration", "frame", "photo"]
     },
     {
       "id": 59,
@@ -1248,11 +1016,7 @@
       "categoryId": 12,
       "color": "pink",
       "material": "plastic",
-      "tags": [
-        "decoration",
-        "flower",
-        "artificial"
-      ]
+      "tags": ["decoration", "flower", "artificial"]
     },
     {
       "id": 60,
@@ -1268,11 +1032,7 @@
       "categoryId": 12,
       "color": "black",
       "material": "canvas",
-      "tags": [
-        "decoration",
-        "picture",
-        "wall art"
-      ]
+      "tags": ["decoration", "picture", "wall art"]
     }
   ]
 }
