@@ -5,7 +5,7 @@ import { Button, Carousel } from "antd"
 import { ShoppingCartOutlined } from "@ant-design/icons"
 import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
-import { getImage, getProductImage, getBannerImage } from "../utils/imageUtils"
+import { getImage, getBannerImage } from "../utils/imageUtils"
 import { useCart } from "../context/CartContext"
 
 const HomePage = () => {
@@ -21,29 +21,85 @@ const HomePage = () => {
   // Featured products data
   const featuredProducts = [
     {
-      id: "billy-bookcase",
-      key: "billy",
-      name: "BILLY Bookcase",
-      price: 49.99,
+      "id": 1,
+      "name": "BILLY",
+      "description": "Bookcase, white, 31 1/2x11x79 1/2\"",
+      "price": "79.99",
+      "currency": "$",
+      "rating": 4.7,
+      "reviews": 4532,
+      "image": "https://www.ikea.com/us/en/images/products/billy-bookcase-white__0644757_pe702939_s5.jpg?f=s",
+      "bestSeller": true,
+      "lastChance": false,
+      "categoryId": 1,
+      "color": "white",
+      "material": "wood",
+      "tags": [
+        "storage",
+        "bookcase",
+        "shelving"
+      ]
     },
     {
-      id: "malm-bed",
-      key: "malm",
-      name: "MALM Bed frame",
-      price: 179.0,
+      "id": 6,
+      "name": "POÄNG",
+      "description": "Armchair, birch veneer/Knisa light beige",
+      "price": "149.99",
+      "currency": "$",
+      "rating": 4.8,
+      "reviews": 2987,
+      "image": "https://www.ikea.com/ext/ingkadam/m/c280f12c0638f54/original/PH187101.jpg?f=xl",
+      "bestSeller": true,
+      "lastChance": false,
+      "categoryId": 1,
+      "color": "beige",
+      "material": "wood",
+      "tags": [
+        "chair",
+        "armchair",
+        "seating"
+      ]
     },
     {
-      id: "poang-chair",
-      key: "poang",
-      name: "POÄNG Armchair",
-      price: 99.0,
+      "id": 3,
+      "name": "MALM",
+      "description": "Bed frame, high, white, Queen",
+      "price": "199.99",
+      "currency": "$",
+      "rating": 4.6,
+      "reviews": 2876,
+      "image": "https://www.ikea.com/us/en/images/products/malm-bed-frame-high-white-luroey__0749130_pe745499_s5.jpg?f=s",
+      "bestSeller": true,
+      "lastChance": false,
+      "categoryId": 2,
+      "color": "white",
+      "material": "wood",
+      "tags": [
+        "bed",
+        "bedroom",
+        "furniture"
+      ]
     },
     {
-      id: "kallax-shelf",
-      key: "kallax",
-      name: "KALLAX Shelf unit",
-      price: 79.99,
-    },
+      "id": 4,
+      "name": "HEMNES",
+      "description": "Wardrobe, white stain, 47 1/4x19 5/8x77 1/2\"",
+      "price": "299.99",
+      "currency": "$",
+      "rating": 4.5,
+      "reviews": 1876,
+      "image": "https://www.ikea.com/us/en/images/products/hemnes-bed-frame-white-stain-luroey__0637516_pe698353_s5.jpg?f=s",
+      "bestSeller": false,
+      "lastChance": true,
+      "categoryId": 2,
+      "color": "white",
+      "material": "wood",
+      "tags": [
+        "storage",
+        "wardrobe",
+        "clothes"
+      ]
+    }
   ]
 
   // Ideas and inspiration data
@@ -152,9 +208,9 @@ const HomePage = () => {
               >
                 <div className="mb-3 overflow-hidden">
                   <img
-                    src={getProductImage(product.key) || "/placeholder.svg"}
+                    src={product.image || "/placeholder.svg"}
                     alt={product.name}
-                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-50 h-50 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Quick add to cart button */}
                   <button

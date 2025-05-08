@@ -1,94 +1,89 @@
-"use client";
+"use client"
 
-import { useState, useEffect, useRef } from "react";
-import { Input, Button } from "antd";
-import {
-  SearchOutlined,
-  CameraOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
+import { useState, useEffect, useRef } from "react"
+import { useNavigate } from "react-router-dom"
+import { Input, Button } from "antd"
+import { SearchOutlined, CameraOutlined, CloseOutlined } from "@ant-design/icons"
 
-const SearchBar = ({ navigateTo, className = "" }) => {
-  const [searchValue, setSearchValue] = useState("");
-  const [recentSearches, setRecentSearches] = useState([]);
-  const [showRecentSearches, setShowRecentSearches] = useState(false);
-  const searchRef = useRef(null);
+const SearchBar = ({ className = "" }) => {
+  const navigate = useNavigate()
+  const [searchValue, setSearchValue] = useState("")
+  const [recentSearches, setRecentSearches] = useState([])
+  const [showRecentSearches, setShowRecentSearches] = useState(false)
+  const searchRef = useRef(null)
 
   // Load recent searches from localStorage on component mount
   useEffect(() => {
-    const savedSearches = localStorage.getItem("recentSearches");
+    const savedSearches = localStorage.getItem("recentSearches")
     if (savedSearches) {
-      setRecentSearches(JSON.parse(savedSearches));
+      setRecentSearches(JSON.parse(savedSearches))
     }
-  }, []);
+  }, [])
 
   // Handle clicks outside the search component to close dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowRecentSearches(false);
+        setShowRecentSearches(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   // Save recent searches to localStorage
   const saveRecentSearch = (query) => {
-    if (!query.trim()) return;
+    if (!query.trim()) return
 
-    const updatedSearches = [
-      query,
-      ...recentSearches.filter((s) => s !== query),
-    ];
-    if (updatedSearches.length > 5) updatedSearches.pop(); // Keep only 5 most recent
+    const updatedSearches = [query, ...recentSearches.filter((s) => s !== query)]
+    if (updatedSearches.length > 5) updatedSearches.pop() // Keep only 5 most recent
 
-    setRecentSearches(updatedSearches);
-    localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
-  };
+    setRecentSearches(updatedSearches)
+    localStorage.setItem("recentSearches", JSON.stringify(updatedSearches))
+  }
 
   // Handle search submission
   const handleSearch = (e) => {
-    if (e) e.preventDefault();
+    if (e) e.preventDefault()
 
-    if (!searchValue.trim()) return;
+    if (!searchValue.trim()) return
 
-    saveRecentSearch(searchValue);
+    saveRecentSearch(searchValue)
 
     // Navigate to search page with the query
-    navigateTo("search", { query: searchValue });
+    navigate(`/search?q=${encodeURIComponent(searchValue)}`)
 
-    setShowRecentSearches(false);
-  };
+    setShowRecentSearches(false)
+  }
 
   // Handle pressing Enter in search field
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      handleSearch()
     }
-  };
+  }
 
   // Handle clicking on a recent search
   const handleRecentSearchClick = (query) => {
-    setSearchValue(query);
+    setSearchValue(query)
     setTimeout(() => {
-      navigateTo("search", { query });
-    }, 0);
-  };
+      navigate(`/search?q=${encodeURIComponent(query)}`)
+    }, 0)
+  }
 
   // Clear all recent searches
   const clearRecentSearches = () => {
-    setRecentSearches([]);
-    localStorage.removeItem("recentSearches");
-  };
+    setRecentSearches([])
+    localStorage.removeItem("recentSearches")
+  }
 
   // Clear current search input
   const clearSearch = () => {
-    setSearchValue("");
-  };
+    setSearchValue("")
+  }
 
   // Recent searches dropdown menu
   const recentSearchesMenu = (
@@ -116,7 +111,7 @@ const SearchBar = ({ navigateTo, className = "" }) => {
         <div className="px-3 py-2 text-gray-500">No recent searches</div>
       )}
     </div>
-  );
+  )
 
   return (
     <div ref={searchRef} className={`relative ${className}`}>
@@ -151,13 +146,9 @@ const SearchBar = ({ navigateTo, className = "" }) => {
       </form>
 
       {/* Recent searches dropdown */}
-      {showRecentSearches && (
-        <div className="absolute top-full left-0 right-0 mt-1 z-50">
-          {recentSearchesMenu}
-        </div>
-      )}
+      {showRecentSearches && <div className="absolute top-full left-0 right-0 mt-1 z-50">{recentSearchesMenu}</div>}
     </div>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar
