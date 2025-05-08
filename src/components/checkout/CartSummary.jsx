@@ -1,7 +1,6 @@
 "use client"
 
 import { Divider } from "antd"
-import { getProductImage } from "../../utils/imageUtils"
 
 const CartSummary = ({ cartItems, total }) => {
   // Format currency
@@ -26,7 +25,7 @@ const CartSummary = ({ cartItems, total }) => {
           <div key={item.id} className="flex items-start">
             <div className="w-16 h-16 flex-shrink-0">
               <img
-                src={getProductImage(item.key) || "/placeholder.svg"}
+                src={item.image|| "/placeholder.svg"}
                 alt={item.name}
                 className="w-full h-full object-cover"
               />

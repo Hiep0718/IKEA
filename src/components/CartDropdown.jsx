@@ -3,14 +3,14 @@
 import { useCart } from "../context/CartContext"
 import { Button, InputNumber } from "antd"
 import { CloseOutlined, DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons"
-import { getProductImage } from "../utils/imageUtils"
+import { useNavigate } from "react-router-dom"
 
-const CartDropdown = ({ navigateTo }) => {
+const CartDropdown = () => {
     const { cartItems, isCartOpen, getCartTotal, updateQuantity, removeFromCart, closeCart } = useCart()
-  
+    const navigate = useNavigate();
     const handleCheckout = () => {
       closeCart()
-      navigateTo && navigateTo("checkout")
+      navigate("/checkout")
     }
 
   if (!isCartOpen) return null
@@ -57,7 +57,7 @@ const CartDropdown = ({ navigateTo }) => {
                   {/* Product image */}
                   <div className="w-20 h-20 flex-shrink-0">
                     <img
-                      src={getProductImage(item.key) || "/placeholder.svg"}
+                      src={item.image || "/placeholder.svg"}
                       alt={item.name}
                       className="w-full h-full object-cover"
                     />
@@ -107,7 +107,7 @@ const CartDropdown = ({ navigateTo }) => {
               type="primary"
               size="large"
               block
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 !mb-3"
               onClick={handleCheckout}
             >
               Checkout

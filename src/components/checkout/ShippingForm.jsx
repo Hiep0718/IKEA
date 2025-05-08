@@ -9,7 +9,7 @@ const ShippingForm = ({ onSubmit, user }) => {
   const [addressType, setAddressType] = useState("existing")
   const [loading, setLoading] = useState(false)
   // Mock saved addresses
-  const [savedAddresses, setSavedAddresses] = useState([
+  const [savedAddresses,] = useState([
     {
       id: 1,
       name: "Nhà riêng",
