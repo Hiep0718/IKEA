@@ -16,13 +16,13 @@
       "id": 3,
       "name": "Kitchen",
       "slug": "kitchen",
-      "image": "https://www.ikea.com/us/en/images/products/sektion-base-cabinet-with-3-drawers-white-maximera-bodbyn-gray__0467521_pe610654_s5.jpg?f=s"
+      "image": "https://www.ikea.com/us/en/images/products/nalblecka-kitchen-countertop-organizer-metal-bamboo__1215091_pe911832_s5.jpg?f=xl"
     },
     {
       "id": 4,
       "name": "Bathroom",
       "slug": "bathroom",
-      "image": "https://www.ikea.com/us/en/images/products/godmorgon-odensvik-sink-cabinet-with-2-drawers-high-gloss-white-dalskaer-faucet__0380723_pe555341_s5.jpg?f=s"
+      "image": "https://www.ikea.com/us/en/images/products/ivoesjoen-cabinet-with-doors-green__1383429_pe962557_s5.jpg?f=xl"
     },
     {
       "id": 5,
@@ -34,13 +34,13 @@
       "id": 6,
       "name": "Children",
       "slug": "children",
-      "image": "https://www.ikea.com/us/en/images/products/sundvik-crib-white__0637931_pe698599_s5.jpg?f=s"
+      "image": "https://www.ikea.com/us/en/images/products/flisat-childrens-table__0735831_pe740206_s5.jpg?f=xl"
     },
     {
       "id": 7,
       "name": "Outdoor",
       "slug": "outdoor",
-      "image": "https://www.ikea.com/us/en/images/products/applaro-table-and-4-armchairs-outdoor-brown-stained-froesoen-duvholmen-beige__0735615_pe740138_s5.jpg?f=s"
+      "image": "https://www.ikea.com/us/en/images/products/dammaeng-bin-with-lid-gray-green__1216059_pe912319_s5.jpg?f=xl"
     },
     {
       "id": 8,
@@ -52,13 +52,13 @@
       "id": 9,
       "name": "Lighting",
       "slug": "lighting",
-      "image": "https://www.ikea.com/us/en/images/products/hektar-pendant-lamp-dark-gray__0879377_pe714920_s5.jpg?f=s"
+      "image": "https://www.ikea.com/us/en/images/products/fado-table-lamp-white__0606976_pe682645_s5.jpg?f=xl"
     },
     {
       "id": 10,
       "name": "Textiles",
       "slug": "textiles",
-      "image": "https://www.ikea.com/us/en/images/products/bergpalm-duvet-cover-and-pillowcase-s-pink-stripe__0722358_pe733493_s5.jpg?f=s"
+      "image": "https://www.ikea.com/us/en/images/products/rinnig-dish-towel-white-dark-gray-patterned__0813216_pe772338_s5.jpg?f=xl"
     },
     {
       "id": 11,
@@ -88,7 +88,11 @@
       "categoryId": 1,
       "color": "white",
       "material": "wood",
-      "tags": ["storage", "bookcase", "shelving"]
+      "tags": [
+        "storage",
+        "bookcase",
+        "shelving"
+      ]
     },
     {
       "id": 2,
@@ -104,7 +108,11 @@
       "categoryId": 1,
       "color": "white",
       "material": "wood",
-      "tags": ["storage", "shelving", "display"]
+      "tags": [
+        "storage",
+        "shelving",
+        "display"
+      ]
     },
     {
       "id": 3,
@@ -120,7 +128,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["bed", "bedroom", "furniture"]
+      "tags": [
+        "bed",
+        "bedroom",
+        "furniture"
+      ]
     },
     {
       "id": 4,
@@ -136,7 +148,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["storage", "wardrobe", "clothes"]
+      "tags": [
+        "storage",
+        "wardrobe",
+        "clothes"
+      ]
     },
     {
       "id": 5,
@@ -152,7 +168,11 @@
       "categoryId": 1,
       "color": "black",
       "material": "wood",
-      "tags": ["table", "coffee table", "living room"]
+      "tags": [
+        "table",
+        "coffee table",
+        "living room"
+      ]
     },
     {
       "id": 6,
@@ -168,7 +188,11 @@
       "categoryId": 1,
       "color": "beige",
       "material": "wood",
-      "tags": ["chair", "armchair", "seating"]
+      "tags": [
+        "chair",
+        "armchair",
+        "seating"
+      ]
     },
     {
       "id": 7,
@@ -184,7 +208,11 @@
       "categoryId": 5,
       "color": "white",
       "material": "wood",
-      "tags": ["desk", "table", "office"]
+      "tags": [
+        "desk",
+        "table",
+        "office"
+      ]
     },
     {
       "id": 8,
@@ -200,7 +228,11 @@
       "categoryId": 4,
       "color": "white",
       "material": "wood",
-      "tags": ["bathroom", "storage", "cabinet"]
+      "tags": [
+        "bathroom",
+        "storage",
+        "cabinet"
+      ]
     },
     {
       "id": 9,
@@ -216,7 +248,11 @@
       "categoryId": 6,
       "color": "white",
       "material": "wood",
-      "tags": ["children", "art", "creativity"]
+      "tags": [
+        "children",
+        "art",
+        "creativity"
+      ]
     },
     {
       "id": 10,
@@ -232,7 +268,11 @@
       "categoryId": 6,
       "color": "blue",
       "material": "fabric",
-      "tags": ["children", "play", "activity"]
+      "tags": [
+        "children",
+        "play",
+        "activity"
+      ]
     },
     {
       "id": 11,
@@ -248,7 +288,11 @@
       "categoryId": 6,
       "color": "white",
       "material": "plastic",
-      "tags": ["children", "feeding", "chair"]
+      "tags": [
+        "children",
+        "feeding",
+        "chair"
+      ]
     },
     {
       "id": 12,
@@ -264,7 +308,11 @@
       "categoryId": 6,
       "color": "brown",
       "material": "fabric",
-      "tags": ["children", "toy", "soft toy"]
+      "tags": [
+        "children",
+        "toy",
+        "soft toy"
+      ]
     },
     {
       "id": 13,
@@ -280,7 +328,11 @@
       "categoryId": 6,
       "color": "green",
       "material": "fabric",
-      "tags": ["children", "play", "tent"]
+      "tags": [
+        "children",
+        "play",
+        "tent"
+      ]
     },
     {
       "id": 14,
@@ -296,7 +348,11 @@
       "categoryId": 6,
       "color": "white",
       "material": "plastic",
-      "tags": ["children", "bathroom", "potty"]
+      "tags": [
+        "children",
+        "bathroom",
+        "potty"
+      ]
     },
     {
       "id": 15,
@@ -312,7 +368,11 @@
       "categoryId": 6,
       "color": "white",
       "material": "plastic",
-      "tags": ["children", "baby", "changing"]
+      "tags": [
+        "children",
+        "baby",
+        "changing"
+      ]
     },
     {
       "id": 16,
@@ -328,7 +388,11 @@
       "categoryId": 6,
       "color": "gray",
       "material": "fabric",
-      "tags": ["children", "toy", "dinosaur"]
+      "tags": [
+        "children",
+        "toy",
+        "dinosaur"
+      ]
     },
     {
       "id": 17,
@@ -344,7 +408,11 @@
       "categoryId": 3,
       "color": "gray",
       "material": "wood",
-      "tags": ["kitchen", "cabinet", "storage"]
+      "tags": [
+        "kitchen",
+        "cabinet",
+        "storage"
+      ]
     },
     {
       "id": 18,
@@ -360,7 +428,11 @@
       "categoryId": 3,
       "color": "gray",
       "material": "wood",
-      "tags": ["kitchen", "complete", "cabinet"]
+      "tags": [
+        "kitchen",
+        "complete",
+        "cabinet"
+      ]
     },
     {
       "id": 19,
@@ -376,7 +448,11 @@
       "categoryId": 3,
       "color": "beige",
       "material": "wood",
-      "tags": ["kitchen", "stool", "step"]
+      "tags": [
+        "kitchen",
+        "stool",
+        "step"
+      ]
     },
     {
       "id": 20,
@@ -392,7 +468,11 @@
       "categoryId": 7,
       "color": "brown",
       "material": "wood",
-      "tags": ["outdoor", "furniture", "dining"]
+      "tags": [
+        "outdoor",
+        "furniture",
+        "dining"
+      ]
     },
     {
       "id": 21,
@@ -408,7 +488,11 @@
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": ["sofa", "sleeper", "sectional"]
+      "tags": [
+        "sofa",
+        "sleeper",
+        "sectional"
+      ]
     },
     {
       "id": 22,
@@ -424,7 +508,11 @@
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": ["sofa", "living room", "seating"]
+      "tags": [
+        "sofa",
+        "living room",
+        "seating"
+      ]
     },
     {
       "id": 23,
@@ -440,7 +528,11 @@
       "categoryId": 1,
       "color": "beige",
       "material": "fabric",
-      "tags": ["sofa", "living room", "seating"]
+      "tags": [
+        "sofa",
+        "living room",
+        "seating"
+      ]
     },
     {
       "id": 24,
@@ -456,7 +548,11 @@
       "categoryId": 1,
       "color": "white",
       "material": "fabric",
-      "tags": ["sofa", "sectional", "living room"]
+      "tags": [
+        "sofa",
+        "sectional",
+        "living room"
+      ]
     },
     {
       "id": 25,
@@ -472,7 +568,11 @@
       "categoryId": 1,
       "color": "black",
       "material": "leather",
-      "tags": ["sofa", "living room", "seating"]
+      "tags": [
+        "sofa",
+        "living room",
+        "seating"
+      ]
     },
     {
       "id": 26,
@@ -488,7 +588,11 @@
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": ["loveseat", "sofa", "living room"]
+      "tags": [
+        "loveseat",
+        "sofa",
+        "living room"
+      ]
     },
     {
       "id": 27,
@@ -504,7 +608,11 @@
       "categoryId": 1,
       "color": "gray",
       "material": "fabric",
-      "tags": ["armchair", "chair", "living room"]
+      "tags": [
+        "armchair",
+        "chair",
+        "living room"
+      ]
     },
     {
       "id": 28,
@@ -520,7 +628,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["bed", "storage", "bedroom"]
+      "tags": [
+        "bed",
+        "storage",
+        "bedroom"
+      ]
     },
     {
       "id": 29,
@@ -536,7 +648,11 @@
       "categoryId": 2,
       "color": "beige",
       "material": "wood",
-      "tags": ["bed", "bedroom", "furniture"]
+      "tags": [
+        "bed",
+        "bedroom",
+        "furniture"
+      ]
     },
     {
       "id": 30,
@@ -552,7 +668,11 @@
       "categoryId": 2,
       "color": "gray",
       "material": "fabric",
-      "tags": ["bed", "bedroom", "upholstered"]
+      "tags": [
+        "bed",
+        "bedroom",
+        "upholstered"
+      ]
     },
     {
       "id": 31,
@@ -568,7 +688,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["wardrobe", "storage", "bedroom"]
+      "tags": [
+        "wardrobe",
+        "storage",
+        "bedroom"
+      ]
     },
     {
       "id": 32,
@@ -584,7 +708,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["dresser", "storage", "bedroom"]
+      "tags": [
+        "dresser",
+        "storage",
+        "bedroom"
+      ]
     },
     {
       "id": 33,
@@ -600,7 +728,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["dresser", "storage", "bedroom"]
+      "tags": [
+        "dresser",
+        "storage",
+        "bedroom"
+      ]
     },
     {
       "id": 34,
@@ -616,7 +748,11 @@
       "categoryId": 2,
       "color": "white",
       "material": "wood",
-      "tags": ["dresser", "storage", "bedroom"]
+      "tags": [
+        "dresser",
+        "storage",
+        "bedroom"
+      ]
     },
     {
       "id": 35,
@@ -632,7 +768,11 @@
       "categoryId": 2,
       "color": "black",
       "material": "wood",
-      "tags": ["dresser", "storage", "bedroom"]
+      "tags": [
+        "dresser",
+        "storage",
+        "bedroom"
+      ]
     },
     {
       "id": 36,
@@ -648,7 +788,11 @@
       "categoryId": 5,
       "color": "white",
       "material": "wood",
-      "tags": ["desk", "office", "work"]
+      "tags": [
+        "desk",
+        "office",
+        "work"
+      ]
     },
     {
       "id": 37,
@@ -664,7 +808,11 @@
       "categoryId": 5,
       "color": "white",
       "material": "metal",
-      "tags": ["desk", "office", "work"]
+      "tags": [
+        "desk",
+        "office",
+        "work"
+      ]
     },
     {
       "id": 38,
@@ -680,7 +828,11 @@
       "categoryId": 5,
       "color": "gray",
       "material": "fabric",
-      "tags": ["chair", "office", "work"]
+      "tags": [
+        "chair",
+        "office",
+        "work"
+      ]
     },
     {
       "id": 39,
@@ -696,7 +848,11 @@
       "categoryId": 5,
       "color": "black",
       "material": "fabric",
-      "tags": ["chair", "office", "work"]
+      "tags": [
+        "chair",
+        "office",
+        "work"
+      ]
     },
     {
       "id": 40,
@@ -712,7 +868,11 @@
       "categoryId": 5,
       "color": "white",
       "material": "wood",
-      "tags": ["drawer", "storage", "office"]
+      "tags": [
+        "drawer",
+        "storage",
+        "office"
+      ]
     },
     {
       "id": 41,
@@ -728,7 +888,11 @@
       "categoryId": 9,
       "color": "gray",
       "material": "metal",
-      "tags": ["lighting", "pendant", "ceiling"]
+      "tags": [
+        "lighting",
+        "pendant",
+        "ceiling"
+      ]
     },
     {
       "id": 42,
@@ -744,7 +908,11 @@
       "categoryId": 9,
       "color": "white",
       "material": "paper",
-      "tags": ["lighting", "pendant", "shade"]
+      "tags": [
+        "lighting",
+        "pendant",
+        "shade"
+      ]
     },
     {
       "id": 43,
@@ -760,7 +928,11 @@
       "categoryId": 9,
       "color": "gray",
       "material": "metal",
-      "tags": ["lighting", "desk", "work"]
+      "tags": [
+        "lighting",
+        "desk",
+        "work"
+      ]
     },
     {
       "id": 44,
@@ -770,13 +942,17 @@
       "currency": "$",
       "rating": 4.7,
       "reviews": 876,
-      "image": "https://www.ikea.com/us/en/images/products/forsa-work-lamp-nickel-plated__0687071_pe721931_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/harte-led-work-lamp-white-silver-color__0243818_pe383097_s5.jpg?f=xl",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 9,
       "color": "silver",
       "material": "metal",
-      "tags": ["lighting", "desk", "work"]
+      "tags": [
+        "lighting",
+        "desk",
+        "work"
+      ]
     },
     {
       "id": 45,
@@ -786,13 +962,17 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 654,
-      "image": "https://www.ikea.com/us/en/images/products/stockholm-table-lamp-chrome-plated-white__0879438_pe714981_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/dejsa-table-lamp-beige-opal-glass__0967540_pe810183_s5.jpg?f=xl",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 9,
       "color": "white",
       "material": "metal",
-      "tags": ["lighting", "table", "lamp"]
+      "tags": [
+        "lighting",
+        "table",
+        "lamp"
+      ]
     },
     {
       "id": 46,
@@ -808,7 +988,11 @@
       "categoryId": 10,
       "color": "pink",
       "material": "cotton",
-      "tags": ["bedding", "duvet", "textile"]
+      "tags": [
+        "bedding",
+        "duvet",
+        "textile"
+      ]
     },
     {
       "id": 47,
@@ -818,13 +1002,17 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 1876,
-      "image": "https://www.ikea.com/us/en/images/products/dvala-sheet-set-white__0673363_pe717068_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/dvala-sheet-set-white__1279647_pe931458_s5.jpg?f=xl",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 10,
       "color": "white",
       "material": "cotton",
-      "tags": ["bedding", "sheet", "textile"]
+      "tags": [
+        "bedding",
+        "sheet",
+        "textile"
+      ]
     },
     {
       "id": 48,
@@ -834,13 +1022,17 @@
       "currency": "$",
       "rating": 4.7,
       "reviews": 765,
-      "image": "https://www.ikea.com/us/en/images/products/puderviva-duvet-cover-and-pillowcase-s-light-gray__0673856_pe717329_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/ekpurpurmal-duvet-cover-and-pillowcase-s-white-blue-cloud__1149536_pe884072_s5.jpg?f=xl",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 10,
       "color": "gray",
       "material": "linen",
-      "tags": ["bedding", "duvet", "textile"]
+      "tags": [
+        "bedding",
+        "duvet",
+        "textile"
+      ]
     },
     {
       "id": 49,
@@ -850,13 +1042,17 @@
       "currency": "$",
       "rating": 4.8,
       "reviews": 987,
-      "image": "https://www.ikea.com/us/en/images/products/ingabritta-throw-pale-pink__0594782_pe676052_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/svartpoppel-cushion-cover-light-pink__1117937_pe872836_s5.jpg?f=xl",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 10,
       "color": "pink",
       "material": "acrylic",
-      "tags": ["throw", "blanket", "textile"]
+      "tags": [
+        "throw",
+        "blanket",
+        "textile"
+      ]
     },
     {
       "id": 50,
@@ -866,13 +1062,17 @@
       "currency": "$",
       "rating": 4.6,
       "reviews": 654,
-      "image": "https://www.ikea.com/us/en/images/products/sanela-curtains-1-pair-dark-blue__0889659_pe782019_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/bengta-block-out-curtain-1-piece-beige-with-heading-tape__1341494_pe948758_s5.jpg?f=xl",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 10,
       "color": "blue",
       "material": "velvet",
-      "tags": ["curtain", "window", "textile"]
+      "tags": [
+        "curtain",
+        "window",
+        "textile"
+      ]
     },
     {
       "id": 51,
@@ -882,13 +1082,17 @@
       "currency": "$",
       "rating": 4.7,
       "reviews": 1432,
-      "image": "https://www.ikea.com/us/en/images/products/ikea-365-food-container-with-lid-rectangular-glass__0710699_pe727731_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/ikea-365-food-container-with-lid-round-plastic__0594414_pe675731_s5.jpg?f=xl",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 11,
       "color": "clear",
       "material": "glass",
-      "tags": ["kitchen", "container", "storage"]
+      "tags": [
+        "kitchen",
+        "container",
+        "storage"
+      ]
     },
     {
       "id": 52,
@@ -898,13 +1102,17 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 876,
-      "image": "https://www.ikea.com/us/en/images/products/ikea-365-water-bottle-dark-gray__0916298_pe785196_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/enkelsparig-water-bottle-stainless-steel-beige__0985523_pe816659_s5.jpg?f=xl",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 11,
       "color": "gray",
       "material": "plastic",
-      "tags": ["kitchen", "bottle", "drink"]
+      "tags": [
+        "kitchen",
+        "bottle",
+        "drink"
+      ]
     },
     {
       "id": 53,
@@ -914,13 +1122,17 @@
       "currency": "$",
       "rating": 4.6,
       "reviews": 987,
-      "image": "https://www.ikea.com/us/en/images/products/vardagen-frying-pan-carbon-steel__0892939_pe782059_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/ikea-365-frying-pan-stainless-steel__1257434_pe925812_s5.jpg?f=xl",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 11,
       "color": "black",
       "material": "carbon steel",
-      "tags": ["kitchen", "cookware", "pan"]
+      "tags": [
+        "kitchen",
+        "cookware",
+        "pan"
+      ]
     },
     {
       "id": 54,
@@ -930,13 +1142,17 @@
       "currency": "$",
       "rating": 4.4,
       "reviews": 765,
-      "image": "https://www.ikea.com/us/en/images/products/oumbaerlig-pot-with-lid-stainless-steel__0712827_pe729007_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/hemkomst-pot-with-lid-stainless-steel-glass__1332933_pe946349_s5.jpg?f=xxs",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 11,
       "color": "silver",
       "material": "stainless steel",
-      "tags": ["kitchen", "cookware", "pot"]
+      "tags": [
+        "kitchen",
+        "cookware",
+        "pot"
+      ]
     },
     {
       "id": 55,
@@ -946,13 +1162,17 @@
       "currency": "$",
       "rating": 4.7,
       "reviews": 1243,
-      "image": "https://www.ikea.com/us/en/images/products/dinera-plate-beige__0711869_pe728425_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/oftast-plate-white__1391197_pe965708_s5.jpg?f=xxs",
       "bestSeller": true,
       "lastChance": false,
       "categoryId": 11,
       "color": "beige",
       "material": "stoneware",
-      "tags": ["kitchen", "tableware", "plate"]
+      "tags": [
+        "kitchen",
+        "tableware",
+        "plate"
+      ]
     },
     {
       "id": 56,
@@ -968,7 +1188,11 @@
       "categoryId": 12,
       "color": "green",
       "material": "plastic",
-      "tags": ["decoration", "plant", "artificial"]
+      "tags": [
+        "decoration",
+        "plant",
+        "artificial"
+      ]
     },
     {
       "id": 57,
@@ -984,7 +1208,11 @@
       "categoryId": 12,
       "color": "black",
       "material": "wood",
-      "tags": ["decoration", "frame", "photo"]
+      "tags": [
+        "decoration",
+        "frame",
+        "photo"
+      ]
     },
     {
       "id": 58,
@@ -994,13 +1222,17 @@
       "currency": "$",
       "rating": 4.5,
       "reviews": 876,
-      "image": "https://www.ikea.com/us/en/images/products/hovsta-frame-birch-effect__0713408_pe729429_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/utaker-stackable-bed-pine__1101313_pe866582_s5.jpg?f=xxs",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 12,
       "color": "beige",
       "material": "wood",
-      "tags": ["decoration", "frame", "photo"]
+      "tags": [
+        "decoration",
+        "frame",
+        "photo"
+      ]
     },
     {
       "id": 59,
@@ -1016,7 +1248,11 @@
       "categoryId": 12,
       "color": "pink",
       "material": "plastic",
-      "tags": ["decoration", "flower", "artificial"]
+      "tags": [
+        "decoration",
+        "flower",
+        "artificial"
+      ]
     },
     {
       "id": 60,
@@ -1026,13 +1262,17 @@
       "currency": "$",
       "rating": 4.6,
       "reviews": 432,
-      "image": "https://www.ikea.com/us/en/images/products/pjaetteryd-picture-eiffel-tower__0642694_pe701384_s5.jpg?f=s",
+      "image": "https://www.ikea.com/us/en/images/products/malm-bed-frame-dark-brown-veneer__1364772_pe956028_s5.jpg?f=xl",
       "bestSeller": false,
       "lastChance": false,
       "categoryId": 12,
       "color": "black",
       "material": "canvas",
-      "tags": ["decoration", "picture", "wall art"]
+      "tags": [
+        "decoration",
+        "picture",
+        "wall art"
+      ]
     }
   ]
 }
