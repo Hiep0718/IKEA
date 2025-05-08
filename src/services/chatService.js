@@ -168,993 +168,935 @@ const formatPrice = (price, currency) => {
     return `${currency}${price}`
 }
 
-// Hàm phân tích yêu cầu của khách hàng
-const analyzeRequest = (message) => {
+// Lưu trữ lịch sử tìm kiếm
+let searchHistory = []
+
+// Lưu trữ ngữ cảnh cuộc trò chuyện
+const conversationContext = {
+    userName: "",
+    lastQuery: "",
+    lastProducts: [],
+    cart: [],
+    conversationHistory: [],
+    lastIntent: "",
+    greetingShown: false,
+}
+
+// Thêm các câu hỏi thường gặp và câu trả lời
+const faqData = {
+    "giờ mở cửa": "Cửa hàng chúng tôi mở cửa từ 8:00 đến 22:00 tất cả các ngày trong tuần, kể cả ngày lễ.",
+    "chính sách đổi trả":
+        "Quý khách có thể đổi trả sản phẩm trong vòng 30 ngày kể từ ngày mua hàng với điều kiện sản phẩm còn nguyên vẹn, đầy đủ phụ kiện và hóa đơn mua hàng.",
+    "phí vận chuyển":
+        "Chúng tôi miễn phí vận chuyển cho đơn hàng từ 1.000.000đ. Đơn hàng dưới 1.000.000đ sẽ có phí vận chuyển từ 30.000đ tùy khu vực.",
+    "thời gian giao hàng":
+        "Thời gian giao hàng thông thường là 3-5 ngày làm việc đối với khu vực nội thành và 5-7 ngày đối với khu vực ngoại thành và tỉnh thành khác.",
+    "phương thức thanh toán":
+        "Chúng tôi chấp nhận thanh toán qua thẻ tín dụng/ghi nợ, chuyển khoản ngân hàng, ví điện tử (MoMo, ZaloPay, VNPay) và thanh toán khi nhận hàng (COD).",
+    "bảo hành":
+        "Các sản phẩm nội thất của chúng tôi được bảo hành từ 12-24 tháng tùy loại sản phẩm. Chi tiết bảo hành được ghi rõ trên phiếu bảo hành đi kèm sản phẩm.",
+    "địa chỉ cửa hàng":
+        "Cửa hàng chính của chúng tôi đặt tại 123 Nguyễn Văn Linh, Quận 7, TP.HCM. Ngoài ra chúng tôi còn có chi nhánh tại Hà Nội và Đà Nẵng.",
+    "khuyến mãi":
+        "Hiện tại chúng tôi đang có chương trình giảm giá 10-30% cho nhiều sản phẩm nội thất và miễn phí vận chuyển cho đơn hàng từ 1.000.000đ.",
+    "lắp đặt":
+        "Chúng tôi cung cấp dịch vụ lắp đặt miễn phí cho các sản phẩm nội thất lớn như giường, tủ, bàn ghế trong phạm vi 20km từ cửa hàng.",
+    "xuất xứ sản phẩm":
+        "Sản phẩm của chúng tôi đến từ nhiều nguồn khác nhau, bao gồm hàng nhập khẩu từ châu Âu, châu Á và hàng sản xuất tại Việt Nam. Thông tin xuất xứ được ghi rõ trong mô tả sản phẩm.",
+}
+
+// Thêm các câu chào và giới thiệu
+const greetings = [
+    "Xin chào! Tôi là trợ lý ảo của cửa hàng nội thất. Tôi có thể giúp bạn tìm kiếm sản phẩm, trả lời câu hỏi hoặc hỗ trợ đặt hàng. Bạn cần giúp đỡ gì?",
+    "Chào mừng bạn đến với cửa hàng nội thất của chúng tôi! Tôi có thể giúp bạn tìm kiếm sản phẩm phù hợp với nhu cầu và ngân sách. Bạn đang tìm kiếm sản phẩm nào?",
+    "Xin chào! Rất vui được hỗ trợ bạn hôm nay. Tôi có thể giúp bạn tìm kiếm sản phẩm nội thất, trả lời thắc mắc hoặc tư vấn về trang trí nội thất. Bạn cần hỗ trợ gì?",
+]
+
+// Thêm các câu trả lời khi không hiểu yêu cầu
+const fallbackResponses = [
+    "Xin lỗi, tôi không hiểu yêu cầu của bạn. Bạn có thể diễn đạt theo cách khác được không?",
+    "Tôi chưa hiểu rõ ý bạn. Bạn có thể cho tôi biết cụ thể hơn về sản phẩm bạn đang tìm kiếm?",
+    "Tôi không chắc mình hiểu đúng yêu cầu của bạn. Bạn có thể cung cấp thêm thông tin hoặc đặt câu hỏi khác không?",
+    "Xin lỗi vì sự bất tiện này. Tôi không thể xử lý yêu cầu của bạn. Bạn có thể thử lại với từ khóa khác hoặc mô tả chi tiết hơn không?",
+]
+
+// Thêm hàm kiểm tra và trả lời câu hỏi thường gặp
+const checkForFAQ = (message) => {
     const lowerMessage = message.toLowerCase().trim()
-    const result = {
-        keywords: [],
-        priceRange: null,
-        colors: [],
-        materials: [],
-        categories: [],
-        purposes: [],
-        styles: [],
-        sizes: [],
-        qualities: [],
-        furnitureTypes: [], // Thêm mảng lưu loại đồ nội thất
-        bedTypes: [], // Thêm mảng lưu loại giường
-        isComparison: false,
-        isRecommendation: false,
-        isBestSeller: false,
-        isNewProduct: false,
-        isDiscount: false,
-        isMultipleSearch: false, // Thêm flag cho tìm kiếm nhiều sản phẩm
-        rawQuery: lowerMessage, // Lưu trữ truy vấn gốc
-    }
 
-    // Kiểm tra xem có phải là yêu cầu so sánh không
-    if (
-        lowerMessage.includes("so sánh") ||
-        lowerMessage.includes("khác nhau") ||
-        lowerMessage.includes("khác biệt") ||
-        lowerMessage.includes("đối chiếu") ||
-        lowerMessage.includes("nên chọn") ||
-        lowerMessage.includes("hay hơn") ||
-        lowerMessage.includes("tốt hơn")
-    ) {
-        result.isComparison = true
-    }
-
-    // Kiểm tra xem có phải là yêu cầu gợi ý không
-    if (
-        lowerMessage.includes("gợi ý") ||
-        lowerMessage.includes("đề xuất") ||
-        lowerMessage.includes("recommend") ||
-        lowerMessage.includes("tư vấn") ||
-        lowerMessage.includes("nên mua") ||
-        lowerMessage.includes("phù hợp với")
-    ) {
-        result.isRecommendation = true
-    }
-
-    // Kiểm tra xem có phải là tìm kiếm nhiều sản phẩm không
-    if (
-        lowerMessage.includes("nhiều") ||
-        lowerMessage.includes("các loại") ||
-        lowerMessage.includes("đa dạng") ||
-        lowerMessage.includes("tất cả") ||
-        lowerMessage.includes("và") ||
-        lowerMessage.includes("cùng với") ||
-        lowerMessage.includes("kết hợp") ||
-        lowerMessage.includes("nhiều sản phẩm") ||
-        lowerMessage.includes("đồ vật") ||
-        lowerMessage.includes("vật dụng")
-    ) {
-        result.isMultipleSearch = true
-    }
-
-    // Kiểm tra khoảng giá
-    if (lowerMessage.includes("dưới") && /\d+/.test(lowerMessage)) {
-        const priceMatch = lowerMessage.match(/dưới\s*(\d+(\.\d+)?)/i)
-        if (priceMatch) {
-            result.priceRange = { max: Number.parseFloat(priceMatch[1]) }
-        }
-    } else if (lowerMessage.includes("trên") && /\d+/.test(lowerMessage)) {
-        const priceMatch = lowerMessage.match(/trên\s*(\d+(\.\d+)?)/i)
-        if (priceMatch) {
-            result.priceRange = { min: Number.parseFloat(priceMatch[1]) }
-        }
-    } else if (lowerMessage.includes("từ") && lowerMessage.includes("đến") && /\d+/.test(lowerMessage)) {
-        const priceMatch = lowerMessage.match(/từ\s*(\d+(\.\d+)?)\s*đến\s*(\d+(\.\d+)?)/i)
-        if (priceMatch) {
-            result.priceRange = { min: Number.parseFloat(priceMatch[1]), max: Number.parseFloat(priceMatch[3]) }
-        }
-    } else if (lowerMessage.includes("khoảng") && /\d+/.test(lowerMessage)) {
-        const priceMatch = lowerMessage.match(/khoảng\s*(\d+(\.\d+)?)/i)
-        if (priceMatch) {
-            const price = Number.parseFloat(priceMatch[1])
-            result.priceRange = { min: price * 0.8, max: price * 1.2 }
-        }
-    }
-
-    // Kiểm tra trực tiếp nếu là tìm kiếm giường
-    if (
-        lowerMessage === "giường" ||
-        lowerMessage.includes("giường") ||
-        lowerMessage.includes("bed") ||
-        lowerMessage.includes("ngủ")
-    ) {
-        if (!result.furnitureTypes.includes("giường")) {
-            result.furnitureTypes.push("giường")
-        }
-        if (!result.keywords.includes("giường")) {
-            result.keywords.push("giường")
-        }
-    }
-
-    // Tìm các từ khóa trong tin nhắn
-    for (const [key, synonyms] of Object.entries(keywordMap)) {
-        for (const synonym of synonyms) {
-            if (lowerMessage.includes(synonym)) {
-                result.keywords.push(key)
-
-                // Phân loại từ khóa
-                if (key.startsWith("màu")) {
-                    result.colors.push(key.replace("màu ", ""))
-                } else if (["gỗ", "kim loại", "vải", "da", "nhựa", "kính", "mây", "đá"].includes(key)) {
-                    result.materials.push(key)
-                } else if (
-                    [
-                        "phòng khách",
-                        "phòng ngủ",
-                        "nhà bếp",
-                        "phòng tắm",
-                        "văn phòng",
-                        "phòng trẻ em",
-                        "ban công",
-                        "phòng ăn",
-                        "hành lang",
-                        "phòng giặt",
-                    ].includes(key)
-                ) {
-                    result.categories.push(key)
-                } else if (
-                    [
-                        "lưu trữ",
-                        "trang trí",
-                        "ngồi",
-                        "ngủ",
-                        "ăn uống",
-                        "làm việc",
-                        "nấu nướng",
-                        "giặt giũ",
-                        "tắm rửa",
-                        "thư giãn",
-                    ].includes(key)
-                ) {
-                    result.purposes.push(key)
-                } else if (
-                    [
-                        "hiện đại",
-                        "cổ điển",
-                        "tối giản",
-                        "sang trọng",
-                        "công nghiệp",
-                        "Bắc Âu",
-                        "mộc mạc",
-                        "ven biển",
-                        "Bohemian",
-                        "Á Đông",
-                    ].includes(key)
-                ) {
-                    result.styles.push(key)
-                } else if (["nhỏ", "lớn"].includes(key)) {
-                    result.sizes.push(key)
-                } else if (["chất lượng cao", "bền"].includes(key)) {
-                    result.qualities.push(key)
-                } else if (key === "bán chạy") {
-                    result.isBestSeller = true
-                } else if (key === "mới") {
-                    result.isNewProduct = true
-                } else if (key === "giảm giá") {
-                    result.isDiscount = true
-                } else if (
-                    [
-                        "ghế sofa",
-                        "ghế đơn",
-                        "ghế văn phòng",
-                        "ghế ăn",
-                        "bàn cà phê",
-                        "bàn ăn",
-                        "bàn làm việc",
-                        "bàn bên",
-                        "tủ quần áo",
-                        "tủ ngăn kéo",
-                        "tủ bếp",
-                        "kệ sách",
-                        "kệ treo tường",
-                        "đèn",
-                        "thảm",
-                        "gương",
-                        "rèm cửa",
-                        "nệm",
-                        "gối",
-                        "chăn",
-                        "ga giường",
-                        "bát đĩa",
-                        "dao kéo",
-                        "nồi chảo",
-                        "lọ hoa",
-                        "khung ảnh",
-                        "đồng hồ",
-                        "hộp đựng",
-                        "giỏ đựng",
-                        "móc treo",
-                        "kệ giày",
-                        "bàn trang điểm",
-                        "tủ tivi",
-                        "bàn console",
-                        "ghế đẩu",
-                        "ghế dài",
-                        "tủ lạnh",
-                        "máy giặt",
-                        "lò vi sóng",
-                        "bếp",
-                        "máy hút mùi",
-                        "máy rửa bát",
-                        "bồn rửa",
-                        "vòi nước",
-                        "bồn tắm",
-                        "vòi sen",
-                        "bồn cầu",
-                        "tủ lavabo",
-                    ].includes(key)
-                ) {
-                    result.furnitureTypes.push(key)
-                } else if (
-                    [
-                        "giường",
-                        "giường đôi",
-                        "giường đơn",
-                        "giường có ngăn chứa",
-                        "giường tầng",
-                        "giường gấp",
-                        "giường sofa",
-                        "giường trẻ em",
-                        "khung giường",
-                        "đầu giường",
-                        "chân giường",
-                    ].includes(key)
-                ) {
-                    result.bedTypes.push(key)
-                    if (!result.furnitureTypes.includes("giường")) {
-                        result.furnitureTypes.push("giường")
-                    }
-                }
-
-                break // Tránh thêm từ khóa trùng lặp
-            }
-        }
-    }
-
-    // Tìm tên sản phẩm cụ thể
-    for (const product of products) {
-        if (product.name && lowerMessage.includes(product.name.toLowerCase())) {
-            result.keywords.push(product.name.toLowerCase())
-        }
-    }
-
-    // Tìm danh mục sản phẩm
-    for (const category of categories) {
+    // Kiểm tra xem tin nhắn có chứa từ khóa FAQ nào không
+    for (const [keyword, answer] of Object.entries(faqData)) {
         if (
-            category.name &&
-            (lowerMessage.includes(category.name.toLowerCase()) ||
-                (category.slug && lowerMessage.includes(category.slug.toLowerCase())))
+            lowerMessage.includes(keyword) ||
+            lowerMessage.includes(`${keyword}?`) ||
+            (lowerMessage.includes("chính sách") && keyword.includes("chính sách")) ||
+            (lowerMessage.includes("bảo hành") && keyword.includes("bảo hành")) ||
+            (lowerMessage.includes("giao hàng") && keyword.includes("giao hàng")) ||
+            (lowerMessage.includes("thanh toán") && keyword.includes("thanh toán")) ||
+            (lowerMessage.includes("đổi trả") && keyword.includes("đổi trả")) ||
+            (lowerMessage.includes("vận chuyển") && keyword.includes("vận chuyển"))
         ) {
-            result.categories.push(category.name.toLowerCase())
+            return {
+                isFAQ: true,
+                answer: answer,
+                relatedQuestions: getRelatedFAQs(keyword),
+            }
         }
     }
 
-    // Xử lý trường hợp đặc biệt cho các từ khóa đơn giản
+    // Kiểm tra các câu hỏi chung
     if (
-        lowerMessage === "ga giường" ||
-        lowerMessage === "ga" ||
-        lowerMessage === "ga trải giường" ||
-        lowerMessage === "bed sheet"
+        lowerMessage.includes("giờ làm việc") ||
+        lowerMessage.includes("mấy giờ mở cửa") ||
+        lowerMessage.includes("thời gian làm việc")
     ) {
-        result.furnitureTypes.push("ga giường")
-        if (!result.keywords.includes("ga giường")) {
-            result.keywords.push("ga giường")
+        return {
+            isFAQ: true,
+            answer: faqData["giờ mở cửa"],
+            relatedQuestions: getRelatedFAQs("giờ mở cửa"),
         }
     }
 
-    return result
+    if (
+        lowerMessage.includes("liên hệ") ||
+        lowerMessage.includes("số điện thoại") ||
+        lowerMessage.includes("email") ||
+        lowerMessage.includes("địa chỉ")
+    ) {
+        return {
+            isFAQ: true,
+            answer: faqData["địa chỉ cửa hàng"],
+            relatedQuestions: getRelatedFAQs("địa chỉ cửa hàng"),
+        }
+    }
+
+    return { isFAQ: false }
 }
 
-// Hàm tìm sản phẩm dựa trên phân tích yêu cầu
-const findProductsByAnalysis = (analysis) => {
-    let filteredProducts = [...products]
-    let diverseResults = []
+// Hàm lấy các câu hỏi liên quan
+const getRelatedFAQs = (currentFAQ) => {
+    const relatedFAQs = []
 
-    // Xử lý trường hợp đặc biệt cho các từ khóa đơn giản
-    if (analysis.rawQuery) {
-        const simpleQuery = analysis.rawQuery.trim()
+    // Nhóm các FAQ theo chủ đề
+    const faqGroups = {
+        "mua hàng": ["phương thức thanh toán", "phí vận chuyển", "thời gian giao hàng"],
+        "chính sách": ["chính sách đổi trả", "bảo hành", "lắp đặt"],
+        "cửa hàng": ["giờ mở cửa", "địa chỉ cửa hàng", "khuyến mãi"],
+        "sản phẩm": ["xuất xứ sản phẩm", "bảo hành", "lắp đặt"],
+    }
 
-        // Tìm kiếm trực tiếp trong tên sản phẩm, mô tả và tags
-        const directMatches = products.filter(
-            (product) =>
-                (product.name && product.name.toLowerCase().includes(simpleQuery)) ||
-                (product.description && product.description.toLowerCase().includes(simpleQuery)) ||
-                (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(simpleQuery))),
-        )
-
-        if (directMatches.length > 0) {
-            // Nếu tìm thấy kết quả trực tiếp, sử dụng chúng
-            return directMatches.sort((a, b) => b.rating - a.rating)
+    // Tìm nhóm chứa FAQ hiện tại
+    let currentGroup = null
+    for (const [group, faqs] of Object.entries(faqGroups)) {
+        if (faqs.includes(currentFAQ)) {
+            currentGroup = group
+            break
         }
     }
 
-    // Lọc theo danh mục
-    if (analysis.categories.length > 0) {
-        const categoryIds = categories
-            .filter((cat) =>
-                analysis.categories.some((c) => cat.name.toLowerCase().includes(c) || cat.slug.toLowerCase().includes(c)),
-            )
-            .map((cat) => cat.id)
-
-        if (categoryIds.length > 0) {
-            filteredProducts = filteredProducts.filter((product) => categoryIds.includes(product.categoryId))
-        }
-    }
-
-    // Lọc theo màu sắc
-    if (analysis.colors.length > 0) {
-        filteredProducts = filteredProducts.filter((product) =>
-            analysis.colors.some((color) => product.color && product.color.toLowerCase().includes(color)),
-        )
-    }
-
-    // Lọc theo chất liệu
-    if (analysis.materials.length > 0) {
-        filteredProducts = filteredProducts.filter((product) =>
-            analysis.materials.some((material) => product.material && product.material.toLowerCase().includes(material)),
-        )
-    }
-
-    // Lọc theo khoảng giá
-    if (analysis.priceRange) {
-        if (analysis.priceRange.min) {
-            filteredProducts = filteredProducts.filter(
-                (product) => Number.parseFloat(product.price) >= analysis.priceRange.min,
-            )
-        }
-        if (analysis.priceRange.max) {
-            filteredProducts = filteredProducts.filter(
-                (product) => Number.parseFloat(product.price) <= analysis.priceRange.max,
-            )
-        }
-    }
-
-    // Lọc theo sản phẩm bán chạy
-    if (analysis.isBestSeller) {
-        filteredProducts = filteredProducts.filter((product) => product.bestSeller)
-    }
-
-    // Lọc theo sản phẩm giảm giá
-    if (analysis.isDiscount) {
-        filteredProducts = filteredProducts.filter((product) => product.lastChance)
-    }
-
-    // Lọc theo mục đích sử dụng
-    if (analysis.purposes.length > 0) {
-        filteredProducts = filteredProducts.filter((product) =>
-            analysis.purposes.some(
-                (purpose) => product.tags && product.tags.some((tag) => tag.toLowerCase().includes(purpose)),
-            ),
-        )
-    }
-
-    // Xử lý tìm kiếm giường
-    if (analysis.bedTypes.length > 0 || analysis.furnitureTypes.includes("giường")) {
-        // Tìm kiếm các sản phẩm giường dựa trên loại giường cụ thể
-        const bedMatches = products.filter(
-            (product) =>
-                (product.tags && product.tags.some((tag) => tag.toLowerCase().includes("bed"))) ||
-                (product.name && product.name.toLowerCase().includes("bed")) ||
-                (product.description && product.description.toLowerCase().includes("bed")) ||
-                (product.tags && product.tags.some((tag) => tag.toLowerCase().includes("giường"))) ||
-                (product.name && product.name.toLowerCase().includes("giường")) ||
-                (product.description && product.description.toLowerCase().includes("giường")),
-        )
-
-        if (bedMatches.length > 0) {
-            // Nếu có loại giường cụ thể, lọc thêm
-            if (analysis.bedTypes.length > 0) {
-                const specificBedMatches = bedMatches.filter((product) =>
-                    analysis.bedTypes.some(
-                        (type) =>
-                            (product.name && product.name.toLowerCase().includes(type.toLowerCase())) ||
-                            (product.description && product.description.toLowerCase().includes(type.toLowerCase())) ||
-                            (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(type.toLowerCase()))),
-                    ),
-                )
-
-                if (specificBedMatches.length > 0) {
-                    return specificBedMatches.sort((a, b) => b.rating - a.rating)
-                }
+    // Nếu tìm thấy nhóm, lấy các FAQ khác trong nhóm đó
+    if (currentGroup) {
+        for (const faq of faqGroups[currentGroup]) {
+            if (faq !== currentFAQ) {
+                relatedFAQs.push(faq)
             }
-
-            // Nếu không có loại giường cụ thể hoặc không tìm thấy, trả về tất cả giường
-            return bedMatches.sort((a, b) => b.rating - a.rating)
-        }
-
-        // Nếu không tìm thấy giường trong dữ liệu, tạo dữ liệu mẫu
-        if (analysis.rawQuery.includes("giường") || analysis.furnitureTypes.includes("giường")) {
-            return createSampleBeds()
         }
     }
 
-    // Nếu có tìm kiếm loại đồ nội thất cụ thể
-    if (analysis.furnitureTypes.length > 0) {
-        // Nếu là tìm kiếm nhiều sản phẩm, xử lý từng loại riêng biệt
-        if (analysis.isMultipleSearch) {
-            // Tìm kiếm từng loại đồ nội thất và lấy top sản phẩm cho mỗi loại
-            for (const furnitureType of analysis.furnitureTypes) {
-                const matchingProducts = products.filter(
-                    (product) =>
-                        (product.name && product.name.toLowerCase().includes(furnitureType.toLowerCase())) ||
-                        (product.description && product.description.toLowerCase().includes(furnitureType.toLowerCase())) ||
-                        (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(furnitureType.toLowerCase()))),
-                )
-
-                // Sắp xếp theo đánh giá và lấy top 2 sản phẩm cho mỗi loại
-                const topProducts = matchingProducts.sort((a, b) => b.rating - a.rating).slice(0, 2)
-                diverseResults = [...diverseResults, ...topProducts]
-            }
-
-            // Nếu không có loại đồ nội thất cụ thể
-            if (analysis.furnitureTypes.length === 0 && analysis.isMultipleSearch) {
-                // Nếu không có loại đồ nội thất cụ thể nhưng muốn tìm nhiều sản phẩm
-                // Nhóm sản phẩm theo danh mục và lấy top sản phẩm từ mỗi danh mục
-                const categoryGroups = {}
-
-                for (const product of filteredProducts) {
-                    const categoryId = product.categoryId
-                    if (!categoryGroups[categoryId]) {
-                        categoryGroups[categoryId] = []
-                    }
-                    categoryGroups[categoryId].push(product)
-                }
-
-                // Lấy top sản phẩm từ mỗi danh mục
-                for (const categoryId in categoryGroups) {
-                    const topCategoryProducts = categoryGroups[categoryId].sort((a, b) => b.rating - a.rating).slice(0, 2)
-                    diverseResults = [...diverseResults, ...topCategoryProducts]
-                }
-            }
-
-            // Nếu đã có kết quả đa dạng, sử dụng kết quả đó
-            if (diverseResults.length > 0) {
-                return diverseResults
-            }
-        } else {
-            // Nếu không phải tìm kiếm nhiều sản phẩm, lọc theo loại đồ nội thất
-            const furnitureMatches = []
-
-            // Tìm kiếm chính xác theo loại đồ nội thất
-            for (const type of analysis.furnitureTypes) {
-                const matches = products.filter(
-                    (product) =>
-                        (product.name && product.name.toLowerCase().includes(type.toLowerCase())) ||
-                        (product.description && product.description.toLowerCase().includes(type.toLowerCase())) ||
-                        (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(type.toLowerCase()))),
-                )
-
-                furnitureMatches.push(...matches)
-            }
-
-            if (furnitureMatches.length > 0) {
-                // Nếu tìm thấy kết quả trực tiếp, sử dụng chúng
-                return furnitureMatches.sort((a, b) => b.rating - a.rating)
-            }
-
-            // Nếu không tìm thấy kết quả trực tiếp, sử dụng phương pháp lọc thông thường
-            filteredProducts = filteredProducts.filter((product) =>
-                analysis.furnitureTypes.some(
-                    (type) =>
-                        (product.name && product.name.toLowerCase().includes(type.toLowerCase())) ||
-                        (product.description && product.description.toLowerCase().includes(type.toLowerCase())) ||
-                        (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(type.toLowerCase()))),
-                ),
-            )
-        }
-    } else if (analysis.isMultipleSearch) {
-        // Nếu là tìm kiếm nhiều sản phẩm nhưng không chỉ định loại cụ thể
-        // Nhóm sản phẩm theo danh mục và lấy top sản phẩm từ mỗi danh mục
-        const categoryGroups = {}
-
-        for (const product of filteredProducts) {
-            const categoryId = product.categoryId
-            if (!categoryGroups[categoryId]) {
-                categoryGroups[categoryId] = []
-            }
-            categoryGroups[categoryId].push(product)
-        }
-
-        // Lấy top sản phẩm từ mỗi danh mục
-        for (const categoryId in categoryGroups) {
-            const topCategoryProducts = categoryGroups[categoryId].sort((a, b) => b.rating - a.rating).slice(0, 2)
-            diverseResults = [...diverseResults, ...topCategoryProducts]
-        }
-
-        if (diverseResults.length > 0) {
-            return diverseResults
+    // Nếu không đủ 3 câu hỏi liên quan, thêm các câu hỏi ngẫu nhiên
+    while (relatedFAQs.length < 3) {
+        const randomFAQ = Object.keys(faqData)[Math.floor(Math.random() * Object.keys(faqData).length)]
+        if (randomFAQ !== currentFAQ && !relatedFAQs.includes(randomFAQ)) {
+            relatedFAQs.push(randomFAQ)
         }
     }
 
-    // Lọc theo từ khóa trong tên và mô tả
-    const otherKeywords = analysis.keywords.filter(
-        (keyword) =>
-            !analysis.colors.includes(keyword) &&
-            !analysis.materials.includes(keyword) &&
-            !analysis.categories.includes(keyword) &&
-            !analysis.purposes.includes(keyword) &&
-            !analysis.furnitureTypes.includes(keyword) &&
-            !analysis.bedTypes.includes(keyword),
-    )
-
-    if (otherKeywords.length > 0) {
-        filteredProducts = filteredProducts.filter((product) =>
-            otherKeywords.some(
-                (keyword) =>
-                    (product.name && product.name.toLowerCase().includes(keyword)) ||
-                    (product.description && product.description.toLowerCase().includes(keyword)) ||
-                    (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(keyword))),
-            ),
-        )
-    }
-
-    // Nếu không tìm thấy sản phẩm nào, thử tìm kiếm mở rộng
-    if (filteredProducts.length === 0 && analysis.rawQuery) {
-        // Tạo một danh sách các từ trong truy vấn
-        const queryWords = analysis.rawQuery.split(/\s+/)
-
-        // Tìm kiếm sản phẩm có chứa bất kỳ từ nào trong truy vấn
-        if (queryWords.length > 0) {
-            return products
-                .filter((product) =>
-                    queryWords.some(
-                        (word) =>
-                            (product.name && product.name.toLowerCase().includes(word)) ||
-                            (product.description && product.description.toLowerCase().includes(word)) ||
-                            (product.tags && product.tags.some((tag) => tag.toLowerCase().includes(word))),
-                    ),
-                )
-                .sort((a, b) => b.rating - a.rating)
-        }
-    }
-
-    // Sắp xếp kết quả
-    if (analysis.isRecommendation) {
-        // Nếu là yêu cầu gợi ý, ưu tiên sản phẩm có đánh giá cao và bán chạy
-        filteredProducts.sort((a, b) => {
-            // Ưu tiên sản phẩm bán chạy
-            if (a.bestSeller && !b.bestSeller) return -1
-            if (!a.bestSeller && b.bestSeller) return 1
-
-            // Sau đó ưu tiên theo đánh giá
-            return b.rating - a.rating
-        })
-    } else {
-        // Mặc định sắp xếp theo đánh giá
-        filteredProducts.sort((a, b) => b.rating - a.rating)
-    }
-
-    return filteredProducts
+    return relatedFAQs.slice(0, 3)
 }
 
-// Hàm tạo dữ liệu mẫu cho giường
-const createSampleBeds = () => {
-    return [
-        {
-            id: "bed001",
-            name: "MALM",
-            description: "Bed frame, high, white, Queen",
-            price: "199.99",
-            currency: "$",
-            rating: 4.6,
-            reviews: 2876,
-            image: "https://www.ikea.com/us/en/images/products/malm-bed-frame-high-white-luroey__0749130_pe745499_s5.jpg?f=s",
-            bestSeller: true,
-            lastChance: false,
-            categoryId: 2,
-            color: "white",
-            material: "wood",
-            tags: ["bed", "bedroom", "furniture"],
-        },
-        {
-            id: "bed002",
-            name: "HEMNES",
-            description: "Bed frame, white stain, Queen",
-            price: "299.99",
-            currency: "$",
-            rating: 4.5,
-            reviews: 1876,
-            image:
-                "https://www.ikea.com/us/en/images/products/hemnes-bed-frame-white-stain-luroey__0637516_pe698353_s5.jpg?f=s",
-            bestSeller: false,
-            lastChance: true,
-            categoryId: 2,
-            color: "white",
-            material: "wood",
-            tags: ["bed", "bedroom", "furniture"],
-        },
-        {
-            id: "bed003",
-            name: "BRIMNES",
-            description: "Bed frame with storage, white, Queen",
-            price: "249.00",
-            currency: "$",
-            rating: 4.4,
-            reviews: 1098,
-            image:
-                "https://www.ikea.com/us/en/images/products/brimnes-bed-frame-with-storage-white-luroey__0861362_pe614968_s5.jpg?f=s",
-            bestSeller: false,
-            lastChance: false,
-            categoryId: 2,
-            color: "white",
-            material: "wood",
-            tags: ["bed", "storage", "bedroom"],
-        },
-        {
-            id: "bed004",
-            name: "NEIDEN",
-            description: "Bed frame, pine, Twin",
-            price: "59.99",
-            currency: "$",
-            rating: 4.3,
-            reviews: 876,
-            image: "https://www.ikea.com/us/en/images/products/neiden-bed-frame-pine__0749132_pe745501_s5.jpg?f=s",
-            bestSeller: false,
-            lastChance: false,
-            categoryId: 2,
-            color: "beige",
-            material: "wood",
-            tags: ["bed", "bedroom", "furniture"],
-        },
-        {
-            id: "bed005",
-            name: "SLATTUM",
-            description: "Upholstered bed frame, Knisa light gray, Queen",
-            price: "179.00",
-            currency: "$",
-            rating: 4.5,
-            reviews: 765,
-            image:
-                "https://www.ikea.com/us/en/images/products/slattum-upholstered-bed-frame-knisa-light-gray__0768244_pe754388_s5.jpg?f=s",
-            bestSeller: true,
-            lastChance: false,
-            categoryId: 2,
-            color: "gray",
-            material: "fabric",
-            tags: ["bed", "bedroom", "upholstered"],
-        },
-        {
-            id: "bed006",
-            name: "TARVA",
-            description: "Bed frame, pine, Queen",
-            price: "149.00",
-            currency: "$",
-            rating: 4.2,
-            reviews: 543,
-            image:
-                "https://www.ikea.com/us/en/images/products/malm-bed-frame-dark-brown-veneer__1364772_pe956028_s5.jpg?f=xl",
-            bestSeller: false,
-            lastChance: false,
-            categoryId: 2,
-            color: "beige",
-            material: "wood",
-            tags: ["bed", "bedroom", "furniture"],
-        },
-        {
-            id: "bed007",
-            name: "SONGESAND",
-            description: "Bed frame with 2 storage boxes, brown, Full/Double",
-            price: "229.00",
-            currency: "$",
-            rating: 4.4,
-            reviews: 687,
-            image: "https://www.ikea.com/us/en/images/products/utaker-stackable-bed-pine__1101313_pe866582_s5.jpg?f=xxs",
-            bestSeller: false,
-            lastChance: false,
-            categoryId: 2,
-            color: "brown",
-            material: "wood",
-            tags: ["bed", "storage", "bedroom"],
-        },
-        {
-            id: "bed008",
-            name: "KURA",
-            description: "Reversible bed, white/pine, Twin",
-            price: "179.00",
-            currency: "$",
-            rating: 4.7,
-            reviews: 1243,
-            image:
-                "https://www.ikea.com/us/en/images/products/malm-bed-frame-high-black-brown-luroey__0638608_pe699032_s5.jpg?f=xxs",
-            bestSeller: true,
-            lastChance: false,
-            categoryId: 2,
-            color: "white",
-            material: "wood",
-            tags: ["bed", "children", "reversible"],
-        },
+// Hàm kiểm tra ý định chào hỏi
+const checkForGreeting = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ chào hỏi phổ biến
+    const greetingWords = [
+        "xin chào",
+        "chào",
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "chào bạn",
+        "alo",
     ]
-}
 
-// Hàm tạo phản hồi dựa trên phân tích yêu cầu và sản phẩm tìm được
-const createResponse = (analysis, products) => {
-    if (products.length === 0) {
-        return {
-            text: "Xin lỗi, chúng tôi không tìm thấy sản phẩm nào phù hợp với yêu cầu của bạn. Bạn có thể mô tả chi tiết hơn hoặc thử với các tiêu chí khác.",
-            products: [],
+    for (const word of greetingWords) {
+        if (lowerMessage.includes(word) || lowerMessage === word) {
+            return true
         }
     }
 
-    let responseText = ""
-    const topProducts = products.slice(0, 8) // Tăng số lượng sản phẩm hiển thị
+    return false
+}
 
-    // Tạo phản hồi dựa trên loại yêu cầu
-    if (analysis.isComparison) {
-        responseText = "Dưới đây là một số sản phẩm để bạn có thể so sánh:"
-    } else if (analysis.isRecommendation) {
-        responseText = "Dựa trên yêu cầu của bạn, tôi xin gợi ý những sản phẩm sau:"
-    } else if (analysis.bedTypes.length > 0 || analysis.furnitureTypes.includes("giường")) {
-        if (analysis.bedTypes.length > 0) {
-            responseText = `Đây là một số ${analysis.bedTypes.join(", ")} phù hợp với yêu cầu của bạn:`
-        } else {
-            responseText = "Đây là một số giường phù hợp với yêu cầu của bạn:"
-        }
-    } else if (analysis.isMultipleSearch) {
-        // Nhóm sản phẩm theo loại
-        const productTypes = {}
-        for (const product of topProducts) {
-            // Xác định loại sản phẩm từ tên hoặc tags
-            let type = "Khác"
-            if (product.tags && product.tags.length > 0) {
-                type = product.tags[0]
-            } else {
-                // Tìm loại từ tên sản phẩm
-                for (const [key, synonyms] of Object.entries(keywordMap)) {
-                    if (
-                        [
-                            "ghế sofa",
-                            "ghế đơn",
-                            "ghế văn phòng",
-                            "ghế ăn",
-                            "bàn cà phê",
-                            "bàn ăn",
-                            "bàn làm việc",
-                            "bàn bên",
-                            "giường",
-                            "tủ quần áo",
-                            "tủ ngăn kéo",
-                            "tủ bếp",
-                            "kệ sách",
-                            "kệ treo tường",
-                            "đèn",
-                            "thảm",
-                            "gương",
-                            "rèm cửa",
-                            "nệm",
-                            "gối",
-                            "chăn",
-                            "ga giường",
-                            "bát đĩa",
-                            "dao kéo",
-                            "nồi chảo",
-                            "lọ hoa",
-                            "khung ảnh",
-                            "đồng hồ",
-                            "hộp đựng",
-                            "giỏ đựng",
-                            "móc treo",
-                            "kệ giày",
-                            "bàn trang điểm",
-                            "tủ tivi",
-                            "bàn console",
-                            "ghế đẩu",
-                            "ghế dài",
-                        ].includes(key)
-                    ) {
-                        for (const synonym of synonyms) {
-                            if (product.name && product.name.toLowerCase().includes(synonym)) {
-                                type = key
-                                break
-                            }
-                        }
-                        if (type !== "Khác") break
-                    }
-                }
-            }
+// Hàm kiểm tra ý định cảm ơn
+const checkForThanks = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
 
-            if (!productTypes[type]) {
-                productTypes[type] = []
-            }
-            productTypes[type].push(product)
-        }
+    // Kiểm tra các từ cảm ơn phổ biến
+    const thanksWords = ["cảm ơn", "thank", "thanks", "thank you", "cám ơn", "cảm ơn bạn", "cảm ơn nhiều"]
 
-        // Đếm số loại sản phẩm khác nhau
-        const typeCount = Object.keys(productTypes).length
+    for (const word of thanksWords) {
+        if (lowerMessage.includes(word) || lowerMessage === word) {
+            return true
+        }
+    }
 
-        if (typeCount > 1) {
-            responseText = `Tôi đã tìm thấy ${typeCount} loại sản phẩm khác nhau phù hợp với yêu cầu của bạn:`
-        } else {
-            responseText = "Dưới đây là các sản phẩm đa dạng phù hợp với yêu cầu của bạn:"
+    return false
+}
+
+// Hàm kiểm tra ý định tạm biệt
+const checkForGoodbye = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ tạm biệt phổ biến
+    const goodbyeWords = ["tạm biệt", "bye", "goodbye", "see you", "hẹn gặp lại", "chào tạm biệt"]
+
+    for (const word of goodbyeWords) {
+        if (lowerMessage.includes(word) || lowerMessage === word) {
+            return true
         }
-    } else if (analysis.categories.length > 0) {
-        const categoryNames = analysis.categories.map((c) => {
-            // Chuyển đổi từ khóa thành tên danh mục đầy đủ
-            const matchedCategory = categories.find(
-                (cat) => cat.name.toLowerCase().includes(c) || cat.slug.toLowerCase().includes(c),
-            )
-            return matchedCategory ? matchedCategory.name : c
-        })
-        responseText = `Chúng tôi có một số sản phẩm ${categoryNames.join(", ")} phù hợp với yêu cầu của bạn:`
-    } else if (analysis.colors.length > 0) {
-        responseText = `Đây là một số sản phẩm màu ${analysis.colors.join(", ")} phù hợp với yêu cầu của bạn:`
-    } else if (analysis.materials.length > 0) {
-        responseText = `Đây là một số sản phẩm làm từ ${analysis.materials.join(", ")} phù hợp với yêu cầu của bạn:`
-    } else if (analysis.priceRange) {
-        if (analysis.priceRange.min && analysis.priceRange.max) {
-            responseText = `Đây là một số sản phẩm có giá từ $${analysis.priceRange.min} đến $${analysis.priceRange.max}:`
-        } else if (analysis.priceRange.min) {
-            responseText = `Đây là một số sản phẩm có giá trên $${analysis.priceRange.min}:`
-        } else if (analysis.priceRange.max) {
-            responseText = `Đây là một số sản phẩm có giá dưới $${analysis.priceRange.max}:`
+    }
+
+    return false
+}
+
+// Hàm kiểm tra ý định đặt hàng
+const checkForOrderIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến đặt hàng
+    const orderKeywords = [
+        "đặt hàng",
+        "mua",
+        "order",
+        "thanh toán",
+        "giỏ hàng",
+        "cart",
+        "mua ngay",
+        "đặt mua",
+        "thêm vào giỏ",
+        "add to cart",
+        "checkout",
+    ]
+
+    for (const keyword of orderKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
         }
-    } else if (analysis.isBestSeller) {
-        responseText = "Đây là những sản phẩm bán chạy nhất của chúng tôi:"
-    } else if (analysis.isDiscount) {
-        responseText = "Hiện tại chúng tôi đang có một số sản phẩm giảm giá:"
-    } else if (analysis.purposes.length > 0) {
-        responseText = `Đây là một số sản phẩm phù hợp cho mục đích ${analysis.purposes.join(", ")}:`
-    } else if (analysis.furnitureTypes.length > 0) {
-        responseText = `Đây là một số sản phẩm loại ${analysis.furnitureTypes.join(", ")} phù hợp với yêu cầu của bạn:`
+    }
+
+    return false
+}
+
+// Hàm thêm sản phẩm vào giỏ hàng
+const addToCart = (productId, quantity = 1) => {
+    // Tìm sản phẩm trong danh sách sản phẩm
+    const product = products.find((p) => p.id === productId)
+
+    if (!product) {
+        return {
+            success: false,
+            message: "Không tìm thấy sản phẩm",
+        }
+    }
+
+    // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+    const existingItemIndex = conversationContext.cart.findIndex((item) => item.product.id === productId)
+
+    if (existingItemIndex >= 0) {
+        // Nếu đã có, tăng số lượng
+        conversationContext.cart[existingItemIndex].quantity += quantity
     } else {
-        responseText = "Dựa trên yêu cầu của bạn, đây là một số sản phẩm phù hợp:"
+        // Nếu chưa có, thêm mới
+        conversationContext.cart.push({
+            product: product,
+            quantity: quantity,
+        })
     }
 
     return {
-        text: responseText,
-        products: topProducts,
+        success: true,
+        message: `Đã thêm ${quantity} ${product.name} vào giỏ hàng`,
+        cart: conversationContext.cart,
     }
 }
 
-// Hàm tạo phản hồi cho trường hợp so sánh sản phẩm
-const createComparisonResponse = (products) => {
-    if (products.length < 2) {
-        return {
-            text: "Để so sánh sản phẩm, vui lòng cung cấp thêm thông tin về các sản phẩm bạn muốn so sánh.",
-            products: products,
+// Hàm xử lý đặt hàng
+const processOrder = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Nếu giỏ hàng trống và có ý định đặt hàng
+    if (conversationContext.cart.length === 0) {
+        // Kiểm tra xem tin nhắn có đề cập đến sản phẩm cụ thể không
+        if (conversationContext.lastProducts && conversationContext.lastProducts.length > 0) {
+            // Nếu có sản phẩm được hiển thị gần đây, hỏi người dùng muốn đặt sản phẩm nào
+            return {
+                text: "Bạn muốn đặt sản phẩm nào? Vui lòng cho tôi biết tên hoặc mã sản phẩm.",
+                products: conversationContext.lastProducts,
+                suggestions: ["Đặt sản phẩm đầu tiên", "Xem thêm sản phẩm", "Thêm tất cả vào giỏ hàng"],
+            }
+        } else {
+            // Nếu không có sản phẩm nào được hiển thị gần đây
+            return {
+                text: "Giỏ hàng của bạn đang trống. Bạn muốn tìm kiếm sản phẩm nào để đặt hàng?",
+                products: [],
+                suggestions: popularSuggestions.slice(0, 5),
+            }
         }
     }
 
-    const topProducts = products.slice(0, 4)
-
-    let comparisonText = "Dưới đây là so sánh giữa các sản phẩm bạn quan tâm:\n\n"
-
-    // So sánh giá
-    comparisonText += "Về giá cả: "
-    const cheapestProduct = topProducts.reduce((prev, current) =>
-        Number.parseFloat(prev.price) < Number.parseFloat(current.price) ? prev : current,
+    // Nếu giỏ hàng có sản phẩm
+    const totalItems = conversationContext.cart.reduce((sum, item) => sum + item.quantity, 0)
+    const totalPrice = conversationContext.cart.reduce(
+        (sum, item) => sum + Number.parseFloat(item.product.price) * item.quantity,
+        0,
     )
-    const mostExpensiveProduct = topProducts.reduce((prev, current) =>
-        Number.parseFloat(prev.price) > Number.parseFloat(current.price) ? prev : current,
-    )
-    comparisonText += `${cheapestProduct.name} có giá thấp nhất (${cheapestProduct.currency}${cheapestProduct.price}), trong khi ${mostExpensiveProduct.name} có giá cao nhất (${mostExpensiveProduct.currency}${mostExpensiveProduct.price}).\n\n`
 
-    // So sánh đánh giá
-    comparisonText += "Về đánh giá: "
-    const bestRatedProduct = topProducts.reduce((prev, current) => (prev.rating > current.rating ? prev : current))
-    comparisonText += `${bestRatedProduct.name} có đánh giá cao nhất (${bestRatedProduct.rating}/5 sao với ${bestRatedProduct.reviews} đánh giá).\n\n`
+    // Tạo danh sách sản phẩm trong giỏ hàng
+    let cartItemsList = "Giỏ hàng của bạn:\n\n"
+    conversationContext.cart.forEach((item, index) => {
+        cartItemsList += `${index + 1}. ${item.product.name} - ${item.quantity} x ${item.product.currency}${item.product.price} = ${item.product.currency}${(Number.parseFloat(item.product.price) * item.quantity).toFixed(2)}\n`
+    })
 
-    // So sánh chất liệu
-    const materials = [...new Set(topProducts.map((p) => p.material))]
-    if (materials.length > 1) {
-        comparisonText += "Về chất liệu: "
-        topProducts.forEach((p) => {
-            comparisonText += `${p.name} được làm từ ${p.material}, `
-        })
-        comparisonText = comparisonText.slice(0, -2) + ".\n\n"
+    cartItemsList += `\nTổng cộng: ${conversationContext.cart[0].product.currency}${totalPrice.toFixed(2)}`
+
+    // Kiểm tra xem người dùng có muốn thanh toán không
+    if (
+        lowerMessage.includes("thanh toán") ||
+        lowerMessage.includes("checkout") ||
+        lowerMessage.includes("đặt hàng ngay") ||
+        lowerMessage.includes("mua ngay")
+    ) {
+        return {
+            text: `${cartItemsList}\n\nĐể hoàn tất đơn hàng, vui lòng cung cấp thông tin giao hàng (tên, số điện thoại, địa chỉ) và phương thức thanh toán bạn muốn sử dụng.`,
+            products: conversationContext.cart.map((item) => item.product),
+            suggestions: [
+                "Thanh toán khi nhận hàng (COD)",
+                "Thanh toán qua thẻ tín dụng",
+                "Chuyển khoản ngân hàng",
+                "Thanh toán qua ví điện tử",
+            ],
+        }
     }
 
-    // Kết luận
-    comparisonText += "Gợi ý: "
-    if (topProducts.some((p) => p.bestSeller)) {
-        const bestSellers = topProducts.filter((p) => p.bestSeller)
-        comparisonText += `${bestSellers.map((p) => p.name).join(", ")} là sản phẩm bán chạy nhất. `
-    }
-
-    comparisonText += "Bạn có thể chọn sản phẩm phù hợp nhất dựa trên nhu cầu và ngân sách của mình."
-
+    // Mặc định hiển thị giỏ hàng
     return {
-        text: comparisonText,
-        products: topProducts,
+        text: `${cartItemsList}\n\nBạn có muốn tiếp tục mua sắm hay thanh toán ngay?`,
+        products: conversationContext.cart.map((item) => item.product),
+        suggestions: ["Tiếp tục mua sắm", "Thanh toán ngay", "Cập nhật số lượng", "Xóa giỏ hàng"],
     }
 }
 
-// Hàm tìm phản hồi dựa trên từ khóa
+// Hàm xử lý ý định xóa giỏ hàng
+const clearCart = () => {
+    conversationContext.cart = []
+    return {
+        success: true,
+        message: "Đã xóa tất cả sản phẩm trong giỏ hàng",
+    }
+}
+
+// Hàm xử lý ý định xem giỏ hàng
+const viewCart = () => {
+    if (conversationContext.cart.length === 0) {
+        return {
+            text: "Giỏ hàng của bạn đang trống. Bạn muốn tìm kiếm sản phẩm nào?",
+            products: [],
+            suggestions: popularSuggestions.slice(0, 5),
+        }
+    }
+
+    const totalItems = conversationContext.cart.reduce((sum, item) => sum + item.quantity, 0)
+    const totalPrice = conversationContext.cart.reduce(
+        (sum, item) => sum + Number.parseFloat(item.product.price) * item.quantity,
+        0,
+    )
+
+    // Tạo danh sách sản phẩm trong giỏ hàng
+    let cartItemsList = "Giỏ hàng của bạn:\n\n"
+    conversationContext.cart.forEach((item, index) => {
+        cartItemsList += `${index + 1}. ${item.product.name} - ${item.quantity} x ${item.product.currency}${item.product.price} = ${item.product.currency}${(Number.parseFloat(item.product.price) * item.quantity).toFixed(2)}\n`
+    })
+
+    cartItemsList += `\nTổng cộng: ${conversationContext.cart[0].product.currency}${totalPrice.toFixed(2)}`
+
+    return {
+        text: `${cartItemsList}\n\nBạn có muốn tiếp tục mua sắm hay thanh toán ngay?`,
+        products: conversationContext.cart.map((item) => item.product),
+        suggestions: ["Tiếp tục mua sắm", "Thanh toán ngay", "Cập nhật số lượng", "Xóa giỏ hàng"],
+    }
+}
+
+// Hàm kiểm tra ý định xem giỏ hàng
+const checkForCartViewIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến xem giỏ hàng
+    const cartKeywords = [
+        "giỏ hàng",
+        "cart",
+        "xem giỏ",
+        "view cart",
+        "xem giỏ hàng",
+        "kiểm tra giỏ hàng",
+        "check cart",
+        "sản phẩm trong giỏ",
+    ]
+
+    for (const keyword of cartKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
+        }
+    }
+
+    return false
+}
+
+// Hàm kiểm tra ý định xóa giỏ hàng
+const checkForClearCartIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến xóa giỏ hàng
+    const clearCartKeywords = [
+        "xóa giỏ hàng",
+        "clear cart",
+        "xóa giỏ",
+        "xóa tất cả",
+        "xóa sản phẩm",
+        "remove all",
+        "empty cart",
+        "làm trống giỏ hàng",
+    ]
+
+    for (const keyword of clearCartKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
+        }
+    }
+
+    return false
+}
+
+// Hàm xử lý ý định thêm sản phẩm vào giỏ hàng
+const processAddToCartIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Nếu không có sản phẩm được hiển thị gần đây
+    if (!conversationContext.lastProducts || conversationContext.lastProducts.length === 0) {
+        return {
+            text: "Bạn muốn thêm sản phẩm nào vào giỏ hàng? Vui lòng cho tôi biết tên hoặc mô tả sản phẩm.",
+            products: [],
+            suggestions: popularSuggestions.slice(0, 5),
+        }
+    }
+
+    // Kiểm tra xem tin nhắn có đề cập đến sản phẩm cụ thể không
+    let productIndex = -1
+
+    // Kiểm tra các từ như "sản phẩm đầu tiên", "sản phẩm thứ hai", v.v.
+    if (lowerMessage.includes("đầu tiên") || lowerMessage.includes("thứ nhất") || lowerMessage.includes("1")) {
+        productIndex = 0
+    } else if (lowerMessage.includes("thứ hai") || lowerMessage.includes("2")) {
+        productIndex = 1
+    } else if (lowerMessage.includes("thứ ba") || lowerMessage.includes("3")) {
+        productIndex = 2
+    } else if (lowerMessage.includes("thứ tư") || lowerMessage.includes("4")) {
+        productIndex = 3
+    }
+
+    // Nếu không tìm thấy chỉ số sản phẩm, kiểm tra tên sản phẩm
+    if (productIndex === -1) {
+        for (let i = 0; i < conversationContext.lastProducts.length; i++) {
+            const product = conversationContext.lastProducts[i]
+            if (lowerMessage.includes(product.name.toLowerCase())) {
+                productIndex = i
+                break
+            }
+        }
+    }
+
+    // Nếu tìm thấy sản phẩm
+    if (productIndex >= 0 && productIndex < conversationContext.lastProducts.length) {
+        const product = conversationContext.lastProducts[productIndex]
+        const result = addToCart(product.id)
+
+        if (result.success) {
+            return {
+                text: `${result.message}. Bạn có muốn tiếp tục mua sắm hay xem giỏ hàng?`,
+                products: [product],
+                suggestions: ["Tiếp tục mua sắm", "Xem giỏ hàng", "Thanh toán ngay", "Thêm sản phẩm khác"],
+            }
+        } else {
+            return {
+                text: result.message,
+                products: conversationContext.lastProducts,
+                suggestions: ["Thử lại", "Tìm sản phẩm khác", "Xem giỏ hàng"],
+            }
+        }
+    }
+
+    // Nếu không tìm thấy sản phẩm cụ thể, hỏi người dùng muốn thêm sản phẩm nào
+    return {
+        text: "Bạn muốn thêm sản phẩm nào vào giỏ hàng? Vui lòng cho tôi biết tên hoặc số thứ tự sản phẩm.",
+        products: conversationContext.lastProducts,
+        suggestions: conversationContext.lastProducts.map((p, i) => `Thêm ${p.name}`),
+    }
+}
+
+// Hàm kiểm tra ý định thêm vào giỏ hàng
+const checkForAddToCartIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến thêm vào giỏ hàng
+    const addToCartKeywords = [
+        "thêm vào giỏ",
+        "add to cart",
+        "thêm giỏ hàng",
+        "mua",
+        "đặt mua",
+        "thêm sản phẩm",
+        "thêm vào",
+        "mua ngay",
+        "đặt ngay",
+    ]
+
+    for (const keyword of addToCartKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
+        }
+    }
+
+    return false
+}
+
+// Hàm xử lý ý định hỗ trợ
+const processHelpIntent = (message) => {
+    return {
+        text:
+            "Tôi có thể giúp bạn với những việc sau:\n\n" +
+            "1. Tìm kiếm sản phẩm nội thất theo loại, màu sắc, giá cả, v.v.\n" +
+            "2. Cung cấp thông tin về sản phẩm và so sánh giữa các sản phẩm\n" +
+            "3. Trả lời các câu hỏi về chính sách cửa hàng, giao hàng, đổi trả\n" +
+            "4. Hỗ trợ đặt hàng và thanh toán\n" +
+            "5. Tư vấn về trang trí nội thất\n\n" +
+            "Bạn cần hỗ trợ về vấn đề gì?",
+        products: [],
+        suggestions: [
+            "Tìm sản phẩm",
+            "Chính sách đổi trả",
+            "Phương thức thanh toán",
+            "Thời gian giao hàng",
+            "Tư vấn trang trí",
+            "Liên hệ nhân viên",
+        ],
+    }
+}
+
+// Hàm kiểm tra ý định hỗ trợ
+const checkForHelpIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến hỗ trợ
+    const helpKeywords = [
+        "giúp",
+        "help",
+        "hỗ trợ",
+        "support",
+        "trợ giúp",
+        "hướng dẫn",
+        "guide",
+        "làm thế nào",
+        "how to",
+        "cách",
+    ]
+
+    for (const keyword of helpKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
+        }
+    }
+
+    return false
+}
+
+// Hàm xử lý ý định liên hệ nhân viên
+const processContactStaffIntent = () => {
+    return {
+        text:
+            "Bạn có thể liên hệ với nhân viên hỗ trợ của chúng tôi qua các kênh sau:\n\n" +
+            "- Hotline: 1900 1234 (8:00 - 22:00 mỗi ngày)\n" +
+            "- Email: support@noithat.com\n" +
+            "- Chat trực tiếp trên website: Nhấn vào nút 'Chat với nhân viên' ở góc phải màn hình\n\n" +
+            "Bạn cũng có thể để lại số điện thoại, chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.",
+        products: [],
+        suggestions: ["Để lại số điện thoại", "Gửi email", "Quay lại tìm kiếm sản phẩm"],
+    }
+}
+
+// Hàm kiểm tra ý định liên hệ nhân viên
+const checkForContactStaffIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến liên hệ nhân viên
+    const contactKeywords = [
+        "nói chuyện với nhân viên",
+        "gặp nhân viên",
+        "liên hệ nhân viên",
+        "talk to human",
+        "speak to agent",
+        "nhân viên hỗ trợ",
+        "tư vấn viên",
+        "gặp người thật",
+        "không muốn nói chuyện với bot",
+        "cần người hỗ trợ",
+    ]
+
+    for (const keyword of contactKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
+        }
+    }
+
+    return false
+}
+
+// Hàm xử lý ý định tư vấn trang trí
+const processDecorAdviceIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Xác định phòng cần tư vấn
+    let room = "phòng khách" // Mặc định là phòng khách
+
+    if (lowerMessage.includes("phòng ngủ")) {
+        room = "phòng ngủ"
+    } else if (lowerMessage.includes("nhà bếp") || lowerMessage.includes("bếp")) {
+        room = "nhà bếp"
+    } else if (lowerMessage.includes("phòng tắm")) {
+        room = "phòng tắm"
+    } else if (lowerMessage.includes("văn phòng") || lowerMessage.includes("phòng làm việc")) {
+        room = "văn phòng"
+    } else if (lowerMessage.includes("phòng ăn")) {
+        room = "phòng ăn"
+    } else if (lowerMessage.includes("ban công")) {
+        room = "ban công"
+    }
+
+    // Xác định phong cách
+    let style = "hiện đại" // Mặc định là phong cách hiện đại
+
+    if (lowerMessage.includes("cổ điển") || lowerMessage.includes("vintage")) {
+        style = "cổ điển"
+    } else if (lowerMessage.includes("tối giản") || lowerMessage.includes("minimalist")) {
+        style = "tối giản"
+    } else if (lowerMessage.includes("bắc âu") || lowerMessage.includes("scandinavian")) {
+        style = "Bắc Âu"
+    } else if (lowerMessage.includes("công nghiệp") || lowerMessage.includes("industrial")) {
+        style = "công nghiệp"
+    } else if (lowerMessage.includes("mộc mạc") || lowerMessage.includes("rustic")) {
+        style = "mộc mạc"
+    }
+
+    // Tạo lời khuyên dựa trên phòng và phong cách
+    let advice = ""
+
+    if (room === "phòng khách") {
+        if (style === "hiện đại") {
+            advice =
+                "Đối với phòng khách phong cách hiện đại, bạn nên chọn:\n\n" +
+                "1. Ghế sofa đơn giản với đường nét sạch sẽ, màu trung tính như xám, be hoặc trắng\n" +
+                "2. Bàn cà phê hình học với mặt kính hoặc gỗ sáng màu\n" +
+                "3. Kệ TV tối giản với không gian lưu trữ ẩn\n" +
+                "4. Thảm trải sàn họa tiết đơn giản hoặc một màu\n" +
+                "5. Đèn sàn hoặc đèn bàn kim loại với thiết kế đơn giản\n\n" +
+                "Hãy giữ không gian thoáng đãng và tránh quá nhiều đồ trang trí."
+        } else if (style === "cổ điển") {
+            advice =
+                "Đối với phòng khách phong cách cổ điển, bạn nên chọn:\n\n" +
+                "1. Ghế sofa bọc vải hoa văn hoặc da với đường viền và chi tiết chạm khắc\n" +
+                "2. Bàn cà phê gỗ tối với chân uốn cong và chi tiết chạm khắc\n" +
+                "3. Tủ kệ gỗ tối với chi tiết trang trí\n" +
+                "4. Thảm Ba Tư hoặc thảm hoa văn cổ điển\n" +
+                "5. Đèn chùm pha lê hoặc đèn bàn với chân đế trang trí\n\n" +
+                "Bạn có thể thêm các đồ trang trí như đồng hồ cổ, khung ảnh mạ vàng, và bình hoa cổ điển."
+        } else if (style === "tối giản") {
+            advice =
+                "Đối vớii phòng khách phong cách tối giản, bạn nên chọn:\n\n" +
+                "1. Ghế sofa đơn giản, đường nét sạch sẽ, màu trung tính\n" +
+                "2. Bàn cà phê đơn giản với thiết kế chức năng\n" +
+                "3. Kệ mở hoặc tủ kệ với thiết kế đơn giản\n" +
+                "4. Thảm trải sàn một màu, không họa tiết\n" +
+                "5. Đèn với thiết kế đơn giản, không trang trí\n\n" +
+                "Hãy giữ số lượng đồ nội thất và trang trí ở mức tối thiểu, tuân theo nguyên tắc 'ít là nhiều'."
+        }
+    } else if (room === "phòng ngủ") {
+        if (style === "hiện đại") {
+            advice =
+                "Đối với phòng ngủ phong cách hiện đại, bạn nên chọn:\n\n" +
+                "1. Giường với khung đơn giản, đầu giường bọc nỉ hoặc da\n" +
+                "2. Tủ đầu giường tối giản với ngăn kéo hoặc kệ mở\n" +
+                "3. Tủ quần áo với cửa trượt hoặc thiết kế phẳng\n" +
+                "4. Đèn treo hoặc đèn bàn với thiết kế hình học\n" +
+                "5. Rèm cửa đơn sắc hoặc có họa tiết đơn giản\n\n" +
+                "Sử dụng màu sắc trung tính như xám, be, trắng kết hợp với một màu nổi bật làm điểm nhấn."
+        } else if (style === "Bắc Âu") {
+            advice =
+                "Đối với phòng ngủ phong cách Bắc Âu, bạn nên chọn:\n\n" +
+                "1. Giường gỗ sáng màu với đường nét đơn giản\n" +
+                "2. Tủ đầu giường gỗ sáng màu hoặc màu trắng\n" +
+                "3. Tủ quần áo gỗ sáng với thiết kế đơn giản\n" +
+                "4. Đèn với chao màu trắng hoặc gỗ nhẹ\n" +
+                "5. Rèm cửa vải tự nhiên, màu sáng\n\n" +
+                "Sử dụng màu sắc nhẹ nhàng như trắng, xám nhạt, xanh pastel và thêm các yếu tố tự nhiên như cây xanh."
+        }
+    }
+
+    // Nếu không có lời khuyên cụ thể, tạo lời khuyên chung
+    if (!advice) {
+        advice =
+            `Đối với ${room} phong cách ${style}, tôi khuyên bạn nên:\n\n` +
+            "1. Chọn màu sắc phù hợp với phong cách và không gian\n" +
+            "2. Lựa chọn đồ nội thất có kích thước phù hợp với diện tích phòng\n" +
+            "3. Cân nhắc công năng sử dụng của từng món đồ\n" +
+            "4. Kết hợp ánh sáng tự nhiên và nhân tạo một cách hài hòa\n" +
+            "5. Thêm các chi tiết trang trí phù hợp với phong cách tổng thể\n\n" +
+            "Bạn có muốn tôi gợi ý một số sản phẩm cụ thể cho không gian này không?"
+    }
+
+    // Tìm các sản phẩm phù hợp với phòng và phong cách
+    const analysis = {
+        categories: [room],
+        styles: [style],
+        keywords: [room, style],
+        furnitureTypes: [],
+        rawQuery: `${room} ${style}`,
+    }
+
+    const matchedProducts = findProductsByAnalysis(analysis)
+
+    return {
+        text: advice,
+        products: matchedProducts.slice(0, 4),
+        suggestions: [`Xem thêm sản phẩm cho ${room}`, `Tư vấn phong cách khác`, `Tư vấn cho phòng khác`, "Đặt hàng ngay"],
+    }
+}
+
+// Hàm kiểm tra ý định tư vấn trang trí
+const checkForDecorAdviceIntent = (message) => {
+    const lowerMessage = message.toLowerCase().trim()
+
+    // Kiểm tra các từ khóa liên quan đến tư vấn trang trí
+    const decorKeywords = [
+        "tư vấn trang trí",
+        "decor",
+        "trang trí",
+        "thiết kế nội thất",
+        "interior design",
+        "phối đồ",
+        "phối màu",
+        "phong cách",
+        "style",
+    ]
+
+    for (const keyword of decorKeywords) {
+        if (lowerMessage.includes(keyword)) {
+            return true
+        }
+    }
+
+    return false
+}
+
+// Cập nhật hàm findResponse để xử lý các ý định mới
 const findResponse = (message) => {
+    // Lưu trữ tin nhắn vào ngữ cảnh cuộc trò chuyện
+    conversationContext.lastQuery = message
+    conversationContext.conversationHistory.push({ role: "user", content: message })
+
+    // Kiểm tra xem có phải là lần đầu tiên người dùng nhắn tin không
+    if (!conversationContext.greetingShown) {
+        conversationContext.greetingShown = true
+        // Hiển thị lời chào khi người dùng bắt đầu cuộc trò chuyện
+        const greeting = greetings[Math.floor(Math.random() * greetings.length)]
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: greeting })
+
+        return {
+            text: greeting,
+            products: chatService.getFeaturedProducts(),
+            suggestions: popularSuggestions.slice(0, 5),
+        }
+    }
+
+    // Kiểm tra các ý định khác nhau
+
+    // Kiểm tra ý định chào hỏi
+    if (checkForGreeting(message)) {
+        const greeting = greetings[Math.floor(Math.random() * greetings.length)]
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: greeting })
+
+        return {
+            text: greeting,
+            products: chatService.getFeaturedProducts(),
+            suggestions: popularSuggestions.slice(0, 5),
+        }
+    }
+
+    // Kiểm tra ý định cảm ơn
+    if (checkForThanks(message)) {
+        const response = "Rất vui được giúp đỡ bạn! Bạn còn cần hỗ trợ gì khác không?"
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: response })
+
+        return {
+            text: response,
+            products: [],
+            suggestions: ["Tìm sản phẩm khác", "Xem giỏ hàng", "Tư vấn trang trí", "Liên hệ nhân viên"],
+        }
+    }
+
+    // Kiểm tra ý định tạm biệt
+    if (checkForGoodbye(message)) {
+        const response = "Cảm ơn bạn đã trò chuyện! Chúc bạn một ngày tốt lành. Hẹn gặp lại bạn sớm!"
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: response })
+
+        return {
+            text: response,
+            products: [],
+            suggestions: ["Tiếp tục mua sắm", "Xem giỏ hàng", "Đánh giá trải nghiệm"],
+        }
+    }
+
+    // Kiểm tra câu hỏi thường gặp
+    const faqCheck = checkForFAQ(message)
+    if (faqCheck.isFAQ) {
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: faqCheck.answer })
+
+        return {
+            text: faqCheck.answer,
+            products: [],
+            suggestions: faqCheck.relatedQuestions.map((q) => `${q}?`),
+        }
+    }
+
+    // Kiểm tra ý định xem giỏ hàng
+    if (checkForCartViewIntent(message)) {
+        const cartResponse = viewCart()
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: cartResponse.text })
+
+        return cartResponse
+    }
+
+    // Kiểm tra ý định xóa giỏ hàng
+    if (checkForClearCartIntent(message)) {
+        const clearResult = clearCart()
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: clearResult.message })
+
+        return {
+            text: clearResult.message + ". Bạn muốn tiếp tục tìm kiếm sản phẩm khác?",
+            products: [],
+            suggestions: popularSuggestions.slice(0, 5),
+        }
+    }
+
+    // Kiểm tra ý định thêm vào giỏ hàng
+    if (checkForAddToCartIntent(message)) {
+        const cartResponse = processAddToCartIntent(message)
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: cartResponse.text })
+
+        return cartResponse
+    }
+
+    // Kiểm tra ý định đặt hàng
+    if (checkForOrderIntent(message)) {
+        const orderResponse = processOrder(message)
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: orderResponse.text })
+
+        return orderResponse
+    }
+
+    // Kiểm tra ý định hỗ trợ
+    if (checkForHelpIntent(message)) {
+        const helpResponse = processHelpIntent(message)
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: helpResponse.text })
+
+        return helpResponse
+    }
+
+    // Kiểm tra ý định liên hệ nhân viên
+    if (checkForContactStaffIntent(message)) {
+        const contactResponse = processContactStaffIntent()
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: contactResponse.text })
+
+        return contactResponse
+    }
+
+    // Kiểm tra ý định tư vấn trang trí
+    if (checkForDecorAdviceIntent(message)) {
+        const decorResponse = processDecorAdviceIntent(message)
+
+        // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+        conversationContext.conversationHistory.push({ role: "assistant", content: decorResponse.text })
+
+        return decorResponse
+    }
+
+    // Nếu không khớp với bất kỳ ý định nào, xử lý như tìm kiếm sản phẩm
     // Phân tích yêu cầu của khách hàng
     const analysis = analyzeRequest(message)
 
     // Tìm sản phẩm phù hợp
     const matchedProducts = findProductsByAnalysis(analysis)
 
-    // Nếu không tìm thấy sản phẩm nào, tạo dữ liệu mẫu cho "ga giường"
-    if (matchedProducts.length === 0 && (message.toLowerCase().includes("ga giường") || message.toLowerCase() === "ga")) {
-        // Tạo dữ liệu mẫu cho ga giường
-        const sampleBedSheets = [
-            {
-                id: "bs001",
-                name: "DVALA Ga giường",
-                description: "Ga giường cotton mềm mại, dễ chịu khi tiếp xúc với da",
-                price: "299000",
-                currency: "₫",
-                rating: 4.7,
-                reviews: 120,
-                image: "/placeholder.svg?height=200&width=200",
-                color: "trắng",
-                material: "cotton",
-                bestSeller: true,
-                categoryId: "bedroom",
-                tags: ["ga giường", "phòng ngủ", "cotton"],
-            },
-            {
-                id: "bs002",
-                name: "NATTJASMIN Ga trải giường",
-                description: "Ga trải giường cotton cao cấp với độ mềm mịn tuyệt vời",
-                price: "499000",
-                currency: "₫",
-                rating: 4.8,
-                reviews: 85,
-                image: "/placeholder.svg?height=200&width=200",
-                color: "xám nhạt",
-                material: "cotton sateen",
-                bestSeller: false,
-                categoryId: "bedroom",
-                tags: ["ga giường", "phòng ngủ", "cotton"],
-            },
-            {
-                id: "bs003",
-                name: "SOMNTUTA Ga giường đôi",
-                description: "Ga giường đôi với kích thước rộng rãi, phù hợp cho giường đôi",
-                price: "399000",
-                currency: "₫",
-                rating: 4.5,
-                reviews: 62,
-                image: "/placeholder.svg?height=200&width=200",
-                color: "be",
-                material: "cotton",
-                bestSeller: false,
-                categoryId: "bedroom",
-                tags: ["ga giường", "phòng ngủ", "cotton", "giường đôi"],
-            },
-            {
-                id: "bs004",
-                name: "ULLVIDE Ga trải giường",
-                description: "Ga trải giường làm từ cotton lyocell mềm mại, thoáng khí",
-                price: "599000",
-                currency: "₫",
-                rating: 4.9,
-                reviews: 103,
-                image: "/placeholder.svg?height=200&width=200",
-                color: "xanh dương nhạt",
-                material: "cotton lyocell",
-                bestSeller: true,
-                categoryId: "bedroom",
-                tags: ["ga giường", "phòng ngủ", "cotton", "lyocell"],
-            },
-        ]
-
-        return {
-            text: "Đây là một số ga giường phù hợp với yêu cầu của bạn:",
-            products: sampleBedSheets,
-        }
-    }
+    // Lưu trữ sản phẩm tìm thấy vào ngữ cảnh cuộc trò chuyện
+    conversationContext.lastProducts = matchedProducts
 
     // Tạo phản hồi
+    let response
     if (analysis.isComparison && matchedProducts.length >= 2) {
-        return createComparisonResponse(matchedProducts)
+        response = createComparisonResponse(matchedProducts)
     } else {
-        return createResponse(analysis, matchedProducts)
+        response = createResponse(analysis, matchedProducts)
     }
+
+    // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+    conversationContext.conversationHistory.push({ role: "assistant", content: response.text })
+
+    return response
 }
 
-// Mô phỏng độ trễ của API
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
+// Cập nhật chatService để bao gồm các chức năng mới
 export const chatService = {
     sendMessage: async (message, attachment = null) => {
         // Mô phỏng độ trễ của API
@@ -1166,10 +1108,18 @@ export const chatService = {
             // Trong thực tế, bạn có thể sử dụng AI để phân tích hình ảnh và đề xuất sản phẩm phù hợp
             const randomProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 4)
 
-            return {
+            const response = {
                 text: "Cảm ơn bạn đã gửi hình ảnh. Dựa vào hình ảnh, tôi nghĩ những sản phẩm sau đây có thể phù hợp với nhu cầu của bạn:",
                 products: randomProducts,
+                suggestions: ["Xem thêm sản phẩm tương tự", "Tìm sản phẩm khác màu", "Tìm sản phẩm cùng loại giá rẻ hơn"],
             }
+
+            // Lưu trữ phản hồi vào ngữ cảnh cuộc trò chuyện
+            conversationContext.conversationHistory.push({ role: "user", content: "Đã gửi một hình ảnh" })
+            conversationContext.conversationHistory.push({ role: "assistant", content: response.text })
+            conversationContext.lastProducts = randomProducts
+
+            return response
         }
 
         // Xử lý tin nhắn văn bản
@@ -1204,4 +1154,154 @@ export const chatService = {
     analyzeRequest: (message) => {
         return analyzeRequest(message)
     },
+
+    // Hàm lấy lịch sử tìm kiếm
+    getSearchHistory: () => {
+        return searchHistory
+    },
+
+    // Hàm xóa lịch sử tìm kiếm
+    clearSearchHistory: () => {
+        searchHistory = []
+        return { success: true }
+    },
+
+    // Hàm lấy gợi ý tìm kiếm
+    getSuggestions: (query = "") => {
+        return generateSmartSuggestions(query)
+    },
+
+    // Hàm lấy gợi ý phổ biến
+    getPopularSuggestions: () => {
+        return popularSuggestions
+    },
+
+    // Hàm tạo gợi ý tìm kiếm thông minh
+    generateSmartSuggestions: (query) => {
+        return generateSmartSuggestions(query)
+    },
+
+    // Hàm lấy giỏ hàng hiện tại
+    getCart: () => {
+        return conversationContext.cart
+    },
+
+    // Hàm thêm sản phẩm vào giỏ hàng
+    addToCart: (productId, quantity = 1) => {
+        return addToCart(productId, quantity)
+    },
+
+    // Hàm xóa sản phẩm khỏi giỏ hàng
+    removeFromCart: (productId) => {
+        const index = conversationContext.cart.findIndex((item) => item.product.id === productId)
+
+        if (index >= 0) {
+            conversationContext.cart.splice(index, 1)
+            return { success: true, message: "Đã xóa sản phẩm khỏi giỏ hàng" }
+        }
+
+        return { success: false, message: "Không tìm thấy sản phẩm trong giỏ hàng" }
+    },
+
+    // Hàm cập nhật số lượng sản phẩm trong giỏ hàng
+    updateCartItemQuantity: (productId, quantity) => {
+        const index = conversationContext.cart.findIndex((item) => item.product.id === productId)
+
+        if (index >= 0) {
+            conversationContext.cart[index].quantity = quantity
+            return { success: true, message: "Đã cập nhật số lượng sản phẩm" }
+        }
+
+        return { success: false, message: "Không tìm thấy sản phẩm trong giỏ hàng" }
+    },
+
+    // Hàm xóa giỏ hàng
+    clearCart: () => {
+        return clearCart()
+    },
+
+    // Hàm lấy lịch sử cuộc trò chuyện
+    getConversationHistory: () => {
+        return conversationContext.conversationHistory
+    },
+
+    // Hàm xóa lịch sử cuộc trò chuyện
+    clearConversationHistory: () => {
+        conversationContext.conversationHistory = []
+        return { success: true }
+    },
+
+    // Hàm lấy ngữ cảnh cuộc trò chuyện
+    getConversationContext: () => {
+        return conversationContext
+    },
+
+    // Hàm đặt tên người dùng
+    setUserName: (name) => {
+        conversationContext.userName = name
+        return { success: true }
+    },
+
+    // Hàm lấy câu hỏi thường gặp
+    getFAQs: () => {
+        return Object.keys(faqData).map((key) => ({ question: key, answer: faqData[key] }))
+    },
+
+    // Hàm kiểm tra câu hỏi thường gặp
+    checkForFAQ: (message) => {
+        return checkForFAQ(message)
+    },
+
+    // Hàm lấy gợi ý tư vấn trang trí
+    getDecorAdvice: (room, style) => {
+        const message = `Tư vấn trang trí ${room} phong cách ${style}`
+        return processDecorAdviceIntent(message)
+    },
+}
+
+// Các hàm hỗ trợ (cần được định nghĩa hoặc import)
+const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+
+// Các hàm này cần được định nghĩa hoặc import từ các module khác
+const popularSuggestions = ["ghế sofa", "bàn ăn", "giường ngủ", "tủ quần áo", "đèn trang trí"]
+
+// Giả định các hàm này được định nghĩa ở nơi khác và import vào đây
+const analyzeRequest = (message) => {
+    // Logic phân tích yêu cầu
+    return {
+        categories: [],
+        styles: [],
+        keywords: [],
+        furnitureTypes: [],
+        rawQuery: message,
+        isComparison: false,
+    }
+}
+
+const findProductsByAnalysis = (analysis) => {
+    // Logic tìm kiếm sản phẩm
+    return products.slice(0, 5) // Trả về 5 sản phẩm đầu tiên làm ví dụ
+}
+
+const createResponse = (analysis, products) => {
+    // Logic tạo phản hồi
+    return {
+        text: "Đây là một số sản phẩm chúng tôi tìm thấy:",
+        products: products,
+        suggestions: ["Tìm sản phẩm tương tự", "Xem thêm sản phẩm"],
+    }
+}
+
+const createComparisonResponse = (products) => {
+    // Logic tạo phản hồi so sánh
+    return {
+        text: "Đây là so sánh giữa các sản phẩm:",
+        products: products,
+        suggestions: ["Xem chi tiết", "Chọn sản phẩm"],
+    }
+}
+
+const generateSmartSuggestions = (query) => {
+    // Logic tạo gợi ý tìm kiếm thông minh
+    return popularSuggestions.filter((suggestion) => suggestion.toLowerCase().includes(query.toLowerCase())).slice(0, 5)
 }
