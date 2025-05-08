@@ -13,11 +13,19 @@ const ChatMessage = ({ message }) => {
 
     // Hàm xử lý khi người dùng nhấp vào sản phẩm
     const handleProductClick = (product) => {
-        // Dispatch một event để App.jsx xử lý
-        const event = new CustomEvent("navigate", {
-            detail: { page: "product", params: { productId: product.id } },
-        })
-        window.dispatchEvent(event)
+        // Tạo hiệu ứng khi click
+        const clickedElement = event.currentTarget
+        clickedElement.classList.add("scale-95", "opacity-70")
+
+        // Sau 200ms, chuyển trang và xóa hiệu ứng
+        setTimeout(() => {
+            // Dispatch một event để App.jsx xử lý
+            const event = new CustomEvent("navigate", {
+                detail: { page: "product", params: { productId: product.id } },
+            })
+            window.dispatchEvent(event)
+            clickedElement.classList.remove("scale-95", "opacity-70")
+        }, 200)
     }
 
     // Hàm định dạng giá tiền
@@ -56,14 +64,14 @@ const ChatMessage = ({ message }) => {
                         {message.products.map((product, idx) => (
                             <div
                                 key={idx}
-                                className="bg-white p-2 rounded border hover:shadow-md cursor-pointer transition-all"
-                                onClick={() => handleProductClick(product)}
+                                className="bg-white p-2 rounded border hover:shadow-md cursor-pointer transition-all transform hover:translate-y-[-2px] hover:border-[#0058a3] relative group"
+                                onClick={(event) => handleProductClick(product)}
                             >
-                                <div className="relative pb-[100%] mb-2">
+                                <div className="relative pb-[100%] mb-2 overflow-hidden">
                                     <img
                                         src={product.image || "/placeholder.svg"}
                                         alt={product.name}
-                                        className="absolute inset-0 w-full h-full object-contain"
+                                        className="absolute inset-0 w-full h-full object-contain transition-transform group-hover:scale-105"
                                     />
                                 </div>
                                 <div className="flex flex-col">
@@ -79,6 +87,11 @@ const ChatMessage = ({ message }) => {
                                             <span className="ml-auto text-[9px] bg-yellow-100 text-yellow-800 px-1 rounded">Bán chạy</span>
                                         )}
                                     </div>
+                                </div>
+                                <div className="absolute inset-0 bg-[#0058a3] bg-opacity-0 group-hover:bg-opacity-5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                    <span className="text-xs font-medium text-[#0058a3] bg-white px-2 py-1 rounded-full shadow-sm">
+                                        Xem chi tiết
+                                    </span>
                                 </div>
                             </div>
                         ))}

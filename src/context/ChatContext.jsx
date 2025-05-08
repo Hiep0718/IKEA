@@ -68,6 +68,23 @@ export const ChatProvider = ({ children }) => {
         setIsMinimized((prev) => !prev)
     }, [])
 
+    // Thêm hàm closeChat
+    const closeChat = useCallback(() => {
+        if (isOpen) {
+            setIsOpen(false)
+        }
+    }, [isOpen])
+
+    // Lắng nghe sự kiện đóng chat box (tùy chọn)
+    useEffect(() => {
+        const handleCloseChat = () => {
+            closeChat()
+        }
+
+        window.addEventListener("closeChatBox", handleCloseChat)
+        return () => window.removeEventListener("closeChatBox", handleCloseChat)
+    }, [closeChat])
+
     const sendMessage = useCallback(async (text, attachment = null) => {
         // Thêm tin nhắn của người dùng vào danh sách
         const userMessage = {
@@ -146,6 +163,7 @@ export const ChatProvider = ({ children }) => {
         categories,
         toggleChat,
         minimizeChat,
+        closeChat,
         sendMessage,
         suggestCategories,
     }

@@ -2,6 +2,7 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { ConfigProvider } from "antd"
+
 import IkeaHeader from "./components/HeaderIKEA"
 import IkeaNavigation from "./components/IkeaNavigation"
 import IkeaFooter from "./components/IkeaFooter"
