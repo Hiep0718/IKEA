@@ -1,5 +1,6 @@
 "use client";
 import {Input, Button, Dropdown, Badge } from "antd";
+import { Link} from "react-router-dom"
 import {
   SearchOutlined,
   HeartOutlined,
@@ -126,21 +127,13 @@ const HeaderIKEA = ({ navigateTo }) => {
       {/* Main header */}
       <header className="bg-white py-3 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-          {/* IKEA Logo */}
-          <a
-            href="#"
-            className="flex-shrink-0"
-            onClick={(e) => {
-              e.preventDefault();
-              navigateTo("home");
-            }}
-          >
+        <Link to="/" className="flex-shrink-0">
             <div className="bg-blue-600 h-10 w-16 rounded flex items-center justify-center">
               <div className="bg-yellow-400 h-6 w-12 rounded flex items-center justify-center border-2 border-blue-600">
                 <span className="text-blue-600 font-bold text-sm">IKEA</span>
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Search Bar */}
           <div className="flex-grow max-w-2xl mx-4">

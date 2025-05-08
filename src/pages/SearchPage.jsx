@@ -12,7 +12,7 @@ const { Title, Text } = Typography
 
 const SearchPage = () => {
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, ] = useSearchParams()
   const query = searchParams.get("q") || ""
 
   const [products, setProducts] = useState([])
