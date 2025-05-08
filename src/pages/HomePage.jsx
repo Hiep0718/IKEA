@@ -7,6 +7,10 @@ import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
 import { getImage, getBannerImage } from "../utils/imageUtils"
 import { useCart } from "../context/CartContext"
+import RoomInspirationSection from "../components/RoomInspirationSection"
+import CurrentPromotionsSection from "../components/CurrentPromotionsSection"
+import ShoppingOptionsSection from "../components/ShoppingOptionsSection"
+import IkeaIntro from "../components/IkeaIntro"
 
 const HomePage = () => {
   const { addToCart } = useCart()
@@ -195,6 +199,8 @@ const HomePage = () => {
         </Carousel>
       </div>
 
+      
+
       {/* Featured Products Section */}
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
@@ -233,6 +239,9 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      
+      <RoomInspirationSection />
+      <CurrentPromotionsSection />
 
       {/* Ideas & Inspiration Section */}
       <section className="py-12 px-4 bg-gray-50">
@@ -286,6 +295,12 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+
+      <ShoppingOptionsSection />
+      {/* Footer Section */}
+
+      <IkeaIntro />
     </div>
   )
 }
