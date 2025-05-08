@@ -87,15 +87,15 @@ const IkeaFooter = () => {
     { key: "mastercard", alt: "Mastercard" },
     { key: "discover", alt: "Discover" },
     { key: "amex", alt: "American Express" },
-    { key: "ikeaCard", alt: "IKEA Card" },
+    { key: "ikeacard", alt: "IKEA Card" },
     { key: "paypal", alt: "PayPal" },
-    { key: "applePay", alt: "Apple Pay" },
-    { key: "googlePay", alt: "Google Pay" },
+    { key: "applepay", alt: "Apple Pay" },
+    { key: "googlepay", alt: "Google Pay" },
     { key: "klarna", alt: "Klarna" },
     { key: "unionpay", alt: "UnionPay" },
     { key: "jcb", alt: "JCB" },
     { key: "diners", alt: "Diners Club" },
-    { key: "giftCard", alt: "Gift Card" },
+    { key: "giftcard", alt: "Gift Card" },
     { key: "affirm", alt: "Affirm" },
   ]
 
@@ -165,7 +165,7 @@ const IkeaFooter = () => {
                 >
                   <img
                     // Update the path to directly reference the files in your project structure
-                    src={`/src/images/payment-icons/${method.key}.png`}
+                    src={`/images/payment-icons/${method.key}.png`}
                     alt={method.alt}
                     className="max-w-full max-h-full object-contain"
                   />
