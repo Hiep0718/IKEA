@@ -1,6 +1,6 @@
 "use client";
 import {Input, Button, Dropdown, Badge } from "antd";
-import { Link} from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import {
   SearchOutlined,
   HeartOutlined,
@@ -18,10 +18,12 @@ import CartDropdown from "./CartDropdown";
 import UserMenu from "./UserMenu";
 import LoginModal from "./LoginModal";
 
+
 const HeaderIKEA = ({ navigateTo }) => {
   const { getCartCount, toggleCart } = useCart();
   const { user, openLoginModal } = useAuth();
   const cartCount = getCartCount();
+  const navigate = useNavigate();
 
   // Language dropdown items
   const languageItems = [
@@ -47,13 +49,13 @@ const HeaderIKEA = ({ navigateTo }) => {
     {
       key: "account",
       label: "Tài khoản của tôi",
-      onClick: () => navigateTo("profile"),
+      onClick: () => navigate("/profile"),
     },
     {
       key: "orders",
       label: "Đơn hàng của tôi",
       onClick: () => {
-        navigateTo("profile")
+        navigate("/profile")
         // You could add logic to activate the orders tab
       },
     },
@@ -61,7 +63,7 @@ const HeaderIKEA = ({ navigateTo }) => {
       key: "wishlist",
       label: "Danh sách yêu thích",
       onClick: () => {
-        navigateTo("profile")
+        navigate("/profile")
         // You could add logic to activate the wishlist tab
       },
     },
