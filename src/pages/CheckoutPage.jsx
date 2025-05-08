@@ -1,146 +1,237 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Steps, Button, message } from "antd"
-import { useCart } from "../context/CartContext"
-import { useAuth } from "../context/AuthContext"
+import { Link, useNavigate } from "react-router-dom"
+import { Button, Carousel } from "antd"
+import { ShoppingCartOutlined } from "@ant-design/icons"
 import Breadcrumb from "../components/Breadcrumb"
-import CartSummary from "../components/checkout/CartSummary"
-import ShippingForm from "../components/checkout/ShippingForm"
-import PaymentMethod from "../components/checkout/PaymentMethod"
-import OrderReview from "../components/checkout/OrderReview"
-import OrderConfirmation from "../components/checkout/OrderConfirmation"
+import ShippingBanner from "../components/ShippingBanner"
+import { getImage, getProductImage, getBannerImage } from "../utils/imageUtils"
+import { useCart } from "../context/CartContext"
 
-const CheckoutPage = ({ navigateTo }) => {
-  const { user } = useAuth()
-  const { cartItems, getCartTotal, clearCart } = useCart()
-  const [currentStep, setCurrentStep] = useState(0)
-  const [shippingInfo, setShippingInfo] = useState(null)
-  const [paymentMethod, setPaymentMethod] = useState(null)
-  const [orderNumber, setOrderNumber] = useState(null)
-  const [loading, setLoading] = useState(false)
+const HomePage = () => {
+  const { addToCart } = useCart()
+  const navigate = useNavigate()
 
-  // Breadcrumb items for checkout page
+  // Breadcrumb items for the home page
   const breadcrumbItems = [
-    { label: "Trang chủ", path: "#" },
-    { label: "Giỏ hàng", path: "#" },
-    { label: "Thanh toán", path: "#" },
+    { label: "Products", path: "/products" },
+    { label: "Smart home", path: "/products?category=smart-home" },
   ]
 
-  // Redirect to home if cart is empty
-  useEffect(() => {
-    if (cartItems.length === 0 && currentStep === 0) {
-      message.info("Giỏ hàng của bạn đang trống")
-      navigateTo && navigateTo("home")
-    }
-  }, [cartItems, navigateTo, currentStep])
-
-  // Handle next step
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1)
-  }
-
-  // Handle previous step
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1)
-  }
-
-  // Handle shipping form submission
-  const handleShippingSubmit = (values) => {
-    setShippingInfo(values)
-    nextStep()
-  }
-
-  // Handle payment method selection
-  const handlePaymentSelect = (method) => {
-    setPaymentMethod(method)
-    nextStep()
-  }
-
-  // Handle order placement
-  const handlePlaceOrder = () => {
-    setLoading(true)
-    // Simulate API call to place order
-    setTimeout(() => {
-      // Generate random order number
-      const newOrderNumber = "ORD-" + Math.floor(100000 + Math.random() * 900000)
-      setOrderNumber(newOrderNumber)
-      clearCart()
-      setLoading(false)
-      nextStep()
-    }, 1500)
-  }
-
-  // Steps for checkout process
-  const steps = [
+  // Featured products data
+  const featuredProducts = [
     {
-      title: "Thông tin giao hàng",
-      content: <ShippingForm onSubmit={handleShippingSubmit} user={user} />,
+      id: "billy-bookcase",
+      key: "billy",
+      name: "BILLY Bookcase",
+      price: 49.99,
     },
     {
-      title: "Phương thức thanh toán",
-      content: <PaymentMethod onSelect={handlePaymentSelect} />,
+      id: "malm-bed",
+      key: "malm",
+      name: "MALM Bed frame",
+      price: 179.0,
     },
     {
-      title: "Xác nhận đơn hàng",
-      content: (
-        <OrderReview
-          cartItems={cartItems}
-          shippingInfo={shippingInfo}
-          paymentMethod={paymentMethod}
-          total={getCartTotal()}
-          onPlaceOrder={handlePlaceOrder}
-          loading={loading}
-        />
-      ),
+      id: "poang-chair",
+      key: "poang",
+      name: "POÄNG Armchair",
+      price: 99.0,
     },
     {
-      title: "Hoàn tất",
-      content: <OrderConfirmation orderNumber={orderNumber} navigateTo={navigateTo} />,
+      id: "kallax-shelf",
+      key: "kallax",
+      name: "KALLAX Shelf unit",
+      price: 79.99,
     },
   ]
+
+  // Ideas and inspiration data
+  const ideasInspiration = [
+    {
+      id: 1,
+      key: "smallSpace",
+      title: "Small space living ideas",
+      description: "Make the most of your compact home with these clever solutions",
+    },
+    {
+      id: 2,
+      key: "bedroom",
+      title: "Bedroom inspiration",
+      description: "Create a relaxing retreat with our bedroom design ideas",
+    },
+    {
+      id: 3,
+      key: "kitchen",
+      title: "Kitchen organization tips",
+      description: "Smart storage solutions for a clutter-free kitchen",
+    },
+  ]
+
+  // Handle product click
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`)
+  }
+
+  // Handle quick add to cart
+  const handleQuickAddToCart = (e, product) => {
+    e.stopPropagation() // Prevent navigating to product page
+    addToCart(product, 1)
+  }
 
   return (
     <div className="bg-white">
       {/* Breadcrumb Navigation */}
       <Breadcrumb items={breadcrumbItems} />
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Back button to return to home */}
-        <button onClick={() => navigateTo("home")} className="mb-6 text-blue-600 hover:underline flex items-center">
-          ← Quay lại trang chủ
-        </button>
+      {/* Shipping Banner */}
+      <ShippingBanner />
 
-        <h1 className="text-3xl font-bold mb-8">Thanh toán</h1>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main checkout content */}
-          <div className="lg:w-2/3">
-            <Steps current={currentStep} items={steps.map((item) => ({ title: item.title }))} className="mb-8" />
-
-            <div className="bg-white p-6 border border-gray-200 rounded-lg mb-6">{steps[currentStep].content}</div>
-
-            {/* Navigation buttons */}
-            {currentStep < steps.length - 1 && currentStep > 0 && (
-              <div className="flex justify-between mt-4">
-                <Button onClick={prevStep}>Quay lại</Button>
-                {currentStep !== 2 && (
-                  <Button type="primary" onClick={nextStep} className="bg-blue-600 hover:bg-blue-700">
-                    Tiếp tục
+      {/* Hero Banner */}
+      <div className="relative">
+        <Carousel autoplay>
+          <div>
+            <div className="relative h-[400px] md:h-[500px]">
+              <img
+                src={getBannerImage("welcome") || "/placeholder.svg"}
+                alt="IKEA Hero Banner"
+                className="w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0 flex flex-col justify-center px-8 md:px-16"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+              >
+                <h1 className="text-white text-4xl md:text-6xl font-bold mb-3">Welcome to IKEA</h1>
+                <p className="text-white text-lg md:text-xl mb-6 max-w-md">
+                  Affordable home furnishing solutions for everyone
+                </p>
+                <div>
+                  <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 rounded-none px-6">
+                    <Link to="/products">Shop now</Link>
                   </Button>
-                )}
+                </div>
               </div>
-            )}
+            </div>
           </div>
+          <div>
+            <div className="relative h-[400px] md:h-[500px]">
+              <img
+                src={getBannerImage("spring") || "/placeholder.svg"}
+                alt="IKEA Spring Collection"
+                className="w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 pb-16"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+              >
+                <h1 className="text-white text-4xl md:text-6xl font-bold mb-3">Spring Collection 2025</h1>
+                <p className="text-white text-lg md:text-xl mb-6 max-w-md">
+                  Refresh your home with our new spring arrivals
+                </p>
+                <div>
+                  <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 rounded-none px-6">
+                    <Link to="/products?collection=spring">Explore collection</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Carousel>
+      </div>
 
-          {/* Order summary */}
-          <div className="lg:w-1/3">
-            {currentStep < 3 && <CartSummary cartItems={cartItems} total={getCartTotal()} />}
+      {/* Featured Products Section */}
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-8">Popular products</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {featuredProducts.map((product) => (
+              <div
+                key={product.id}
+                className="group cursor-pointer relative"
+                onClick={() => handleProductClick(product.id)}
+              >
+                <div className="mb-3 overflow-hidden">
+                  <img
+                    src={getProductImage(product.key) || "/placeholder.svg"}
+                    alt={product.name}
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {/* Quick add to cart button */}
+                  <button
+                    className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    onClick={(e) => handleQuickAddToCart(e, product)}
+                    aria-label={`Add ${product.name} to cart`}
+                  >
+                    <ShoppingCartOutlined style={{ fontSize: "18px" }} />
+                  </button>
+                </div>
+                <h3 className="font-medium">{product.name}</h3>
+                <p className="text-gray-700">${product.price}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button size="large">
+              <Link to="/products">View all products</Link>
+            </Button>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Ideas & Inspiration Section */}
+      <section className="py-12 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-8">Ideas & Inspiration</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {ideasInspiration.map((idea) => (
+              <div
+                key={idea.id}
+                className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                <img
+                  src={getImage(`inspiration.${idea.key || "/placeholder.svg"}`)}
+                  alt={idea.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-medium mb-2">{idea.title}</h3>
+                  <p className="text-gray-600 mb-4">{idea.description}</p>
+                  <Button type="link" className="p-0 text-blue-600 font-medium">
+                    Explore more
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sustainability Section */}
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-green-50 rounded-lg p-6 md:p-10">
+            <div className="md:flex items-center">
+              <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">A more sustainable life at home</h2>
+                <p className="text-gray-700 mb-6">
+                  We're committed to creating a better everyday life for people and the planet. From sourcing materials
+                  responsibly to designing products that can be recycled, we're working hard to transform our business.
+                </p>
+                <Button size="large">Learn more about sustainability</Button>
+              </div>
+              <div className="md:w-1/2">
+                <img
+                  src={getBannerImage("sustainability") || "/placeholder.svg"}
+                  alt="Sustainability at IKEA"
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
 
-export default CheckoutPage
+export default HomePage

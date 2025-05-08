@@ -1,40 +1,28 @@
-"use client"
+import { Button } from "antd"
+import { CheckCircleOutlined } from "@ant-design/icons"
+import { Link } from "react-router-dom"
 
-import { Result, Button } from "antd"
-import { CheckCircleOutlined, HomeOutlined, FileTextOutlined } from "@ant-design/icons"
-
-const OrderConfirmation = ({ orderNumber, navigateTo }) => {
+const OrderConfirmation = ({ orderNumber }) => {
   return (
-    <Result
-      icon={<CheckCircleOutlined className="text-green-500" />}
-      title="Đặt hàng thành công!"
-      subTitle={
-        <div className="text-center">
-          <p>Cảm ơn bạn đã mua sắm tại IKEA.</p>
-          <p className="font-medium">
-            Mã đơn hàng: <span className="text-blue-600">{orderNumber}</span>
-          </p>
-          <p className="mt-2">
-            Chúng tôi đã gửi email xác nhận đơn hàng đến địa chỉ email của bạn. Bạn có thể theo dõi trạng thái đơn hàng
-            trong trang "Đơn hàng của tôi".
-          </p>
-        </div>
-      }
-      extra={[
-        <Button
-          key="home"
-          type="primary"
-          icon={<HomeOutlined />}
-          onClick={() => navigateTo("home")}
-          className="bg-blue-600 hover:bg-blue-700 mr-4"
-        >
-          Tiếp tục mua sắm
-        </Button>,
-        <Button key="orders" icon={<FileTextOutlined />} onClick={() => navigateTo("profile")}>
-          Xem đơn hàng của tôi
-        </Button>,
-      ]}
-    />
+    <div className="text-center py-8">
+      <CheckCircleOutlined className="text-green-500 text-6xl mb-4" />
+      <h2 className="text-2xl font-bold mb-2">Đặt hàng thành công!</h2>
+      <p className="text-gray-600 mb-6">
+        Cảm ơn bạn đã đặt hàng. Mã đơn hàng của bạn là <strong>{orderNumber}</strong>
+      </p>
+      <p className="text-gray-600 mb-8">
+        Chúng tôi đã gửi email xác nhận đơn hàng đến địa chỉ email của bạn. Bạn có thể theo dõi đơn hàng trong phần "Đơn
+        hàng của tôi" trong tài khoản của bạn.
+      </p>
+      <div className="flex flex-col sm:flex-row justify-center gap-4">
+        <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700">
+          <Link to="/profile">Xem đơn hàng của tôi</Link>
+        </Button>
+        <Button size="large">
+          <Link to="/">Tiếp tục mua sắm</Link>
+        </Button>
+      </div>
+    </div>
   )
 }
 

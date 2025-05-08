@@ -1,5 +1,6 @@
 "use client"
 
+import { Link, useNavigate } from "react-router-dom"
 import { Button, Carousel } from "antd"
 import { ShoppingCartOutlined } from "@ant-design/icons"
 import Breadcrumb from "../components/Breadcrumb"
@@ -7,13 +8,14 @@ import ShippingBanner from "../components/ShippingBanner"
 import { getImage, getProductImage, getBannerImage } from "../utils/imageUtils"
 import { useCart } from "../context/CartContext"
 
-const HomePage = ({ navigateTo }) => {
+const HomePage = () => {
   const { addToCart } = useCart()
+  const navigate = useNavigate()
 
   // Breadcrumb items for the home page
   const breadcrumbItems = [
-    { label: "Products", path: "#products" },
-    { label: "Smart home", path: "#smart-home" },
+    { label: "Products", path: "/products" },
+    { label: "Smart home", path: "/products?category=smart-home" },
   ]
 
   // Featured products data
@@ -67,14 +69,9 @@ const HomePage = ({ navigateTo }) => {
   ]
 
   // Handle product click
-  const handleProductClick = () => {
-    navigateTo && navigateTo("product")
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`)
   }
-
-  const handleProductClicks = () => {
-    navigateTo && navigateTo("products")
-  }
-
 
   // Handle quick add to cart
   const handleQuickAddToCart = (e, product) => {
@@ -100,15 +97,17 @@ const HomePage = ({ navigateTo }) => {
                 alt="IKEA Hero Banner"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 flex flex-col justify-center px-8 md:px-16"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}>
+              <div
+                className="absolute inset-0 flex flex-col justify-center px-8 md:px-16"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+              >
                 <h1 className="text-white text-4xl md:text-6xl font-bold mb-3">Welcome to IKEA</h1>
                 <p className="text-white text-lg md:text-xl mb-6 max-w-md">
-                Affordable home furnishing solutions for everyone
+                  Affordable home furnishing solutions for everyone
                 </p>
                 <div>
                   <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 rounded-none px-6">
-                  Shop now
+                    <Link to="/products">Shop now</Link>
                   </Button>
                 </div>
               </div>
@@ -131,7 +130,7 @@ const HomePage = ({ navigateTo }) => {
                 </p>
                 <div>
                   <Button type="primary" size="large" className="bg-blue-600 hover:bg-blue-700 rounded-none px-6">
-                    Explore collection
+                    <Link to="/products?collection=spring">Explore collection</Link>
                   </Button>
                 </div>
               </div>
@@ -146,7 +145,11 @@ const HomePage = ({ navigateTo }) => {
           <h2 className="text-2xl md:text-3xl font-bold mb-8">Popular products</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="group cursor-pointer relative" onClick={handleProductClick}>
+              <div
+                key={product.id}
+                className="group cursor-pointer relative"
+                onClick={() => handleProductClick(product.id)}
+              >
                 <div className="mb-3 overflow-hidden">
                   <img
                     src={getProductImage(product.key) || "/placeholder.svg"}
@@ -168,8 +171,8 @@ const HomePage = ({ navigateTo }) => {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Button size="large" onClick={handleProductClicks}>
-              View all products
+            <Button size="large">
+              <Link to="/products">View all products</Link>
             </Button>
           </div>
         </div>

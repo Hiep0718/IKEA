@@ -1,61 +1,83 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useParams, Link } from "react-router-dom"
 import { Button, Tabs, Rate, InputNumber } from "antd"
 import Breadcrumb from "../components/Breadcrumb"
 import ShippingBanner from "../components/ShippingBanner"
 import { getImage, getProductImage } from "../utils/imageUtils"
 import { useCart } from "../context/CartContext"
+import productsData from "../data/products.json"
 
-const ProductPage = ({ navigateTo }) => {
+const ProductPage = () => {
   const [quantity, setQuantity] = useState(1)
-  const [mainImage, setMainImage] = useState("kallax")
+  const [mainImage, setMainImage] = useState("")
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const { productId } = useParams()
   const { addToCart } = useCart()
 
-  // Product data
-  const product = {
-    id: "kallax-shelf",
-    key: "kallax",
-    name: "KALLAX Shelf unit",
-    price: 79.99,
-    description:
-      "A simple, stylish storage solution that fits everywhere. Use it as a room divider, bookshelf or TV bench. KALLAX shelf unit can be placed on the floor or mounted on the wall.",
-    dimensions: "77×39×77 cm",
-    material: "Particleboard, Fiberboard, Plastic edging, Plastic edging",
-    maxLoad: "13 kg per shelf",
-    rating: 4.5,
-    reviewCount: 127,
-    colors: [
-      { name: "White", value: "white" },
-      { name: "Black-brown", value: "black" },
-      { name: "Blue", value: "blue-600" },
-    ],
-    sizes: [
-      { name: "77x77 cm", value: "small" },
-      { name: "77x147 cm", value: "medium" },
-      { name: "147x147 cm", value: "large" },
-    ],
+  // Fetch product data
+  useEffect(() => {
+    setLoading(true)
+    try {
+      const foundProduct = productsData.products.find((p) => p.id.toString() === productId)
+      if (foundProduct) {
+        setProduct(foundProduct)
+        setMainImage(foundProduct.key || foundProduct.id.toString())
+      }
+    } catch (error) {
+      console.error("Error loading product:", error)
+    } finally {
+      setLoading(false)
+    }
+  }, [productId])
+
+  if (loading || !product) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="h-96 bg-gray-200 rounded"></div>
+            <div>
+              <div className="h-8 bg-gray-200 rounded w-1/2 mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/4 mb-6"></div>
+              <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-full mb-6"></div>
+              <div className="h-10 bg-gray-200 rounded w-full mb-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   // Breadcrumb items for a specific product page
+  const category = productsData.categories.find((c) => c.id === product.categoryId)
   const breadcrumbItems = [
-    { label: "Products", path: "#" },
-    { label: "Furniture", path: "#" },
-    { label: "Storage & organization", path: "#" },
-    { label: "KALLAX Shelf unit", path: "#" },
+    { label: "Products", path: "/products" },
+    { label: category?.name || "Category", path: `/products/${category?.slug || ""}` },
+    { label: product.name, path: `/product/${product.id}` },
   ]
 
   // Product images
   const productImages = [
-    { id: 1, key: "kallax", alt: "KALLAX Shelf unit main view" },
-    { id: 2, key: "kallax", alt: "KALLAX Shelf unit side view" },
-    { id: 3, key: "kallax", alt: "KALLAX Shelf unit with items" },
-    { id: 4, key: "kallax", alt: "KALLAX Shelf unit in room setting" },
+    { id: 1, key: product.key || product.id.toString(), alt: `${product.name} main view` },
+    { id: 2, key: product.key || product.id.toString(), alt: `${product.name} side view` },
+    { id: 3, key: product.key || product.id.toString(), alt: `${product.name} with items` },
+    { id: 4, key: product.key || product.id.toString(), alt: `${product.name} in room setting` },
   ]
 
   // Handle add to cart
   const handleAddToCart = () => {
-    addToCart(product, quantity)
+    addToCart({
+      id: product.id,
+      key: product.key || product.id.toString(),
+      name: product.name,
+      price: Number.parseFloat(product.price),
+      quantity,
+    })
   }
 
   return (
@@ -68,16 +90,16 @@ const ProductPage = ({ navigateTo }) => {
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back button to return to home */}
-        <button onClick={() => navigateTo("home")} className="mb-4 text-blue-600 hover:underline flex items-center">
-          ← Back to Home
-        </button>
+        <Link to="/products" className="mb-4 text-blue-600 hover:underline flex items-center">
+          ← Back to Products
+        </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Product Images */}
           <div>
             <img
-              src={getProductImage(mainImage) || "/placeholder.svg"}
-              alt="KALLAX Shelf unit"
+              src={product.image || getProductImage(mainImage) || "/placeholder.svg"}
+              alt={product.name}
               className="w-full h-auto rounded-md"
             />
             <div className="grid grid-cols-4 gap-2 mt-4">
@@ -96,10 +118,13 @@ const ProductPage = ({ navigateTo }) => {
           {/* Product Details */}
           <div>
             <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-            <p className="text-xl text-gray-700 mb-4">${product.price}</p>
+            <p className="text-xl text-gray-700 mb-4">
+              {product.currency}
+              {product.price}
+            </p>
             <div className="flex items-center mb-4">
               <Rate allowHalf defaultValue={product.rating} disabled />
-              <span className="ml-2 text-gray-500">({product.reviewCount} reviews)</span>
+              <span className="ml-2 text-gray-500">({product.reviews} reviews)</span>
             </div>
             <p className="text-gray-600 mb-6">{product.description}</p>
 
@@ -107,28 +132,10 @@ const ProductPage = ({ navigateTo }) => {
             <div className="mb-6">
               <h3 className="font-medium mb-2">Color</h3>
               <div className="flex space-x-3">
-                {product.colors.map((color) => (
-                  <button
-                    key={color.value}
-                    className={`w-10 h-10 bg-${color.value} border border-gray-300 rounded-full`}
-                    title={color.name}
-                  ></button>
-                ))}
-              </div>
-            </div>
-
-            {/* Size Options */}
-            <div className="mb-6">
-              <h3 className="font-medium mb-2">Size</h3>
-              <div className="flex space-x-3">
-                {product.sizes.map((size) => (
-                  <button
-                    key={size.value}
-                    className="px-4 py-2 border border-gray-300 rounded-md hover:border-blue-500"
-                  >
-                    {size.name}
-                  </button>
-                ))}
+                <button
+                  className={`w-10 h-10 bg-${product.color} border border-gray-300 rounded-full`}
+                  title={product.color}
+                ></button>
               </div>
             </div>
 
@@ -167,9 +174,8 @@ const ProductPage = ({ navigateTo }) => {
                   label: "Product details",
                   children: (
                     <div>
-                      <p>Dimensions: {product.dimensions}</p>
                       <p>Material: {product.material}</p>
-                      <p>Max load per shelf: {product.maxLoad}</p>
+                      <p>Tags: {product.tags.join(", ")}</p>
                     </div>
                   ),
                 },
@@ -190,7 +196,7 @@ const ProductPage = ({ navigateTo }) => {
                   children: (
                     <div>
                       <p>
-                        Average rating: {product.rating}/5 from {product.reviewCount} reviews
+                        Average rating: {product.rating}/5 from {product.reviews} reviews
                       </p>
                       <p>95% of customers would recommend this product</p>
                     </div>
@@ -201,6 +207,7 @@ const ProductPage = ({ navigateTo }) => {
           </div>
         </div>
       </div>
+      {/* Recently Viewed Products */}
     </div>
   )
 }

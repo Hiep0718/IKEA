@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { Link, useSearchParams, useNavigate } from "react-router-dom"
 import { Input, Select, Checkbox, Slider, Rate, Tag, Button, Pagination, Radio, Empty } from "antd"
 import { SearchOutlined, FilterOutlined, SortAscendingOutlined } from "@ant-design/icons"
 import Breadcrumb from "../components/Breadcrumb"
@@ -9,27 +10,30 @@ import productsData from "../data/products.json"
 
 const { Option } = Select
 
-const ProductsPage = ({ navigateTo }) => {
+const ProductsPage = () => {
   const { addToCart } = useCart()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
+
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "")
+  const [selectedCategory, setSelectedCategory] = useState(Number(searchParams.get("category")) || null)
   const [selectedColors, setSelectedColors] = useState([])
   const [selectedMaterials, setSelectedMaterials] = useState([])
   const [priceRange, setPriceRange] = useState([0, 1200])
-  const [sortBy, setSortBy] = useState("featured")
+  const [sortBy, setSortBy] = useState(searchParams.get("sort") || "featured")
   const [filtersVisible, setFiltersVisible] = useState(true)
 
   const pageSize = 12
 
   // Breadcrumb items
   const breadcrumbItems = [
-    { label: "Trang chủ", path: "#" },
-    { label: "Sản phẩm", path: "#" },
+    { label: "Trang chủ", path: "/" },
+    { label: "Sản phẩm", path: "/products" },
   ]
 
   // Load products and categories
@@ -43,6 +47,17 @@ const ProductsPage = ({ navigateTo }) => {
       setLoading(false)
     }
   }, [])
+
+  // Update URL when filters change
+  useEffect(() => {
+    const params = new URLSearchParams()
+
+    if (searchQuery) params.set("q", searchQuery)
+    if (selectedCategory) params.set("category", selectedCategory)
+    if (sortBy !== "featured") params.set("sort", sortBy)
+
+    setSearchParams(params)
+  }, [searchQuery, selectedCategory, sortBy, setSearchParams])
 
   // Filter products based on selected filters
   useEffect(() => {
@@ -151,20 +166,21 @@ const ProductsPage = ({ navigateTo }) => {
   }
 
   // Handle add to cart
-  const handleAddToCart = (product) => {
+  const handleAddToCart = (e, product) => {
+    e.stopPropagation() // Prevent navigating to product page
     addToCart({
       id: product.id,
       name: product.name,
       price: Number.parseFloat(product.price),
       image: product.image,
+      key: product.key || product.id.toString(),
       quantity: 1,
     })
   }
 
   // Handle product click
   const handleProductClick = (product) => {
-    // In a real app, you would navigate to the product detail page
-    console.log("Product clicked:", product)
+    navigate(`/product/${product.id}`)
   }
 
   // Reset all filters
@@ -198,9 +214,9 @@ const ProductsPage = ({ navigateTo }) => {
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back button to return to home */}
-        <button onClick={() => navigateTo("home")} className="mb-6 text-blue-600 hover:underline flex items-center">
+        <Link to="/" className="mb-6 text-blue-600 hover:underline flex items-center">
           ← Quay lại trang chủ
-        </button>
+        </Link>
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Filters - Mobile Toggle */}
@@ -342,7 +358,7 @@ const ProductsPage = ({ navigateTo }) => {
                 {paginatedProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300 group"
+                    className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300 group cursor-pointer"
                   >
                     <div className="relative">
                       <img
@@ -363,7 +379,8 @@ const ProductsPage = ({ navigateTo }) => {
                       )}
                       <button
                         className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        onClick={() => handleAddToCart(product)}
+                        onClick={(e) => handleAddToCart(e, product)}
+                        aria-label={`Add ${product.name} to cart`}
                       >
                         +
                       </button>
