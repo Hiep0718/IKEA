@@ -6,10 +6,12 @@ import { useCart } from "../context/CartContext";
 
 const { Text, Title } = Typography;
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onClick }) => {
+  // Thêm prop onClick
   const { addToCart } = useCart();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Ngăn việc kích hoạt sự kiện onClick của Card
     addToCart(product);
   };
 
@@ -27,6 +29,7 @@ const ProductCard = ({ product }) => {
     <Badge.Ribbon {...(renderBadge() ? {} : { style: { display: "none" } })}>
       <Card
         hoverable
+        onClick={onClick} // Đánh dấu: Thêm sự kiện onClick vào Card
         cover={
           <div className="aspect-square overflow-hidden">
             <img
